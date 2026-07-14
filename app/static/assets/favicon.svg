@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="MASAGI">
+  <rect width="120" height="120" rx="22" fill="#0F1512"/>
+  <polygon points="30,58 12,92 48,92" fill="#1E7A4C"/>
+  <polygon points="58,42 34,92 82,92" fill="#31A96A"/>
+  <polygon points="92,26 62,92 120,92" transform="translate(-14,0)" fill="#57D496"/>
+  <polygon points="92,26 84.5,42 99.5,42" transform="translate(-14,0)" fill="#0B3B24"/>
+</svg>

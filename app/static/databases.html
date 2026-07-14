@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MASAGI HV — Choose Database</title>
+<link rel="icon" type="image/svg+xml" href="/static/assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0d0f; --panel: #12161b; --text: #f4f6f8; --muted: #93a0ab;
+  --teal: #1e8a55; --teal-bright: #2fb877; --border: #1f262d;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { min-height: 100%; }
+body {
+  font-family: Arial, "Helvetica Neue", Helvetica, system-ui, sans-serif; color: var(--text);
+  min-height: 100vh; -webkit-font-smoothing: antialiased;
+  background:
+    radial-gradient(1100px 600px at 82% -8%, rgba(30,138,85,.16), transparent 55%),
+    radial-gradient(900px 500px at 0% 110%, rgba(30,138,85,.08), transparent 60%),
+    linear-gradient(180deg, #0b0e10 0%, #0a0d0f 100%);
+  background-attachment: fixed;
+}
+/* faint blueprint grid */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .5;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 46px 46px;
+}
+.wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 22px 26px 60px; }
+/* top bar */
+.bar { display: flex; align-items: center; justify-content: space-between; padding: 8px 0 26px; }
+.bar .logo { height: 30px; width: auto; display: block; }
+.bar .who { display: flex; align-items: center; gap: 16px; font-size: 13px; color: var(--muted); }
+.bar .who b { color: var(--text); font-weight: 600; }
+.bar .who .role { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--teal-bright); border: 1px solid rgba(47,184,119,.35); border-radius: 999px; padding: 3px 9px; }
+.bar .logout { color: var(--muted); text-decoration: none; font-size: 13px; cursor: pointer; }
+.bar .logout:hover { color: var(--text); }
+/* heading */
+.head { margin: 8px 0 22px; }
+.head .kicker { font-family: var(--mono); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--teal-bright); }
+.head h1 { font-family: "Chakra Petch", sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -.3px; margin-top: 6px; }
+.head p { color: var(--muted); font-size: 13.5px; margin-top: 6px; max-width: 640px; }
+/* tile grid */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(218px, 1fr)); gap: 18px; margin-top: 8px; }
+.tile {
+  position: relative; height: 232px; border-radius: 16px; overflow: hidden; cursor: pointer;
+  border: 1px solid var(--border); background: var(--panel);
+  display: flex; flex-direction: column; transition: transform .14s, box-shadow .14s, border-color .14s;
+}
+.tile:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(0,0,0,.45); border-color: rgba(47,184,119,.5); }
+.tile .art { flex: 1; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(150deg, #1e8a55 0%, #0f5c38 100%); }
+.tile .art svg { width: 96px; height: 96px; }
+.tile .label { padding: 13px 15px; background: var(--panel); }
+.tile .name { font-family: var(--mono); font-size: 13px; font-weight: 600; letter-spacing: .02em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tile .meta { font-size: 11px; color: var(--muted); margin-top: 3px; }
+/* chips on the art */
+.tile .chip { position: absolute; top: 12px; left: 12px; font-family: var(--mono); font-size: 9.5px;
+  font-weight: 600; letter-spacing: .12em; text-transform: uppercase; padding: 4px 8px; border-radius: 6px;
+  background: rgba(8,11,13,.55); color: #fff; backdrop-filter: blur(2px); }
+.tile.active { border-color: var(--teal-bright); box-shadow: 0 0 0 1px var(--teal-bright), 0 14px 34px rgba(30,138,85,.25); }
+.tile.active .chip { background: var(--teal-bright); color: #06181b; }
+.tile .del { position: absolute; top: 10px; right: 10px; width: 26px; height: 26px; border-radius: 7px;
+  border: none; cursor: pointer; background: rgba(8,11,13,.5); color: #fff; font-size: 15px; line-height: 1;
+  display: none; align-items: center; justify-content: center; }
+.tile:hover .del { display: flex; }
+.tile .del:hover { background: #bd362f; }
+.tile .gear { position: absolute; top: 10px; right: 40px; width: 26px; height: 26px; border-radius: 7px;
+  border: none; cursor: pointer; background: rgba(8,11,13,.5); color: #fff; font-size: 14px; line-height: 1;
+  display: none; align-items: center; justify-content: center; }
+.tile:hover .gear { display: flex; }
+.tile .gear:hover { background: var(--teal); }
+.tile .art .emoji { font-size: 64px; line-height: 1; }
+/* frozen / no-access states */
+.tile.frozen .art { filter: grayscale(.7) brightness(.7); }
+.tile .chip.frozenchip { background: #6b5300; color: #ffe6a3; }
+.tile.locked { opacity: .62; cursor: not-allowed; }
+.tile.locked:hover { transform: none; box-shadow: none; border-color: var(--border); }
+.tile.locked .art::after { content: "🔒"; position: absolute; font-size: 30px; }
+/* access roles on the tile */
+.tile .access { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+.acc-row { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+.acc-k { font-family: var(--mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); width: 34px; }
+.rb { font-size: 9.5px; font-weight: 600; padding: 1.5px 6px; border-radius: 5px; letter-spacing: .02em; }
+.rb-admin { background: rgba(30,138,85,.2); color: #57d496; }
+.rb-finance { background: rgba(31,157,87,.2); color: #7fd3a0; }
+.rb-viewer { background: rgba(154,166,177,.18); color: #aeb8c2; }
+.rb-none { background: rgba(154,166,177,.14); color: var(--muted); }
+/* profile modal pickers */
+.pick-row { display: flex; flex-wrap: wrap; gap: 7px; margin: 4px 0 16px; }
+.pick { width: 38px; height: 38px; border-radius: 9px; border: 1px solid #2a323b; background: #0f1318;
+  cursor: pointer; font-size: 19px; display: flex; align-items: center; justify-content: center; padding: 0; }
+.pick.sel { border-color: var(--teal-bright); box-shadow: 0 0 0 2px rgba(47,184,119,.4); }
+.swatch { width: 30px; height: 30px; border-radius: 8px; cursor: pointer; border: 2px solid transparent; }
+.swatch.sel { border-color: #fff; box-shadow: 0 0 0 2px rgba(0,0,0,.4) inset; }
+.role-grid { display: flex; gap: 16px; flex-wrap: wrap; margin: 2px 0 16px; }
+.role-grid label { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: var(--text); font-weight: 500; margin: 0; cursor: pointer; }
+.role-grid input { width: 15px; height: 15px; accent-color: var(--teal); }
+.role-grid input:disabled { accent-color: var(--muted); }
+.freeze-row { display: flex; align-items: center; gap: 9px; margin: 4px 0 16px; padding: 11px 13px;
+  background: rgba(200,122,8,.1); border: 1px solid rgba(200,122,8,.3); border-radius: 9px; color: #f0c489; font-size: 13px; }
+.fld-label { font-size: 12px; font-weight: 600; color: #c2c8cd; margin: 14px 0 4px; }
+/* create tile */
+.tile.create { background: transparent; border: 2px dashed #2b343c; }
+.tile.create:hover { border-color: var(--teal-bright); background: rgba(30,138,85,.05); }
+.tile.create .art { background: transparent; flex-direction: column; gap: 10px; color: var(--teal-bright); }
+.tile.create .plus { font-size: 50px; font-weight: 300; line-height: 1; }
+.tile.create .ct { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+/* modal */
+.backdrop { position: fixed; inset: 0; z-index: 30; display: none; align-items: center; justify-content: center;
+  background: rgba(4,6,8,.66); padding: 20px; }
+.backdrop.show { display: flex; }
+.modal { width: min(420px, 100%); background: var(--panel); border: 1px solid var(--border); border-radius: 14px;
+  padding: 24px; box-shadow: 0 30px 80px rgba(0,0,0,.6); }
+.modal h3 { font-family: "Chakra Petch", sans-serif; font-size: 19px; margin-bottom: 4px; }
+.modal p { color: var(--muted); font-size: 12.5px; margin-bottom: 16px; }
+.modal label { display: block; font-size: 12px; font-weight: 600; color: #c2c8cd; margin: 0 0 7px; }
+.modal input[type=text] { width: 100%; padding: 11px 13px; font-size: 14px; color: var(--text); font-family: inherit;
+  background: #0f1318; border: 1px solid #262d35; border-radius: 9px; outline: none; }
+.modal input[type=text]:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(30,138,85,.2); }
+.modal .seedrow { display: flex; align-items: center; gap: 8px; margin: 14px 0 20px; color: var(--muted); font-size: 13px; }
+.modal .seedrow input { width: 15px; height: 15px; accent-color: var(--teal); }
+.modal .acts { display: flex; justify-content: flex-end; gap: 10px; }
+.btn { font-family: inherit; font-weight: 600; font-size: 13.5px; padding: 10px 16px; border-radius: 9px; cursor: pointer; border: 1px solid var(--border); background: transparent; color: var(--text); }
+.btn:hover { border-color: var(--muted); }
+.btn.primary { background: var(--teal); border-color: var(--teal); color: #fff; box-shadow: 0 8px 22px rgba(30,138,85,.3); }
+.btn.primary:hover { filter: brightness(1.07); }
+.err { color: #ff9d9d; font-size: 12.5px; margin-top: 10px; min-height: 16px; }
+/* last-used line on tile */
+.tile .used { font-family: var(--mono); font-size: 9.5px; color: var(--muted); margin-top: 6px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tile .used b { color: #b9c2cb; font-weight: 600; }
+/* manage-users button on tile */
+.tile .people { position: absolute; top: 10px; right: 70px; width: 26px; height: 26px; border-radius: 7px;
+  border: none; cursor: pointer; background: rgba(8,11,13,.5); color: #fff; font-size: 13px; line-height: 1;
+  display: none; align-items: center; justify-content: center; }
+.tile:hover .people { display: flex; }
+.tile .people:hover { background: var(--teal); }
+/* users modal */
+.modal input[type=password], .modal select { width: 100%; padding: 11px 13px; font-size: 14px; color: var(--text);
+  font-family: inherit; background: #0f1318; border: 1px solid #262d35; border-radius: 9px; outline: none; }
+.modal input[type=password]:focus, .modal select:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(30,138,85,.2); }
+.ulist { max-height: 232px; overflow: auto; margin: 4px 0 16px; border: 1px solid var(--border); border-radius: 10px; }
+.urow { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: 1px solid var(--border); font-size: 13px; }
+.urow:last-child { border-bottom: none; }
+.urow.inactive { opacity: .55; }
+.urow .un { font-weight: 600; }
+.urow .uf { color: var(--muted); font-size: 11.5px; }
+.urow .sp { flex: 1; }
+.urow .ub { background: transparent; border: 1px solid var(--border); color: var(--muted); border-radius: 7px;
+  padding: 4px 9px; font-size: 12px; cursor: pointer; font-family: inherit; }
+.urow .ub:hover { border-color: var(--muted); color: var(--text); }
+.urow .ub.danger:hover { border-color: #bd362f; color: #ff9d9d; }
+.uform { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
+.uform .full { grid-column: 1 / -1; }
+.uform label { margin-bottom: 5px; }
+.uform .uactive { display: flex; align-items: center; gap: 8px; font-weight: 500; color: var(--muted); }
+.uform .uactive input { width: 15px; height: 15px; accent-color: var(--teal); }
+.section-t { font-size: 12px; font-weight: 700; color: #c2c8cd; margin: 6px 0 8px; letter-spacing: .02em; }
+/* toast */
+.toast { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 40;
+  background: #12161b; border: 1px solid var(--border); color: var(--text); padding: 11px 18px; border-radius: 10px;
+  font-size: 13px; box-shadow: 0 14px 34px rgba(0,0,0,.5); opacity: 0; transition: opacity .2s; pointer-events: none; }
+.toast.show { opacity: 1; }
+.toast.bad { border-color: rgba(189,54,47,.6); color: #ffb3b3; }
+.empty { color: var(--muted); font-size: 14px; padding: 40px 0; }
+@media (max-width: 540px) { .head h1 { font-size: 24px; } }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="bar">
+      <img class="logo" src="/static/assets/masagi-logo-ondark.svg" alt="MASAGI HV">
+      <div class="who">
+        <span><b id="whoName">—</b> <span class="role" id="whoRole"></span></span>
+        <a class="logout" id="logout">Logout</a>
+      </div>
+    </div>
+    <div class="head">
+      <div class="kicker">Helicopter View · Group Finance</div>
+      <h1>Choose a Database</h1>
+      <p>Each database is a fully separate set of companies, accounts and journals.
+        Pick one to open the console — you can switch any time from here.</p>
+    </div>
+    <div class="grid" id="grid"><div class="empty">Loading databases…</div></div>
+  </div>
+
+  <!-- create modal -->
+  <div class="backdrop" id="backdrop">
+    <div class="modal">
+      <h3>Create Database</h3>
+      <p>A new, independent data store. Fill it with demo data to explore, or start empty.</p>
+      <label for="dbName">Database name</label>
+      <input type="text" id="dbName" placeholder="e.g. 2027-BUDGET or CLIENT-X" autocomplete="off">
+      <label class="seedrow"><input type="checkbox" id="dbSeed" checked> Fill with demo data (uncheck for an empty database)</label>
+      <div class="acts">
+        <button class="btn" id="cCancel">Cancel</button>
+        <button class="btn primary" id="cCreate">Create</button>
+      </div>
+      <div class="err" id="cErr"></div>
+    </div>
+  </div>
+
+  <!-- database settings (profile) modal — admin only -->
+  <div class="backdrop" id="pBackdrop">
+    <div class="modal" style="width:min(480px,100%)">
+      <h3>Database Settings</h3>
+      <p id="pName" style="font-family:var(--mono);color:var(--teal-bright);margin-bottom:16px"></p>
+
+      <div class="fld-label">Picture</div>
+      <div class="pick-row" id="pIcons"></div>
+
+      <div class="fld-label">Tile colour</div>
+      <div class="pick-row" id="pColors"></div>
+
+      <label class="freeze-row"><input type="checkbox" id="pFrozen">
+        <span><b>Freeze this database</b> — lock it so no one (except admins) can open or edit it.</span></label>
+
+      <div class="fld-label">Who can ENTER (open) this database</div>
+      <div class="role-grid" id="pEnter">
+        <label><input type="checkbox" data-role="admin" checked disabled> Admin</label>
+        <label><input type="checkbox" data-role="finance"> Accountant</label>
+        <label><input type="checkbox" data-role="viewer"> Viewer / Auditor</label>
+      </div>
+
+      <div class="fld-label">Who can EDIT (write) in this database</div>
+      <div class="role-grid" id="pEdit">
+        <label><input type="checkbox" data-role="admin" checked disabled> Admin</label>
+        <label><input type="checkbox" data-role="finance"> Accountant</label>
+      </div>
+
+      <div class="acts" style="margin-top:18px">
+        <button class="btn" id="pCancel">Cancel</button>
+        <button class="btn primary" id="pSave">Save settings</button>
+      </div>
+      <div class="err" id="pErr"></div>
+    </div>
+  </div>
+
+  <!-- per-database user management modal — admin only -->
+  <div class="backdrop" id="uBackdrop">
+    <div class="modal" style="width:min(520px,100%)">
+      <h3>Manage Users</h3>
+      <p id="uName" style="font-family:var(--mono);color:var(--teal-bright);margin-bottom:14px"></p>
+      <div class="section-t">Accounts in this database</div>
+      <div class="ulist" id="uList"><div class="empty" style="padding:20px 12px">Loading…</div></div>
+      <div class="section-t" id="uFormTitle">Add a new user</div>
+      <div class="uform">
+        <label class="full">Username <input type="text" id="uUsername" placeholder="e.g. andi.finance" autocomplete="off"></label>
+        <label>Full name <input type="text" id="uFullName" placeholder="Andi Wijaya" autocomplete="off"></label>
+        <label>Role
+          <select id="uRole">
+            <option value="viewer">Viewer / Auditor</option>
+            <option value="finance">Accountant</option>
+            <option value="admin">Administrator</option>
+          </select></label>
+        <label class="full">Password <input type="password" id="uPassword" placeholder="set a password" autocomplete="new-password"></label>
+        <label class="full uactive" id="uActiveWrap" style="display:none"><input type="checkbox" id="uActive" checked> Active (can sign in)</label>
+      </div>
+      <div class="acts" style="margin-top:16px">
+        <button class="btn" id="uReset" style="display:none">Cancel edit</button>
+        <button class="btn" id="uClose">Close</button>
+        <button class="btn primary" id="uSave">Add user</button>
+      </div>
+      <div class="err" id="uErr"></div>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+
+<script>
+const ROLE_LABELS = { admin: "Administrator", finance: "Accountant", viewer: "Viewer / Auditor" };
+const grid = document.getElementById('grid');
+const toastEl = document.getElementById('toast');
+let toastT;
+function toast(msg, bad) {
+  toastEl.textContent = msg; toastEl.className = 'toast show' + (bad ? ' bad' : '');
+  clearTimeout(toastT); toastT = setTimeout(() => toastEl.className = 'toast', 2600);
+}
+const SHOP = `<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M3 9l1.5-5h15L21 9"/><path d="M3 9h18l-1 4a3 3 0 0 1-3 2.4H7A3 3 0 0 1 4 13z" fill="rgba(255,255,255,.14)"/>
+  <path d="M5 15.5V20h14v-4.5"/><path d="M10 20v-3.5h4V20"/></svg>`;
+
+async function jget(url) { const r = await fetch(url); if (!r.ok) throw new Error((await r.json().catch(()=>({}))).error || r.statusText); return r.json(); }
+async function jpost(url, body, method) {
+  const r = await fetch(url, { method: method || 'POST', headers: { 'Content-Type': 'application/json' }, body: body ? JSON.stringify(body) : undefined });
+  if (!r.ok) throw new Error((await r.json().catch(()=>({}))).error || r.statusText);
+  return r.json().catch(() => ({}));
+}
+
+let canManage = false, defaultDb = 'MASAGI-GROUP';
+
+async function load() {
+  let me;
+  try { me = await jget('/api/me'); } catch (e) { location.href = '/product?login=1'; return; }
+  document.getElementById('whoName').textContent = me.full_name || me.username;
+  document.getElementById('whoRole').textContent = ROLE_LABELS[me.role] || me.role;
+  const d = await jget('/api/databases');
+  canManage = d.can_manage; defaultDb = d.default;
+  render(d);
+}
+
+let dbList = [];
+const ROLE_SHORT = { admin: 'Admin', finance: 'Accountant', viewer: 'Viewer' };
+const ICON_PRESETS = ['🏪','🏢','🏦','📊','💼','🧪','📁','⭐','🚀','🧮','🗂️','🔒'];
+const COLOR_PRESETS = ['#1e8a55','#2f6db0','#1f9d57','#c87a08','#bd362f','#7a5af0','#5b6b80','#0c1013'];
+function roleBadges(roles) {
+  if (!roles || !roles.length) return '<span class="rb rb-none">none</span>';
+  return roles.map(r => `<span class="rb rb-${r}">${ROLE_SHORT[r] || r}</span>`).join(' ');
+}
+function usedText(db) {
+  if (!db.entries) return 'No entries yet';
+  const when = db.last_entry || (db.last_at || '').slice(0, 10) || '—';
+  return `Last entry <b>${esc(when)}</b> · ${Number(db.entries).toLocaleString()} entries`;
+}
+
+function render(d) {
+  dbList = d.databases;
+  const tiles = d.databases.map(db => {
+    const isGroup = db.name === d.default;
+    const frozen = db.frozen;
+    const locked = !db.can_enter;
+    const chip = db.active ? 'ACTIVE' : (frozen ? 'FROZEN' : (isGroup ? 'LIVE · GROUP' : 'SANDBOX'));
+    const meta = db.active ? 'Currently open' : (frozen ? 'Locked by admin' : (isGroup ? 'Your live group data' : 'Separate data store'));
+    const gear = canManage ? `<button class="gear" data-cfg="${esc(db.name)}" title="Database settings">&#9881;</button>` : '';
+    const people = canManage ? `<button class="people" data-usr="${esc(db.name)}" title="Manage users">&#128100;</button>` : '';
+    const del = (canManage && db.deletable && !db.active)
+      ? `<button class="del" data-del="${esc(db.name)}" title="Delete database">&times;</button>` : '';
+    const art = db.icon
+      ? `<div class="art" style="background:${esc(db.color || '#1e8a55')}"><span class="emoji">${esc(db.icon)}</span></div>`
+      : `<div class="art">${SHOP}</div>`;
+    return `<div class="tile ${db.active ? 'active' : ''} ${frozen ? 'frozen' : ''} ${locked ? 'locked' : ''}"
+        data-open="${esc(db.name)}" data-enter="${db.can_enter ? 1 : 0}">
+      <div class="chip ${frozen ? 'frozenchip' : ''}">${chip}</div>${people}${gear}${del}
+      ${art}
+      <div class="label"><div class="name" title="${esc(db.name)}">${esc(db.name)}</div>
+        <div class="meta">${meta}</div>
+        <div class="used">${usedText(db)}</div>
+        <div class="access">
+          <span class="acc-row"><span class="acc-k">Enter</span> ${roleBadges(db.enter_roles)}</span>
+          <span class="acc-row"><span class="acc-k">Edit</span> ${roleBadges(db.edit_roles)}</span>
+        </div></div>
+    </div>`;
+  }).join('');
+  const createTile = canManage
+    ? `<div class="tile create" id="createTile">
+         <div class="art"><div class="plus">+</div><div class="ct">Click to create database</div></div>
+       </div>` : '';
+  grid.innerHTML = tiles + createTile;
+
+  grid.querySelectorAll('[data-open]').forEach(t => t.onclick = (e) => {
+    if (e.target.closest('[data-del]') || e.target.closest('[data-cfg]') || e.target.closest('[data-usr]')) return;
+    if (t.dataset.enter !== '1') { toast('You don\'t have access to open this database.', true); return; }
+    open(t.dataset.open, t.classList.contains('active'));
+  });
+  grid.querySelectorAll('[data-cfg]').forEach(b => b.onclick = (e) => { e.stopPropagation(); openProfile(b.dataset.cfg); });
+  grid.querySelectorAll('[data-usr]').forEach(b => b.onclick = (e) => { e.stopPropagation(); openUsers(b.dataset.usr); });
+  grid.querySelectorAll('[data-del]').forEach(b => b.onclick = async (e) => {
+    e.stopPropagation();
+    const name = b.dataset.del;
+    if (!confirm(`Permanently delete the "${name}" database and ALL its data? This cannot be undone.`)) return;
+    try { await jpost('/api/databases/' + encodeURIComponent(name), null, 'DELETE'); toast('Database deleted'); load(); }
+    catch (err) { toast(err.message, true); }
+  });
+  const ct = document.getElementById('createTile');
+  if (ct) ct.onclick = openCreate;
+}
+
+/* database settings (profile) modal — admin only */
+const pBackdrop = document.getElementById('pBackdrop');
+let pCurrent = { name: '', icon: '', color: '#1e8a55' };
+function pMarkSel() {
+  document.querySelectorAll('#pIcons .pick').forEach(b => b.classList.toggle('sel', b.dataset.icon === pCurrent.icon));
+  document.querySelectorAll('#pColors .swatch').forEach(b => b.classList.toggle('sel', (b.dataset.color || '').toLowerCase() === (pCurrent.color || '').toLowerCase()));
+}
+function openProfile(name) {
+  const db = dbList.find(x => x.name === name);
+  if (!db) return;
+  if (!document.getElementById('pIcons').children.length) {
+    document.getElementById('pIcons').innerHTML = `<button class="pick" data-icon="" title="Default shop icon">&#127978;</button>`
+      + ICON_PRESETS.map(ic => `<button class="pick" data-icon="${ic}">${ic}</button>`).join('');
+    document.getElementById('pColors').innerHTML = COLOR_PRESETS.map(c => `<button class="swatch" data-color="${c}" style="background:${c}"></button>`).join('');
+  }
+  pCurrent = { name, icon: db.icon || '', color: db.color || '#1e8a55' };
+  document.getElementById('pName').textContent = name;
+  document.getElementById('pFrozen').checked = !!db.frozen;
+  document.querySelectorAll('#pEnter input').forEach(i => { if (!i.disabled) i.checked = (db.enter_roles || []).includes(i.dataset.role); });
+  document.querySelectorAll('#pEdit input').forEach(i => { if (!i.disabled) i.checked = (db.edit_roles || []).includes(i.dataset.role); });
+  document.getElementById('pErr').textContent = '';
+  pMarkSel();
+  pBackdrop.classList.add('show');
+}
+function closeProfile() { pBackdrop.classList.remove('show'); }
+document.getElementById('pIcons').onclick = e => { const b = e.target.closest('.pick'); if (b) { pCurrent.icon = b.dataset.icon; pMarkSel(); } };
+document.getElementById('pColors').onclick = e => { const b = e.target.closest('.swatch'); if (b) { pCurrent.color = b.dataset.color; pMarkSel(); } };
+document.getElementById('pCancel').onclick = closeProfile;
+pBackdrop.addEventListener('mousedown', e => { if (e.target === pBackdrop) closeProfile(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProfile(); });
+document.getElementById('pSave').onclick = async () => {
+  const enter_roles = [...document.querySelectorAll('#pEnter input:checked')].map(i => i.dataset.role);
+  const edit_roles = [...document.querySelectorAll('#pEdit input:checked')].map(i => i.dataset.role);
+  try {
+    await jpost('/api/databases/' + encodeURIComponent(pCurrent.name) + '/profile',
+      { icon: pCurrent.icon, color: pCurrent.color, frozen: document.getElementById('pFrozen').checked, enter_roles, edit_roles }, 'PUT');
+    closeProfile(); toast('Database settings saved'); load();
+  } catch (e) { document.getElementById('pErr').textContent = e.message; }
+};
+
+/* per-database user management modal — admin only */
+const uBackdrop = document.getElementById('uBackdrop');
+const uState = { name: '', editId: null, users: [] };
+function openUsers(name) {
+  uState.name = name;
+  document.getElementById('uName').textContent = name;
+  document.getElementById('uErr').textContent = '';
+  resetUserForm();
+  document.getElementById('uList').innerHTML = '<div class="empty" style="padding:20px 12px">Loading…</div>';
+  uBackdrop.classList.add('show');
+  loadUsers();
+}
+function closeUsers() { uBackdrop.classList.remove('show'); }
+async function loadUsers() {
+  try {
+    uState.users = await jget('/api/databases/' + encodeURIComponent(uState.name) + '/users');
+    renderUsers();
+  } catch (e) { document.getElementById('uList').innerHTML = `<div class="empty" style="padding:20px 12px">${esc(e.message)}</div>`; }
+}
+function renderUsers() {
+  const list = document.getElementById('uList');
+  if (!uState.users.length) { list.innerHTML = '<div class="empty" style="padding:20px 12px">No users yet.</div>'; return; }
+  list.innerHTML = uState.users.map(u => `<div class="urow ${u.is_active ? '' : 'inactive'}">
+      <span class="rb rb-${u.role}">${ROLE_SHORT[u.role] || u.role}</span>
+      <span class="un">${esc(u.username)}</span>
+      ${u.full_name ? `<span class="uf">${esc(u.full_name)}</span>` : ''}
+      ${u.is_active ? '' : '<span class="uf">(disabled)</span>'}
+      <span class="sp"></span>
+      <button class="ub" data-euser="${u.id}">Edit</button>
+      <button class="ub danger" data-duser="${u.id}">Delete</button>
+    </div>`).join('');
+  list.querySelectorAll('[data-euser]').forEach(b => b.onclick = () => editUser(uState.users.find(x => x.id == b.dataset.euser)));
+  list.querySelectorAll('[data-duser]').forEach(b => b.onclick = () => deleteUser(uState.users.find(x => x.id == b.dataset.duser)));
+}
+function resetUserForm() {
+  uState.editId = null;
+  document.getElementById('uUsername').value = '';
+  document.getElementById('uUsername').disabled = false;
+  document.getElementById('uFullName').value = '';
+  document.getElementById('uPassword').value = '';
+  document.getElementById('uPassword').placeholder = 'set a password';
+  document.getElementById('uRole').value = 'viewer';
+  document.getElementById('uActive').checked = true;
+  document.getElementById('uActiveWrap').style.display = 'none';
+  document.getElementById('uFormTitle').textContent = 'Add a new user';
+  document.getElementById('uSave').textContent = 'Add user';
+  document.getElementById('uReset').style.display = 'none';
+  document.getElementById('uErr').textContent = '';
+}
+function editUser(u) {
+  if (!u) return;
+  uState.editId = u.id;
+  document.getElementById('uUsername').value = u.username;
+  document.getElementById('uUsername').disabled = true;
+  document.getElementById('uFullName').value = u.full_name || '';
+  document.getElementById('uPassword').value = '';
+  document.getElementById('uPassword').placeholder = 'leave blank to keep current';
+  document.getElementById('uRole').value = u.role;
+  document.getElementById('uActive').checked = !!u.is_active;
+  document.getElementById('uActiveWrap').style.display = 'flex';
+  document.getElementById('uFormTitle').textContent = 'Edit user — ' + u.username;
+  document.getElementById('uSave').textContent = 'Save changes';
+  document.getElementById('uReset').style.display = '';
+  document.getElementById('uErr').textContent = '';
+}
+async function deleteUser(u) {
+  if (!u) return;
+  if (!confirm(`Delete user "${u.username}" from ${uState.name}? This cannot be undone.`)) return;
+  try {
+    await jpost('/api/databases/' + encodeURIComponent(uState.name) + '/users/' + u.id, null, 'DELETE');
+    toast('User deleted'); if (uState.editId === u.id) resetUserForm(); loadUsers();
+  } catch (e) { document.getElementById('uErr').textContent = e.message; }
+}
+document.getElementById('uSave').onclick = async () => {
+  const username = document.getElementById('uUsername').value.trim();
+  const password = document.getElementById('uPassword').value;
+  const body = {
+    full_name: document.getElementById('uFullName').value.trim(),
+    role: document.getElementById('uRole').value,
+  };
+  const err = document.getElementById('uErr'); err.textContent = '';
+  try {
+    if (uState.editId) {
+      body.is_active = document.getElementById('uActive').checked;
+      if (password) body.password = password;
+      await jpost('/api/databases/' + encodeURIComponent(uState.name) + '/users/' + uState.editId, body, 'PUT');
+      toast('User updated');
+    } else {
+      if (!username) { err.textContent = 'Username is required.'; return; }
+      if (!password) { err.textContent = 'Password is required for a new user.'; return; }
+      body.username = username; body.password = password;
+      await jpost('/api/databases/' + encodeURIComponent(uState.name) + '/users', body);
+      toast('User created');
+    }
+    resetUserForm(); loadUsers();
+  } catch (e) { err.textContent = e.message; }
+};
+document.getElementById('uReset').onclick = resetUserForm;
+document.getElementById('uClose').onclick = closeUsers;
+uBackdrop.addEventListener('mousedown', e => { if (e.target === uBackdrop) closeUsers(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeUsers(); });
+
+async function open(name, isActive) {
+  try {
+    if (!isActive) await jpost('/api/databases/switch', { name });
+    location.href = '/app';
+  } catch (e) { toast(e.message, true); }
+}
+
+/* create modal */
+const backdrop = document.getElementById('backdrop');
+function openCreate() {
+  document.getElementById('dbName').value = '';
+  document.getElementById('dbSeed').checked = true;
+  document.getElementById('cErr').textContent = '';
+  backdrop.classList.add('show');
+  setTimeout(() => document.getElementById('dbName').focus(), 40);
+}
+function closeCreate() { backdrop.classList.remove('show'); }
+document.getElementById('cCancel').onclick = closeCreate;
+backdrop.addEventListener('mousedown', e => { if (e.target === backdrop) closeCreate(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCreate(); });
+document.getElementById('cCreate').onclick = async () => {
+  const name = document.getElementById('dbName').value.trim();
+  const seed = document.getElementById('dbSeed').checked;
+  if (!name) { document.getElementById('cErr').textContent = 'Please enter a database name.'; return; }
+  try {
+    const r = await jpost('/api/databases', { name, seed_demo: seed });
+    closeCreate(); toast(`Database "${r.name}" created`); load();
+  } catch (e) { document.getElementById('cErr').textContent = e.message; }
+};
+
+document.getElementById('logout').onclick = async () => {
+  await fetch('/api/logout', { method: 'POST' }); location.href = '/';
+};
+
+function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+load();
+</script>
+</body>
+</html>

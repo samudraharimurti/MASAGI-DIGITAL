@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — MASAGI Store</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="/static/assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root { --paper:#f5f5f2; --card:#ffffff; --ink:#21201e; --ink-2:#3c3b38; --gray:#6b6e72;
+  --line:#e4e4e0; --accent:#cc0000; --forest:#17603c; --tint:#eaf5ef; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:"Hanken Grotesk","Helvetica Neue",Helvetica,Arial,sans-serif; background:var(--paper);
+  color:var(--ink); min-height:100vh; display:flex; flex-direction:column; align-items:center;
+  -webkit-font-smoothing:antialiased; line-height:1.5; padding:20px; }
+.gateway { width:min(520px,100%); margin-top:4vh; }
+.gw-head { display:flex; align-items:center; justify-content:space-between; padding:0 4px 14px; }
+.gw-head .brand { font-weight:800; font-size:15px; display:flex; align-items:center; gap:9px; }
+.gw-head .brand svg { height:22px; }
+.gw-head .doku { font-size:12px; color:var(--gray); }
+.gw-head .doku b { color:#e11931; font-size:14px; letter-spacing:.02em; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+.order { padding:22px 26px; border-bottom:1px solid var(--line); background:#fff; }
+.order .id { font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--gray); }
+.order .items { margin:12px 0 0; display:grid; gap:7px; font-size:13.5px; }
+.order .items .row { display:flex; justify-content:space-between; gap:12px; }
+.order .total { display:flex; justify-content:space-between; margin-top:14px; padding-top:14px;
+  border-top:1px solid var(--line); font-weight:800; font-size:16px; }
+.pay { padding:22px 26px; }
+.pay h3 { font-size:13px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-2); margin-bottom:14px; }
+.methods { display:grid; gap:10px; }
+.method { display:flex; align-items:center; gap:14px; border:1px solid var(--line); border-radius:6px;
+  padding:14px 16px; cursor:pointer; background:#fff; transition:border-color .15s, box-shadow .15s; }
+.method:hover { border-color:#c9c9c4; }
+.method.on { border-color:var(--forest); box-shadow:0 0 0 1px var(--forest); }
+.method .ic { width:42px; height:30px; border-radius:4px; background:var(--tint); color:var(--forest);
+  display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; flex:none; }
+.method .nm { font-weight:700; font-size:14.5px; }
+.method .d { font-size:12px; color:var(--gray); }
+.paybtn { width:100%; margin-top:20px; font:inherit; font-weight:800; font-size:15px; cursor:pointer;
+  padding:14px; border-radius:4px; border:none; background:var(--accent); color:#fff; }
+.paybtn:hover { background:#a80000; }
+.paybtn:disabled { opacity:.6; cursor:default; }
+.cancel { display:block; text-align:center; margin-top:14px; font-size:13px; color:var(--gray); text-decoration:none; }
+.cancel:hover { color:var(--accent); }
+.sandbox { margin-top:16px; font-size:11.5px; color:var(--gray); text-align:center; line-height:1.6; }
+.qr { display:none; margin:18px auto 0; text-align:center; }
+.qr svg { width:170px; height:170px; }
+.qr .t { font-size:12px; color:var(--gray); margin-top:8px; }
+.err { display:none; margin-top:14px; font-size:13px; color:var(--accent); font-weight:700; text-align:center; }
+</style>
+</head>
+<body>
+  <div class="gateway">
+    <div class="gw-head">
+      <span class="brand">
+        <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <polygon points="35,62 5,110 65,110" fill="#17603C"/>
+          <polygon points="85,38 45,110 125,110" fill="#27925A"/>
+          <polygon points="145,14 95,110 195,110" fill="#4CC98A"/>
+          <polygon points="145,14 132.5,38 157.5,38" fill="#0B3B24"/>
+        </svg> MASAGI Store
+      </span>
+      <span class="doku">secured by <b>DOKU</b> · sandbox</span>
+    </div>
+    <div class="card">
+      <div class="order">
+        <div class="id" id="orderId">Order —</div>
+        <div class="items" id="items"></div>
+        <div class="total"><span>Total</span><span id="total">—</span></div>
+      </div>
+      <div class="pay">
+        <h3>Choose payment method</h3>
+        <div class="methods" id="methods">
+          <div class="method on" data-m="QRIS"><div class="ic">QR</div>
+            <div><div class="nm">QRIS</div><div class="d">Scan with any e-wallet or mobile banking app</div></div></div>
+          <div class="method" data-m="VA_BCA"><div class="ic">VA</div>
+            <div><div class="nm">BCA Virtual Account</div><div class="d">Transfer from BCA mobile / KlikBCA</div></div></div>
+          <div class="method" data-m="CARD"><div class="ic">💳</div>
+            <div><div class="nm">Credit / debit card</div><div class="d">Visa, Mastercard, JCB</div></div></div>
+        </div>
+        <div class="qr" id="qrBox">
+          <svg viewBox="0 0 29 29" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" id="qrSvg"></svg>
+          <div class="t">Sandbox QR — click “Pay now” to simulate the scan</div>
+        </div>
+        <button class="paybtn" id="payBtn" type="button">Pay now</button>
+        <div class="err" id="err"></div>
+        <a class="cancel" href="/store">← Cancel and return to the store</a>
+      </div>
+    </div>
+    <div class="sandbox">SANDBOX MODE — no real money moves. In production this page is DOKU's
+      hosted checkout; the store only trusts DOKU's signed <b>webhook</b>, never the browser.</div>
+  </div>
+
+<script>
+const orderId = decodeURIComponent(location.pathname.split("/").filter(Boolean).pop());
+const rp = n => "Rp " + n.toLocaleString("id-ID");
+let method = "QRIS";
+
+fetch("/api/store/order/" + encodeURIComponent(orderId)).then(r => r.json()).then(o => {
+  if (o.error) { document.getElementById("err").textContent = o.error; document.getElementById("err").style.display = "block"; return; }
+  if (o.status === "paid") { location.href = "/store/thanks?order=" + encodeURIComponent(orderId); return; }
+  document.getElementById("orderId").textContent = "Order " + o.id + " · " + o.email;
+  document.getElementById("items").innerHTML = o.items.map(i =>
+    '<div class="row"><span>' + i.name + '</span><span>' + rp(i.price) + '</span></div>').join("") +
+    (o.plan === "bundle" ? '<div class="row" style="color:var(--forest);font-weight:700"><span>Bundle discount</span><span>− ' +
+      rp(o.items.reduce((s, i) => s + i.price, 0) - o.total) + '</span></div>' : "") +
+    (o.plan === "membership" ? '<div class="row" style="color:var(--forest);font-weight:700"><span>Membership — first month</span><span></span></div>' : "");
+  document.getElementById("total").textContent = rp(o.total);
+});
+
+/* deterministic little sandbox "QR" */
+(function drawQr() {
+  let seed = 0; for (const ch of orderId) seed = (seed * 31 + ch.charCodeAt(0)) >>> 0;
+  const svg = document.getElementById("qrSvg");
+  let cells = "";
+  for (let y = 0; y < 29; y++) for (let x = 0; x < 29; x++) {
+    seed = (seed * 1103515245 + 12345) >>> 0;
+    const corner = (x < 7 && y < 7) || (x > 21 && y < 7) || (x < 7 && y > 21);
+    const on = corner ? ((x % 6 === 0 || y % 6 === 0 || (x > 1 && x < 5 && y > 1 && y < 5)) &&
+                         !(x > 21 && (x - 22) % 6 === 5)) : (seed % 100 < 45);
+    if (on) cells += '<rect x="' + x + '" y="' + y + '" width="1" height="1"/>';
+  }
+  svg.innerHTML = '<rect width="29" height="29" fill="#fff"/><g fill="#21201e">' + cells + '</g>';
+})();
+
+document.querySelectorAll(".method").forEach(m => m.onclick = () => {
+  document.querySelectorAll(".method").forEach(x => x.classList.remove("on"));
+  m.classList.add("on"); method = m.dataset.m;
+  document.getElementById("qrBox").style.display = method === "QRIS" ? "block" : "none";
+  document.getElementById("payBtn").textContent =
+    method === "QRIS" ? "I've scanned — Pay now" : method === "VA_BCA" ? "I've transferred — Confirm" : "Pay now";
+});
+document.getElementById("qrBox").style.display = "block";
+
+/* SANDBOX: simulates DOKU confirming the payment. It triggers the same signed
+   webhook the real gateway would call; the store grants nothing until then. */
+document.getElementById("payBtn").onclick = async () => {
+  const btn = document.getElementById("payBtn"), err = document.getElementById("err");
+  btn.disabled = true; btn.textContent = "Processing payment…"; err.style.display = "none";
+  try {
+    const r = await fetch("/api/store/gateway/pay", { method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ order_id: orderId, method }) });
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.error || "Payment failed");
+    location.href = "/store/thanks?order=" + encodeURIComponent(orderId);
+  } catch (ex) {
+    err.textContent = ex.message; err.style.display = "block";
+    btn.disabled = false; btn.textContent = "Pay now";
+  }
+};
+</script>
+</body>
+</html>

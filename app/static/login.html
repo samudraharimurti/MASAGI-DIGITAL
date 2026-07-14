@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MASAGI HV — Sign in</title>
+<link rel="icon" type="image/svg+xml" href="/static/assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0d0f; --panel: #15191e; --field: #0f1318; --field-border: #262d35;
+  --text: #f4f6f8; --muted: #93a0ab; --teal: #1e8a55; --teal-bright: #2fb877; --teal-link: #4cc98a;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: Arial, "Helvetica Neue", Helvetica, system-ui, sans-serif; min-height: 100vh;
+  display: flex; align-items: center; justify-content: center; padding: 26px;
+  background:
+    radial-gradient(900px 500px at 85% 0%, rgba(30,138,85,.12), transparent 55%),
+    linear-gradient(180deg, #0b0e10 0%, #0a0d0f 100%);
+  color: var(--text); -webkit-font-smoothing: antialiased;
+}
+.card {
+  width: min(960px, 100%); min-height: 520px; display: grid; grid-template-columns: 1fr 1fr;
+  background: var(--panel); border: 1px solid #20262d; border-radius: 16px; overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,.55);
+}
+/* left brand panel */
+.brandside { position: relative; overflow: hidden; background: #0c0f12; }
+.brandside svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.brandside .glow1 { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(180deg, rgba(23,110,66,.34), rgba(8,11,13,.82)); mix-blend-mode: multiply; }
+.brandside .glow2 { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(180deg, rgba(30,138,85,.10), rgba(10,13,15,.45) 78%); }
+.brandside .foot { position: absolute; left: 0; right: 0; bottom: 0; padding: 30px 32px; z-index: 3; }
+.brandside .foot img { height: 26px; width: auto; display: block; margin-bottom: 12px; }
+.brandside .foot .cuan { font-family: "Chakra Petch", sans-serif; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #9fe0be; }
+/* right form */
+.formside { background: var(--panel); padding: 46px 46px; display: flex; flex-direction: column; justify-content: center; }
+.kicker { margin-bottom: 24px; }
+.kicker .brand { font-family: "Chakra Petch", sans-serif; font-size: 18px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #f4f6f8; }
+.kicker .brand span { color: var(--teal-bright); }
+.kicker .sub { color: var(--muted); font-size: 12.5px; margin-top: 4px; }
+.formside h2 { font-size: 25px; font-weight: 700; letter-spacing: -.4px; color: #f4f6f8; }
+.formside .lead { color: var(--muted); font-size: 13px; margin: 6px 0 24px; }
+.fld { margin-bottom: 16px; }
+.fld label { display: block; font-size: 12px; font-weight: 600; color: #c2c8cd; margin: 0 0 7px; }
+.fld input { width: 100%; padding: 12px 14px; font-size: 14px; color: var(--text); font-family: inherit; background: var(--field); border: 1px solid var(--field-border); border-radius: 9px; outline: none; transition: border-color .15s, box-shadow .15s; }
+.fld input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(30,138,85,.20); }
+.row { display: flex; align-items: center; justify-content: space-between; margin: 4px 0 22px; font-size: 13px; }
+.remember { display: flex; align-items: center; gap: 8px; color: var(--muted); cursor: pointer; }
+.remember input { width: 15px; height: 15px; accent-color: var(--teal); cursor: pointer; }
+.forgot { color: var(--teal-link); cursor: pointer; }
+.forgot:hover { color: #6ad9a0; }
+button[type=submit] { width: 100%; padding: 13px; cursor: pointer; font-family: inherit; font-weight: 600; font-size: 14.5px; color: #fff; border: none; border-radius: 9px; background: var(--teal); box-shadow: 0 10px 26px rgba(30,138,85,.30); transition: filter .15s; }
+button[type=submit]:hover { filter: brightness(1.07); }
+.err { background: rgba(189,54,47,.14); border: 1px solid rgba(189,54,47,.5); color: #ff9d9d; padding: 10px 13px; border-radius: 8px; font-size: 13px; margin-bottom: 16px; }
+.note { color: var(--muted); font-size: 12px; margin-top: 12px; }
+.hint { color: #5d6168; font-size: 11.5px; margin: 20px 0 0; padding-top: 16px; border-top: 1px solid #20262d; line-height: 1.8; }
+.hint b { color: #9aa6af; }
+@media (max-width: 760px) { .card { grid-template-columns: 1fr; } .brandside { min-height: 180px; } }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="brandside">
+      <svg viewBox="0 0 400 520" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a2127"/><stop offset="1" stop-color="#0c0f12"/></linearGradient>
+          <linearGradient id="con" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1c242b"/><stop offset="1" stop-color="#28323a"/></linearGradient>
+        </defs>
+        <rect width="400" height="520" fill="url(#sky)"/>
+        <rect x="20" y="170" width="120" height="350" fill="#161d23"/>
+        <g fill="#202a31" opacity=".8">
+          <rect x="34" y="190" width="20" height="14"/><rect x="62" y="190" width="20" height="14"/><rect x="90" y="190" width="20" height="14"/>
+          <rect x="34" y="216" width="20" height="14"/><rect x="62" y="216" width="20" height="14"/><rect x="90" y="216" width="20" height="14"/>
+          <rect x="34" y="242" width="20" height="14"/><rect x="62" y="242" width="20" height="14"/><rect x="90" y="242" width="20" height="14"/>
+        </g>
+        <rect x="120" y="90" width="210" height="430" fill="url(#con)"/>
+        <rect x="120" y="90" width="14" height="430" fill="#161d23"/>
+        <g fill="#11171c"><rect x="134" y="130" width="196" height="6"/><rect x="134" y="190" width="196" height="6"/><rect x="134" y="250" width="196" height="6"/><rect x="134" y="310" width="196" height="6"/><rect x="134" y="370" width="196" height="6"/><rect x="134" y="430" width="196" height="6"/></g>
+        <g fill="#0c1115"><rect x="146" y="142" width="172" height="38"/><rect x="146" y="202" width="172" height="38"/><rect x="146" y="262" width="172" height="38"/><rect x="146" y="322" width="172" height="38"/><rect x="146" y="382" width="172" height="38"/></g>
+        <g stroke="#2a343c" stroke-width="2"><line x1="178" y1="142" x2="178" y2="420"/><line x1="210" y1="142" x2="210" y2="420"/><line x1="242" y1="142" x2="242" y2="420"/><line x1="274" y1="142" x2="274" y2="420"/><line x1="306" y1="142" x2="306" y2="420"/></g>
+        <g fill="#1e8a55" opacity=".55"><rect x="148" y="144" width="28" height="34"/><rect x="244" y="264" width="28" height="34"/><rect x="180" y="324" width="28" height="34"/><rect x="276" y="204" width="28" height="34"/></g>
+      </svg>
+      <div class="glow1"></div><div class="glow2"></div>
+      <div class="foot">
+        <img src="/static/assets/masagi-logo-ondark.svg" alt="MASAGI">
+        <div class="cuan">Precise by Default</div>
+      </div>
+    </div>
+
+    <div class="formside">
+      <div class="kicker">
+        <div class="brand">MASAGI-HV <span>Console</span></div>
+        <div class="sub">Helicopter View · Group Finance</div>
+      </div>
+      <h2>Welcome back</h2>
+      <p class="lead">Please enter your details to sign in.</p>
+      <form id="loginForm">
+        <div id="loginError" class="err" hidden></div>
+        <div class="fld"><label for="username">Username / Email</label>
+          <input type="text" id="username" autocomplete="username" placeholder="Enter your username or email" required autofocus></div>
+        <div class="fld"><label for="password">Password</label>
+          <input type="password" id="password" autocomplete="current-password" placeholder="Enter your password" required></div>
+        <div class="row">
+          <label class="remember"><input type="checkbox" id="remember"> Remember me</label>
+          <span class="forgot" id="forgot">Forgot Password?</span>
+        </div>
+        <button type="submit">Sign In</button>
+      </form>
+      <div id="forgotNote" class="note" hidden>Please contact your system administrator to reset your password.</div>
+    </div>
+  </div>
+<script>
+document.getElementById('forgot').addEventListener('click', () => { document.getElementById('forgotNote').hidden = false; });
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const err = document.getElementById('loginError'); err.hidden = true;
+  const res = await fetch('/api/login', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      username: document.getElementById('username').value,
+      password: document.getElementById('password').value,
+      remember: document.getElementById('remember').checked,
+    }),
+  });
+  if (res.ok) { window.location.href = '/access'; return; }
+  const data = await res.json().catch(() => ({}));
+  err.textContent = data.error || 'Login failed'; err.hidden = false;
+});
+</script>
+</body>
+</html>

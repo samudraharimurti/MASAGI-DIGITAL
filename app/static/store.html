@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MASAGI Store — Finance templates, playbooks &amp; courses for growing SMEs</title>
+<meta name="description" content="Instant-download finance templates, ebooks and courses from the MASAGI team — the same tools we deploy with our ERP clients. Pay with QRIS, virtual account or card; download immediately.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://masagi.id/store">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MASAGI">
+<meta property="og:title" content="MASAGI Store — tools for SMEs that want their numbers under control">
+<meta property="og:description" content="Templates, playbooks and courses. Buy once, download instantly.">
+<link rel="icon" type="image/svg+xml" href="/static/assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Mobile-first. MASAGI brand: Bain-style paper/charcoal/red + logo greens. */
+:root {
+  --paper:#ffffff; --paper-2:#f5f5f2; --ink:#21201e; --ink-2:#3c3b38; --gray:#6b6e72;
+  --line:#e4e4e0; --accent:#cc0000; --pine:#0b3b24; --forest:#17603c; --leaf:#27925a;
+  --mint:#4cc98a; --card:#ffffff; --nav-bg:rgba(255,255,255,.96); --green-ink:#17603c; --tint:#eaf5ef;
+}
+html[data-theme="dark"] {
+  --paper:#151613; --paper-2:#1b1c18; --ink:#f1f1ec; --ink-2:#d6d6cf; --gray:#a3a69f;
+  --line:#2b2c27; --card:#1d1e1a; --nav-bg:rgba(21,22,19,.95); --green-ink:#57d496; --tint:rgba(47,184,119,.16);
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body { font-family:"Hanken Grotesk","Helvetica Neue",Helvetica,Arial,sans-serif; background:var(--paper);
+  color:var(--ink); -webkit-font-smoothing:antialiased; line-height:1.5; padding-bottom:74px; }
+a { color:inherit; text-decoration:none; }
+.wrap { max-width:1100px; margin:0 auto; padding:0 20px; }
+section { padding:56px 0; }
+h1 { font-size:clamp(34px,6vw,58px); font-weight:800; line-height:1.05; letter-spacing:-.02em; }
+h2 { font-size:clamp(26px,4vw,38px); font-weight:800; line-height:1.12; letter-spacing:-.015em; }
+.eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:12px; font-weight:700;
+  letter-spacing:.22em; text-transform:uppercase; color:var(--ink-2); margin-bottom:18px; }
+.eyebrow::before { content:""; width:30px; height:3px; background:var(--accent); }
+.btn { display:inline-block; font:inherit; font-weight:800; font-size:15px; cursor:pointer;
+  padding:13px 26px; border-radius:2px; border:1px solid var(--ink); transition:opacity .15s, background .15s, color .15s; }
+.btn-red { background:var(--accent); color:#fff; border-color:var(--accent); }
+.btn-red:hover { background:#a80000; }
+.btn-solid { background:var(--ink); color:var(--paper); }
+.btn-solid:hover { opacity:.85; }
+.btn-ghost { background:transparent; color:var(--ink); }
+.btn-ghost:hover { background:var(--ink); color:var(--paper); }
+
+/* top bar */
+header.top { position:sticky; top:0; z-index:40; background:var(--nav-bg); backdrop-filter:blur(6px); border-bottom:1px solid var(--line); }
+.topbar { display:flex; align-items:center; justify-content:space-between; height:64px; gap:10px; }
+.brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:18px; }
+.brand svg { height:26px; }
+.brand .area { font-size:11px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--gray); }
+.top-right { display:flex; align-items:center; gap:10px; }
+.theme-btn { font-size:14px; cursor:pointer; width:30px; height:28px; border:1px solid var(--line);
+  border-radius:3px; background:transparent; color:var(--ink-2); }
+
+/* hero */
+.hero { padding:64px 0 48px; }
+.hero .grid { display:grid; gap:36px; }
+.hero p.sub { font-size:clamp(16px,2vw,19px); color:var(--gray); max-width:56ch; margin:20px 0 28px; }
+.hero .cta-row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+.hero .mini { font-size:13px; color:var(--gray); margin-top:14px; }
+.hero .mini b { color:var(--green-ink); }
+
+/* social proof bar */
+.proof { border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--paper-2); padding:22px 0; }
+.proof .row { display:flex; align-items:center; gap:14px 34px; flex-wrap:wrap; justify-content:center;
+  font-size:13.5px; color:var(--gray); }
+.proof b { color:var(--ink-2); }
+.proof .stars { color:#b26a00; letter-spacing:2px; }
+
+/* product cards */
+.cards { display:grid; grid-template-columns:1fr; gap:18px; margin-top:40px; }
+.pcard { background:var(--card); border:1px solid var(--line); border-radius:6px; overflow:hidden;
+  display:flex; flex-direction:column; transition:transform .15s, box-shadow .15s; }
+.pcard:hover { transform:translateY(-3px); box-shadow:0 16px 36px rgba(0,0,0,.13); }
+.pcard .art { height:120px; display:flex; align-items:center; justify-content:center; font-size:44px;
+  color:#fff; background:linear-gradient(135deg,var(--pine),var(--leaf)); }
+.pcard .body { padding:20px 22px 22px; display:flex; flex-direction:column; flex:1; }
+.pcard .kind { font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); }
+.pcard h3 { font-size:17.5px; margin:8px 0 6px; }
+.pcard p { font-size:13.5px; color:var(--gray); flex:1; }
+.pcard .buyrow { display:flex; align-items:center; justify-content:space-between; margin-top:16px; gap:10px; }
+.pcard .price { font-size:19px; font-weight:800; }
+.pcard .buy { font-size:13px; padding:9px 16px; }
+
+/* benefits */
+#benefits { background:var(--paper-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.bens { display:grid; grid-template-columns:1fr; gap:22px; margin-top:38px; }
+.ben .ic { width:44px; height:44px; border-radius:6px; background:var(--tint); color:var(--green-ink);
+  display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:800; margin-bottom:12px; }
+.ben h3 { font-size:16.5px; margin-bottom:6px; }
+.ben p { font-size:14px; color:var(--gray); }
+
+/* testimonials */
+.quotes { display:grid; grid-template-columns:1fr; gap:16px; margin-top:38px; }
+.quote { border:1px solid var(--line); border-radius:6px; padding:24px; background:var(--card); }
+.quote .q { font-size:15px; line-height:1.6; color:var(--ink-2); }
+.quote .q::before { content:"“"; color:var(--accent); font-size:32px; line-height:0; vertical-align:-9px; margin-right:4px; font-weight:800; }
+.quote .who { margin-top:14px; font-size:13px; font-weight:700; }
+.quote .role { font-size:12px; color:var(--gray); }
+
+/* pricing */
+#pricing { background:var(--paper-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.tiers { display:grid; grid-template-columns:1fr; gap:18px; margin-top:40px; }
+.tier { background:var(--card); border:1px solid var(--line); border-radius:6px; padding:28px; display:flex; flex-direction:column; }
+.tier.feature { border:2px solid var(--ink); position:relative; }
+.tier .flag { position:absolute; top:-13px; left:24px; background:var(--accent); color:#fff; font-size:11px;
+  font-weight:800; letter-spacing:.1em; text-transform:uppercase; padding:4px 12px; border-radius:2px; }
+.tier h3 { font-size:17px; }
+.tier .for { font-size:13px; color:var(--gray); margin:4px 0 16px; }
+.tier .price { font-size:30px; font-weight:800; }
+.tier .per { font-size:12.5px; color:var(--gray); margin-bottom:18px; }
+.tier ul { list-style:none; display:grid; gap:9px; font-size:14px; color:var(--ink-2); margin-bottom:24px; }
+.tier ul li::before { content:"✓"; color:var(--green-ink); font-weight:800; margin-right:9px; }
+.tier .btn { margin-top:auto; text-align:center; }
+
+/* FAQ */
+.faq { max-width:760px; margin:36px auto 0; }
+.faq details { border-bottom:1px solid var(--line); }
+.faq summary { cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center;
+  padding:18px 4px; font-weight:700; font-size:15.5px; }
+.faq summary::-webkit-details-marker { display:none; }
+.faq summary::after { content:"+"; font-size:21px; font-weight:400; color:var(--accent); }
+.faq details[open] summary::after { content:"–"; }
+.faq .a { padding:0 4px 20px; font-size:14px; color:var(--gray); max-width:66ch; }
+
+/* sticky footer CTA */
+.sticky-cta { position:fixed; left:0; right:0; bottom:0; z-index:50; background:var(--ink);
+  color:var(--paper); border-top:1px solid var(--line); }
+.sticky-cta .in { display:flex; align-items:center; justify-content:space-between; gap:12px;
+  max-width:1100px; margin:0 auto; padding:12px 20px; }
+.sticky-cta .t { font-size:14px; font-weight:700; }
+.sticky-cta .t small { display:block; font-weight:500; font-size:12px; opacity:.75; }
+.sticky-cta .btn { border-color:var(--accent); background:var(--accent); color:#fff; font-size:14px; padding:11px 20px; white-space:nowrap; }
+
+footer.site { border-top:1px solid var(--line); padding:22px 0; font-size:12.5px; color:var(--gray); }
+footer.site .in { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+
+/* email-capture modal */
+.backdrop { position:fixed; inset:0; z-index:60; background:rgba(10,12,10,.6); display:none;
+  align-items:center; justify-content:center; padding:20px; }
+.backdrop.show { display:flex; }
+.modal { width:min(430px,100%); background:var(--card); border:1px solid var(--line); border-radius:8px; padding:28px; }
+.modal h3 { font-size:19px; }
+.modal .sum { font-size:13.5px; color:var(--gray); margin:6px 0 18px; }
+.modal .sum b { color:var(--ink); }
+.modal label { display:block; font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--gray); margin:12px 0 5px; }
+.modal input { font:inherit; font-size:14px; width:100%; padding:11px 12px; border:1px solid var(--line);
+  border-radius:4px; background:var(--card); color:var(--ink); outline:none; }
+.modal input:focus { border-color:var(--forest); box-shadow:0 0 0 3px rgba(23,96,60,.13); }
+.modal .err { display:none; margin-top:12px; font-size:13px; color:var(--accent); font-weight:700; }
+.modal .row { display:flex; gap:10px; margin-top:20px; }
+.modal .row .btn { flex:1; text-align:center; }
+.modal .fine { font-size:11.5px; color:var(--gray); margin-top:14px; }
+
+@media (min-width:680px) {
+  .cards { grid-template-columns:repeat(2,1fr); }
+  .bens { grid-template-columns:repeat(2,1fr); }
+  .quotes { grid-template-columns:repeat(3,1fr); }
+}
+@media (min-width:980px) {
+  .wrap { padding:0 28px; }
+  .cards { grid-template-columns:repeat(3,1fr); }
+  .bens { grid-template-columns:repeat(4,1fr); }
+  .tiers { grid-template-columns:repeat(3,1fr); }
+  .hero .grid { grid-template-columns:1.1fr .9fr; align-items:center; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap topbar">
+    <a class="brand" href="/">
+      <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <polygon points="35,62 5,110 65,110" fill="#17603C"/>
+        <polygon points="85,38 45,110 125,110" fill="#27925A"/>
+        <polygon points="145,14 95,110 195,110" fill="#4CC98A"/>
+        <polygon points="145,14 132.5,38 157.5,38" fill="#0B3B24"/>
+      </svg>
+      MASAGI <span class="area">Store</span>
+    </a>
+    <div class="top-right">
+      <button class="theme-btn" id="themeBtn" type="button" title="Light / dark">☾</button>
+      <a class="btn btn-ghost" style="font-size:13px; padding:9px 16px" href="/downloads">My Downloads</a>
+    </div>
+  </div>
+</header>
+
+<!-- ————— HERO ————— -->
+<section class="hero">
+  <div class="wrap grid">
+    <div>
+      <span class="eyebrow">Digital products · instant download</span>
+      <h1>The finance tools we use with clients. Yours in five minutes.</h1>
+      <p class="sub">Templates, playbooks and a mini-course from the MASAGI team — the exact
+        materials we deploy when we onboard a growing SME onto MASAGI HV. Buy once,
+        download instantly, keep forever.</p>
+      <div class="cta-row">
+        <a class="btn btn-red" href="#pricing" id="heroCta">Get Instant Access</a>
+        <a class="btn btn-ghost" href="#products">Browse products ↓</a>
+      </div>
+      <div class="mini"><b>✓</b> Pay with QRIS, BCA virtual account or card &nbsp;·&nbsp;
+        <b>✓</b> Files delivered the moment payment clears</div>
+    </div>
+    <div>
+      <svg viewBox="0 0 480 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;border:1px solid var(--line);border-radius:8px;background:#fff">
+        <rect width="480" height="320" fill="#ffffff"/>
+        <rect x="26" y="26" width="200" height="130" rx="6" fill="#f5f5f2" stroke="#e4e4e0"/>
+        <text x="42" y="56" font-family="Arial" font-size="13" font-weight="bold" fill="#21201e">COA Template</text>
+        <rect x="42" y="70" width="168" height="10" rx="5" fill="#eaf5ef"/><rect x="42" y="70" width="120" height="10" rx="5" fill="#27925a"/>
+        <rect x="42" y="90" width="168" height="10" rx="5" fill="#eaf5ef"/><rect x="42" y="90" width="90" height="10" rx="5" fill="#4cc98a"/>
+        <rect x="42" y="110" width="168" height="10" rx="5" fill="#eaf5ef"/><rect x="42" y="110" width="140" height="10" rx="5" fill="#17603c"/>
+        <rect x="252" y="26" width="200" height="130" rx="6" fill="#0e0f0c"/>
+        <text x="268" y="56" font-family="Arial" font-size="13" font-weight="bold" fill="#ffffff">SME Finance</text>
+        <text x="268" y="74" font-family="Arial" font-size="13" font-weight="bold" fill="#4cc98a">Playbook</text>
+        <text x="268" y="102" font-family="Arial" font-size="10" fill="#cfcfca">7 rules for numbers</text>
+        <text x="268" y="116" font-family="Arial" font-size="10" fill="#cfcfca">under control</text>
+        <rect x="26" y="176" width="426" height="118" rx="6" fill="#f5f5f2" stroke="#e4e4e0"/>
+        <text x="42" y="204" font-family="Arial" font-size="13" font-weight="bold" fill="#21201e">Onboarding Mini-Course</text>
+        <g font-family="Arial" font-size="11" fill="#3c3b38">
+          <circle cx="52" cy="228" r="9" fill="#17603c"/><text x="48" y="232" fill="#fff">1</text><text x="70" y="232">Setup &amp; standard COA</text>
+          <circle cx="52" cy="254" r="9" fill="#27925a"/><text x="48" y="258" fill="#fff">2</text><text x="70" y="258">First journals</text>
+          <circle cx="52" cy="280" r="9" fill="#4cc98a"/><text x="48" y="284" fill="#fff">3</text><text x="70" y="284">Bank import → helicopter view</text>
+        </g>
+        <rect x="300" y="240" width="130" height="36" rx="4" fill="#cc0000"/>
+        <text x="318" y="263" font-family="Arial" font-size="12" font-weight="bold" fill="#fff">Get access →</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ————— SOCIAL PROOF BAR ————— -->
+<div class="proof">
+  <div class="wrap row">
+    <span><span class="stars">★★★★★</span> <b>4.9/5</b> from pilot clients</span>
+    <span><b>120+</b> downloads in the first month</span>
+    <span>Used by teams in <b>Jakarta · Bandung · Surabaya</b></span>
+    <span>From the makers of <b>MASAGI HV</b></span>
+  </div>
+</div>
+
+<!-- ————— PRODUCT SHOWCASE ————— -->
+<section id="products">
+  <div class="wrap">
+    <span class="eyebrow">The products</span>
+    <h2>Start with one. Or take the whole toolkit.</h2>
+    <div class="cards" id="cards"></div>
+  </div>
+</section>
+
+<!-- ————— BENEFITS ————— -->
+<section id="benefits">
+  <div class="wrap">
+    <span class="eyebrow">Why these</span>
+    <h2>Not theory. Deployment material.</h2>
+    <div class="bens">
+      <div class="ben"><div class="ic">⚑</div><h3>Field-tested</h3>
+        <p>Every file here is the exact material we use in real MASAGI HV client onboardings.</p></div>
+      <div class="ben"><div class="ic">⚡</div><h3>Instant delivery</h3>
+        <p>The moment payment clears, your account and downloads are ready. No waiting, no email tennis.</p></div>
+      <div class="ben"><div class="ic">∞</div><h3>Yours forever</h3>
+        <p>Re-download anytime from your dashboard. Buy once — updates to the same edition included.</p></div>
+      <div class="ben"><div class="ic">🇮🇩</div><h3>Made for Indonesia</h3>
+        <p>Rupiah-native, BCA-aware, and written for how Indonesian SMEs actually close a month.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ————— TESTIMONIALS ————— -->
+<section id="voices">
+  <div class="wrap">
+    <span class="eyebrow">What buyers say</span>
+    <h2>Small files. Big cleanups.</h2>
+    <div class="quotes">
+      <div class="quote"><p class="q">Imported the COA template on a Friday, started booking Monday.
+          Cheapest consultant I ever hired.</p>
+        <div class="who">Owner</div><div class="role">Distribution business, Jakarta</div></div>
+      <div class="quote"><p class="q">The close checklist alone shaved three days off our month-end.
+          Printed it, taped it to the wall.</p>
+        <div class="who">Finance Manager</div><div class="role">Construction services, Bandung</div></div>
+      <div class="quote"><p class="q">The playbook reads like someone who has actually sat in our chair —
+          because they have.</p>
+        <div class="who">Co-founder</div><div class="role">F&amp;B group, Surabaya</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ————— PRICING ————— -->
+<section id="pricing">
+  <div class="wrap">
+    <span class="eyebrow">Pricing</span>
+    <h2>Three ways in.</h2>
+    <div class="tiers">
+      <div class="tier">
+        <h3>Single products</h3>
+        <div class="for">Pick exactly what you need today</div>
+        <div class="price">Rp 79rb+</div><div class="per">one-time · per product</div>
+        <ul><li>Instant download after payment</li><li>Re-download anytime</li><li>Same-edition updates included</li></ul>
+        <a class="btn btn-ghost" href="#products">Browse products</a>
+      </div>
+      <div class="tier feature">
+        <span class="flag">Best value</span>
+        <h3 id="bundleName">Founder's Toolkit</h3>
+        <div class="for" id="bundleTag">All five products, one price</div>
+        <div class="price" id="bundlePrice">Rp 499rb</div><div class="per">one-time · save 40%+</div>
+        <ul><li>All 5 templates, guides &amp; the course</li><li>Every future update to them</li><li>One receipt, one dashboard</li></ul>
+        <button class="btn btn-red" data-plan="bundle" type="button">Get Instant Access</button>
+      </div>
+      <div class="tier">
+        <h3 id="memberName">Insider Membership</h3>
+        <div class="for" id="memberTag">For teams that want everything, always</div>
+        <div class="price" id="memberPrice">Rp 99rb</div><div class="per">per month · cancel anytime</div>
+        <ul><li>Everything in the toolkit</li><li>Every new product while active</li><li>Member-only updates</li></ul>
+        <button class="btn btn-solid" data-plan="membership" type="button">Become an Insider</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ————— FAQ ————— -->
+<section id="faq">
+  <div class="wrap">
+    <span class="eyebrow">FAQ</span>
+    <h2>Before you buy.</h2>
+    <div class="faq">
+      <details><summary>How do I receive the files?</summary>
+        <div class="a">The moment your payment is confirmed by the payment gateway, we create your
+          account automatically and email you a receipt with a sign-in link. Your files are in the
+          "My Downloads" dashboard — available immediately and re-downloadable anytime.</div></details>
+      <details><summary>Which payment methods can I use?</summary>
+        <div class="a">QRIS (any Indonesian e-wallet or mobile banking app), BCA virtual account, or
+          credit/debit card — processed through DOKU.</div></details>
+      <details><summary>Do download links expire?</summary>
+        <div class="a">Each generated link is valid for 24 hours or 5 downloads — but you can generate
+          a fresh link from your dashboard whenever you like, forever. Your access doesn't expire;
+          only the individual links rotate (that's what keeps them from being shared around).</div></details>
+      <details><summary>What does the membership add?</summary>
+        <div class="a">Everything in the toolkit, plus every new template, guide and course we release
+          while your membership is active — we ship new material with every batch of client work.</div></details>
+      <details><summary>Can I get an invoice for my company?</summary>
+        <div class="a">Yes — a numbered invoice is generated with every purchase and included in your
+          receipt email and order history.</div></details>
+      <details><summary>Refunds?</summary>
+        <div class="a">Digital files can't be un-downloaded, so all sales are final — but if a file is
+          broken or not as described, write to hello@masagi.id and we'll make it right.</div></details>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap in">
+    <span>© 2026 MASAGI · <a href="/" style="font-weight:700">masagi.id</a> · <a href="/downloads" style="font-weight:700">My Downloads</a></span>
+    <span>Precise by default</span>
+  </div>
+</footer>
+
+<!-- ————— STICKY FOOTER CTA ————— -->
+<div class="sticky-cta">
+  <div class="in">
+    <div class="t">Founder's Toolkit — all five products, Rp 499rb
+      <small>Instant download · QRIS, VA or card</small></div>
+    <button class="btn" data-plan="bundle" type="button">Get Instant Access</button>
+  </div>
+</div>
+
+<!-- ————— EMAIL CAPTURE MODAL (step 2 of the pipeline) ————— -->
+<div class="backdrop" id="capture">
+  <div class="modal">
+    <h3>Almost there.</h3>
+    <div class="sum" id="capSummary">—</div>
+    <form id="capForm">
+      <label for="capEmail">Email — your receipt &amp; downloads go here</label>
+      <input type="email" id="capEmail" placeholder="you@company.co.id" required autocomplete="email">
+      <label for="capName">Name (optional)</label>
+      <input type="text" id="capName" placeholder="Your name" autocomplete="name">
+      <div class="err" id="capErr"></div>
+      <div class="row">
+        <button class="btn btn-ghost" type="button" id="capCancel">Cancel</button>
+        <button class="btn btn-red" type="submit" id="capGo">Continue to payment →</button>
+      </div>
+      <div class="fine">You'll be taken to secure DOKU checkout. Your account is created
+        automatically after payment — no separate signup.</div>
+    </form>
+  </div>
+</div>
+
+<script>
+/* theme (shared with the rest of masagi.id) */
+function applyTheme(t){ document.documentElement.dataset.theme=t;
+  document.getElementById("themeBtn").textContent = t==="dark"?"☀":"☾";
+  try{ localStorage.setItem("masagi-theme",t); }catch(e){} }
+document.getElementById("themeBtn").onclick = () =>
+  applyTheme(document.documentElement.dataset.theme==="dark"?"light":"dark");
+let savedTheme=null; try{ savedTheme=localStorage.getItem("masagi-theme"); }catch(e){}
+applyTheme(savedTheme || (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));
+
+const rp = n => "Rp " + n.toLocaleString("id-ID");
+let CATALOG = null;
+
+/* product showcase (from the same catalog the server sells from) */
+const ARTS = ["linear-gradient(135deg,#0b3b24,#27925a)","linear-gradient(135deg,#17603c,#4cc98a)",
+              "linear-gradient(135deg,#101511,#17603c)","linear-gradient(135deg,#123c28,#0b3b24)",
+              "linear-gradient(135deg,#0b3b24,#4cc98a)"];
+fetch("/api/store/products").then(r=>r.json()).then(c=>{
+  CATALOG=c;
+  document.getElementById("cards").innerHTML = c.products.map((p,i)=>
+    '<article class="pcard">'+
+      '<div class="art" style="background:'+ARTS[i%ARTS.length]+'">'+p.icon+'</div>'+
+      '<div class="body"><span class="kind">'+p.kind+'</span><h3>'+p.name+'</h3>'+
+      '<p>'+p.tagline+'</p>'+
+      '<div class="buyrow"><span class="price">'+rp(p.price)+'</span>'+
+      '<button class="btn btn-solid buy" data-plan="items" data-item="'+p.id+'" type="button">Buy</button></div>'+
+      '</div></article>').join("");
+  document.getElementById("bundlePrice").textContent = rp(c.bundle.price);
+  document.getElementById("memberPrice").textContent = rp(c.membership.price);
+  wireBuyButtons();
+});
+
+/* ——— pipeline step 1-2: buy click -> email capture -> checkout ——— */
+let pending = null;
+function openCapture(plan, item){
+  pending = { plan, items: item ? [item] : [] };
+  let label = "", total = 0;
+  if (plan === "bundle") { label = CATALOG.bundle.name; total = CATALOG.bundle.price; }
+  else if (plan === "membership") { label = CATALOG.membership.name + " — monthly"; total = CATALOG.membership.price; }
+  else { const p = CATALOG.products.find(x=>x.id===item); label = p.name; total = p.price; }
+  document.getElementById("capSummary").innerHTML = "You're buying: <b>"+label+"</b> · <b>"+rp(total)+"</b>";
+  document.getElementById("capErr").style.display = "none";
+  document.getElementById("capture").classList.add("show");
+  setTimeout(()=>document.getElementById("capEmail").focus(), 60);
+}
+function wireBuyButtons(){
+  document.querySelectorAll("[data-plan]").forEach(b=>{
+    b.onclick = () => { if (CATALOG) openCapture(b.dataset.plan, b.dataset.item || null); };
+  });
+}
+wireBuyButtons();
+document.getElementById("capCancel").onclick = () => document.getElementById("capture").classList.remove("show");
+document.getElementById("capture").addEventListener("mousedown", e => {
+  if (e.target === document.getElementById("capture")) document.getElementById("capture").classList.remove("show");
+});
+
+document.getElementById("capForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const go = document.getElementById("capGo"), err = document.getElementById("capErr");
+  go.disabled = true; go.textContent = "Preparing checkout…"; err.style.display = "none";
+  try {
+    const r = await fetch("/api/store/checkout", { method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: document.getElementById("capEmail").value,
+                             name: document.getElementById("capName").value,
+                             plan: pending.plan, items: pending.items }) });
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.error || "Checkout failed");
+    location.href = d.payment_url;   /* step 3: redirect to checkout */
+  } catch (ex) {
+    err.textContent = ex.message; err.style.display = "block";
+    go.disabled = false; go.textContent = "Continue to payment →";
+  }
+});
+</script>
+</body>
+</html>

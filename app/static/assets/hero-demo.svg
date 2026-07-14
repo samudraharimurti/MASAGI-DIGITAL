@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" font-family="Arial,Helvetica,sans-serif">
+  <rect width="800" height="450" fill="#ffffff"/>
+  <rect width="800" height="42" fill="#f5f5f2"/>
+  <circle cx="22" cy="21" r="5" fill="#d6d6d2"/><circle cx="40" cy="21" r="5" fill="#d6d6d2"/><circle cx="58" cy="21" r="5" fill="#d6d6d2"/>
+  <rect x="80" y="10" width="240" height="22" rx="11" fill="#ffffff" stroke="#e4e4e0"/>
+  <text x="95" y="25" font-size="11" fill="#6b6e72">masagi.id/app — Helicopter View</text>
+  <!-- KPI cards -->
+  <g>
+    <rect x="24" y="64" width="176" height="64" rx="6" fill="#ffffff" stroke="#e4e4e0"/>
+    <text x="38" y="86" font-size="10" fill="#6b6e72" letter-spacing="1">REVENUE YTD</text>
+    <text x="38" y="110" font-size="18" font-weight="bold" fill="#21201e">Rp 18,4 M</text>
+    <rect x="216" y="64" width="176" height="64" rx="6" fill="#ffffff" stroke="#e4e4e0"/>
+    <text x="230" y="86" font-size="10" fill="#6b6e72" letter-spacing="1">CASH POSITION</text>
+    <text x="230" y="110" font-size="18" font-weight="bold" fill="#21201e">Rp 6,1 M</text>
+    <rect x="408" y="64" width="176" height="64" rx="6" fill="#ffffff" stroke="#e4e4e0"/>
+    <text x="422" y="86" font-size="10" fill="#6b6e72" letter-spacing="1">NET PROFIT</text>
+    <text x="422" y="110" font-size="18" font-weight="bold" fill="#17603c">Rp 5,5 M</text>
+  </g>
+  <!-- animated bars -->
+  <g>
+    <rect x="40" y="180" width="34" height="0" fill="#17603c">
+      <animate attributeName="height" values="0;120" dur="1.2s" fill="freeze"/>
+      <animate attributeName="y" values="300;180" dur="1.2s" fill="freeze"/>
+    </rect>
+    <rect x="84" y="216" width="34" height="0" fill="#4cc98a">
+      <animate attributeName="height" values="0;84" dur="1.2s" begin="0.15s" fill="freeze"/>
+      <animate attributeName="y" values="300;216" dur="1.2s" begin="0.15s" fill="freeze"/>
+    </rect>
+    <rect x="150" y="162" width="34" height="0" fill="#17603c">
+      <animate attributeName="height" values="0;138" dur="1.2s" begin="0.3s" fill="freeze"/>
+      <animate attributeName="y" values="300;162" dur="1.2s" begin="0.3s" fill="freeze"/>
+    </rect>
+    <rect x="194" y="204" width="34" height="0" fill="#4cc98a">
+      <animate attributeName="height" values="0;96" dur="1.2s" begin="0.45s" fill="freeze"/>
+      <animate attributeName="y" values="300;204" dur="1.2s" begin="0.45s" fill="freeze"/>
+    </rect>
+    <rect x="260" y="138" width="34" height="0" fill="#17603c">
+      <animate attributeName="height" values="0;162" dur="1.2s" begin="0.6s" fill="freeze"/>
+      <animate attributeName="y" values="300;138" dur="1.2s" begin="0.6s" fill="freeze"/>
+    </rect>
+    <rect x="304" y="186" width="34" height="0" fill="#4cc98a">
+      <animate attributeName="height" values="0;114" dur="1.2s" begin="0.75s" fill="freeze"/>
+      <animate attributeName="y" values="300;186" dur="1.2s" begin="0.75s" fill="freeze"/>
+    </rect>
+    <line x1="24" y1="300" x2="584" y2="300" stroke="#e4e4e0" stroke-width="2"/>
+    <polyline points="57,240 167,222 277,196 387,204 497,168" fill="none" stroke="#cc0000" stroke-width="3" stroke-dasharray="600" stroke-dashoffset="600">
+      <animate attributeName="stroke-dashoffset" values="600;0" dur="1.6s" begin="0.9s" fill="freeze"/>
+    </polyline>
+  </g>
+  <!-- AI strip -->
+  <rect x="24" y="330" width="560" height="34" rx="6" fill="#eaf5ef" stroke="#d2ecdd"/>
+  <text x="40" y="352" font-size="12" font-weight="bold" fill="#17603c">✦ 34 bank lines pre-booked today · 2 waiting for your review</text>
+  <!-- right rail -->
+  <rect x="608" y="64" width="168" height="300" rx="6" fill="#f5f5f2"/>
+  <text x="624" y="90" font-size="10" fill="#6b6e72" letter-spacing="1">ENTITIES</text>
+  <g font-size="12" fill="#21201e">
+    <rect x="622" y="102" width="140" height="30" rx="4" fill="#17603c"/><text x="634" y="121" fill="#ffffff" font-weight="bold">Group — all</text>
+    <rect x="622" y="140" width="140" height="30" rx="4" fill="#ffffff" stroke="#e4e4e0"/><text x="634" y="159">PT Trading Co</text>
+    <rect x="622" y="178" width="140" height="30" rx="4" fill="#ffffff" stroke="#e4e4e0"/><text x="634" y="197">PT Services Co</text>
+    <rect x="622" y="216" width="140" height="30" rx="4" fill="#ffffff" stroke="#e4e4e0"/><text x="634" y="235">PT Mfg Co</text>
+  </g>
+  <!-- video chrome overlay -->
+  <rect width="800" height="450" fill="#0b0f0c" opacity="0.32"/>
+  <circle cx="400" cy="225" r="46" fill="#ffffff" opacity="0.95">
+    <animate attributeName="r" values="46;49;46" dur="2.2s" repeatCount="indefinite"/>
+  </circle>
+  <polygon points="388,205 388,245 424,225" fill="#cc0000"/>
+  <rect x="24" y="398" width="118" height="28" rx="14" fill="#0b0f0c" opacity="0.72"/>
+  <text x="42" y="417" font-size="12" fill="#ffffff" font-weight="bold">▶ Demo · 2:00</text>
+</svg>

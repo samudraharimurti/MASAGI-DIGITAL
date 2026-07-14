@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MASAGI — Client Access</title>
+<link rel="icon" type="image/svg+xml" href="/static/assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #ffffff; --paper-2: #f5f5f2; --ink: #21201e; --ink-2: #3c3b38;
+  --gray: #6b6e72; --line: #e4e4e0; --accent: #cc0000;
+  --pine: #0b3b24; --forest: #17603c; --leaf: #27925a; --mint: #4cc98a;
+  --card: #ffffff; --nav-bg: #ffffff; --tint: #eaf5ef; --green-ink: #17603c;
+  --warn-bg: #fdf3e7; --warn-ink: #b26a00; --err-bg: #fbecec; --err-ink: #cc0000;
+}
+html[data-theme="dark"] {
+  --paper: #151613; --paper-2: #151613; --ink: #f1f1ec; --ink-2: #d6d6cf;
+  --gray: #a3a69f; --line: #2b2c27;
+  --card: #1d1e1a; --nav-bg: #191a16; --tint: rgba(47,184,119,.16); --green-ink: #57d496;
+  --warn-bg: rgba(200,140,30,.16); --warn-ink: #e8b46a; --err-bg: rgba(204,40,40,.16); --err-ink: #ff9d9d;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Hanken Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: var(--paper-2); color: var(--ink); -webkit-font-smoothing: antialiased; line-height: 1.5;
+  min-height: 100vh; display: flex; flex-direction: column;
+}
+a { color: inherit; text-decoration: none; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; width: 100%; }
+
+header.top { background: var(--nav-bg); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 20; }
+.topbar { display: flex; align-items: center; justify-content: space-between; height: 66px; gap: 10px; }
+.brand { display: flex; align-items: center; gap: 11px; }
+.brand svg { height: 26px; width: auto; }
+.brand .word { font-weight: 800; font-size: 19px; letter-spacing: .04em; }
+.brand .sep { color: var(--line); font-weight: 400; }
+.brand .area { font-size: 12px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--gray); }
+.top-links { display: flex; align-items: center; gap: 18px; font-size: 14px; font-weight: 600; color: var(--ink-2); }
+.top-links a:hover { color: var(--accent); }
+.btn { display: inline-block; font: inherit; font-weight: 700; font-size: 14px; cursor: pointer;
+  padding: 9px 18px; border-radius: 2px; border: 1px solid var(--ink); background: var(--ink); color: var(--nav-bg);
+  transition: opacity .15s, background .15s, color .15s; }
+.btn:hover { opacity: .85; }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn.ghost:hover { background: var(--ink); color: var(--nav-bg); opacity: 1; }
+.btn.sm { padding: 7px 14px; font-size: 13px; }
+
+/* language + theme switches */
+.switches { display: flex; align-items: center; gap: 6px; }
+.lang-group { display: flex; border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
+.lang-btn { font: inherit; font-size: 11px; font-weight: 800; letter-spacing: .06em; cursor: pointer;
+  padding: 5px 9px; border: none; background: transparent; color: var(--gray); }
+.lang-btn.on { background: var(--ink); color: var(--nav-bg); }
+.theme-btn { font-size: 14px; line-height: 1; cursor: pointer; width: 30px; height: 28px;
+  border: 1px solid var(--line); border-radius: 3px; background: transparent; color: var(--ink-2); }
+.theme-btn:hover { border-color: var(--ink); }
+
+main { flex: 1; padding: 40px 0 64px; }
+.eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 700;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 10px; }
+.eyebrow::before { content: ""; width: 30px; height: 3px; background: var(--accent); }
+.headrow { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 30px; }
+h1 { font-size: clamp(26px, 3.4vw, 38px); font-weight: 800; letter-spacing: -.015em; line-height: 1.08; }
+.sub { color: var(--gray); font-size: 14.5px; margin-top: 6px; }
+
+.grid { display: grid; grid-template-columns: 340px 1fr; gap: 20px; align-items: start; }
+.col { display: grid; gap: 20px; min-width: 0; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 26px; min-width: 0; }
+.card h2 { font-size: 13px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-2);
+  padding-bottom: 14px; border-bottom: 1px solid var(--line); margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center; }
+.card h2 .hint { font-size: 11px; letter-spacing: .04em; text-transform: none; color: var(--gray); font-weight: 600; }
+
+/* account */
+.me { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+.avatar { width: 56px; height: 56px; border-radius: 50%; background: var(--forest); color: #fff;
+  display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; flex: none; }
+.me .nm { font-size: 17px; font-weight: 800; }
+.me .un { font-size: 13px; color: var(--gray); }
+.rolechip { display: inline-block; margin-top: 5px; font-size: 11px; font-weight: 800; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--green-ink); background: var(--tint); border-radius: 99px; padding: 3px 10px; }
+.kv { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.kv .row { display: flex; justify-content: space-between; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+.kv .k { color: var(--gray); }
+.kv .v { font-weight: 700; text-align: right; }
+details.pw { margin-top: 16px; }
+details.pw summary { cursor: pointer; font-size: 13px; font-weight: 700; color: var(--accent); list-style: none; }
+details.pw summary::-webkit-details-marker { display: none; }
+details.pw form { margin-top: 14px; display: grid; gap: 10px; }
+details.pw input { font: inherit; font-size: 13.5px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 4px;
+  outline: none; width: 100%; background: var(--card); color: var(--ink); }
+details.pw input:focus { border-color: var(--green-ink); box-shadow: 0 0 0 3px rgba(39,146,90,.15); }
+.msg { font-size: 12.5px; padding: 8px 11px; border-radius: 4px; display: none; }
+.msg.ok { display: block; background: var(--tint); color: var(--green-ink); }
+.msg.err { display: block; background: var(--err-bg); color: var(--err-ink); }
+
+/* databases */
+.dbs { display: grid; gap: 10px; }
+.db { display: flex; align-items: center; gap: 14px; border: 1px solid var(--line); border-radius: 6px;
+  padding: 14px 16px; background: var(--card); transition: border-color .15s, box-shadow .15s; }
+.db:hover { border-color: var(--gray); box-shadow: 0 6px 18px rgba(0,0,0,.08); }
+.db.active { border-color: var(--green-ink); box-shadow: 0 0 0 1px var(--green-ink); }
+.db .ic { width: 40px; height: 40px; border-radius: 6px; display: flex; align-items: center; justify-content: center;
+  font-size: 17px; flex: none; background: var(--paper-2); }
+html[data-theme="dark"] .db .ic { background: #24251f; }
+.db .info { min-width: 0; }
+.db .nm { font-weight: 800; font-size: 14.5px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.db .meta { font-size: 12px; color: var(--gray); margin-top: 1px; }
+.pill { font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; border-radius: 99px; padding: 2px 9px; }
+.pill.live { background: var(--tint); color: var(--green-ink); }
+.pill.frozen { background: var(--paper-2); color: var(--gray); border: 1px solid var(--line); }
+.db .act { margin-left: auto; display: flex; gap: 8px; flex: none; }
+.db .act .btn.green { background: var(--forest); border-color: var(--forest); color: #fff; }
+.db .act .btn.green:hover { background: var(--pine); opacity: 1; }
+
+/* billing */
+.bill-top { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+.bill-box { border: 1px solid var(--line); border-radius: 6px; padding: 18px; }
+.bill-box .k { font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--gray); }
+.bill-box .v { font-size: 19px; font-weight: 800; margin-top: 5px; }
+.bill-box .d { font-size: 12.5px; color: var(--gray); margin-top: 3px; }
+table.inv { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+table.inv th { text-align: left; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gray);
+  padding: 9px 10px; border-bottom: 1px solid var(--line); }
+table.inv td { padding: 11px 10px; border-bottom: 1px solid var(--line); }
+table.inv tr:last-child td { border-bottom: none; }
+table.inv .amt { text-align: right; font-weight: 700; }
+.status { font-size: 10.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; border-radius: 99px; padding: 3px 10px; }
+.status.paid { background: var(--tint); color: var(--green-ink); }
+.status.due { background: var(--warn-bg); color: var(--warn-ink); }
+.dl { color: var(--accent); font-weight: 700; font-size: 12.5px; cursor: pointer; }
+html[data-theme="dark"] .dl { color: #ff8a8a; }
+.sample-note { margin-top: 14px; font-size: 12px; color: var(--gray); }
+
+footer { border-top: 1px solid var(--line); background: var(--nav-bg); padding: 18px 0; font-size: 12.5px; color: var(--gray); }
+.foot { display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+
+@media (max-width: 940px) { .grid { grid-template-columns: 1fr; } .bill-top { grid-template-columns: 1fr; } .top-links .hide-m { display: none; } }
+@media (max-width: 620px) {
+  .brand .area, .brand .sep, .brand .word { display: none; }
+  .top-links { gap: 10px; font-size: 13px; }
+  .top-links .btn { white-space: nowrap; }
+  .btn { padding: 8px 12px; font-size: 13px; }
+  .wrap { padding: 0 18px; }
+  .card { padding: 20px; }
+  table.inv { display: block; overflow-x: auto; white-space: nowrap; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap topbar">
+    <a class="brand" href="/">
+      <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <polygon points="35,62 5,110 65,110" fill="#17603C"/>
+        <polygon points="85,38 45,110 125,110" fill="#27925A"/>
+        <polygon points="145,14 95,110 195,110" fill="#4CC98A"/>
+        <polygon points="145,14 132.5,38 157.5,38" fill="#0B3B24"/>
+      </svg>
+      <span class="word">MASAGI</span>
+      <span class="sep">|</span>
+      <span class="area" data-i18n="area">Client Access</span>
+    </a>
+    <div class="top-links">
+      <div class="switches">
+        <div class="lang-group">
+          <button class="lang-btn" data-lang="en" type="button">EN</button>
+          <button class="lang-btn" data-lang="id" type="button">ID</button>
+        </div>
+        <button class="theme-btn" id="themeBtn" type="button" title="Light / dark">☾</button>
+      </div>
+      <a class="hide-m" href="/" data-i18n="lnkMkt">Marketing site</a>
+      <a class="hide-m" href="/product" data-i18n="lnkProd">Product</a>
+      <a class="btn" href="/app" id="openConsole" data-i18n="lnkOpen">Open MASAGI HV →</a>
+      <a href="#" id="signOut" style="color:var(--accent)" data-i18n="lnkOut">Sign out</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="headrow">
+      <div>
+        <span class="eyebrow" data-i18n="eyebrow">Access portal</span>
+        <h1 id="hello" data-i18n="hello">Welcome back</h1>
+        <div class="sub" id="helloSub" data-i18n="sub">Your account, databases and billing in one place.</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- ——— left column: account ——— -->
+      <div class="col">
+        <div class="card">
+          <h2 data-i18n="hAccount">Account</h2>
+          <div class="me">
+            <div class="avatar" id="avatar">–</div>
+            <div>
+              <div class="nm" id="meName">—</div>
+              <div class="un" id="meUser">—</div>
+              <span class="rolechip" id="meRole">—</span>
+            </div>
+          </div>
+          <div class="kv">
+            <div class="row"><span class="k" data-i18n="kDb">Active database</span><span class="v" id="meDb">—</span></div>
+            <div class="row"><span class="k" data-i18n="kAccess">Company access</span><span class="v" id="meCompanies">—</span></div>
+            <div class="row"><span class="k" data-i18n="kPlan">Plan</span><span class="v">MASAGI HV Business</span></div>
+          </div>
+          <details class="pw">
+            <summary data-i18n="pwSum">Change password</summary>
+            <form id="pwForm">
+              <div class="msg" id="pwMsg"></div>
+              <input type="password" id="pwCur" placeholder="Current password" data-i18n-ph="phCur" autocomplete="current-password" required>
+              <input type="password" id="pwNew" placeholder="New password (min 6 chars)" data-i18n-ph="phNew" autocomplete="new-password" minlength="6" required>
+              <button class="btn sm" type="submit" data-i18n="pwBtn">Update password</button>
+            </form>
+          </details>
+        </div>
+
+        <div class="card">
+          <h2 data-i18n="hSupport">Support</h2>
+          <div style="font-size:13.5px; color:var(--gray); line-height:1.7">
+            <span data-i18n="supportTxt">Need a new database, another user seat, or a task automated?</span><br>
+            <a href="mailto:hello@masagi.id" style="color:var(--accent); font-weight:700">hello@masagi.id</a>
+          </div>
+          <div id="adminTools" style="display:none; margin-top:14px; padding-top:14px; border-top:1px solid var(--line); font-size:13.5px;">
+            <a href="/admin/content" style="font-weight:800; color:var(--green-ink)" data-i18n="cmsLink">✦ Content Studio — edit marketing site</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ——— right column: databases + billing ——— -->
+      <div class="col">
+        <div class="card">
+          <h2><span data-i18n="hDbs">Databases</span> <span class="hint" data-i18n="hDbsHint">switch, then open the console</span></h2>
+          <div class="dbs" id="dbList"><div style="color:var(--gray);font-size:13.5px" data-i18n="dbLoading">Loading databases…</div></div>
+        </div>
+
+        <div class="card">
+          <h2><span data-i18n="hBill">Billing center</span> <span class="hint" data-i18n="hBillHint">sample data — pilot stage</span></h2>
+          <div class="bill-top">
+            <div class="bill-box">
+              <div class="k" data-i18n="bPlanK">Current plan</div>
+              <div class="v">MASAGI HV Business</div>
+              <div class="d" data-i18n="bPlanD">Rp 3.500.000 / month · renews 1 Aug 2026</div>
+            </div>
+            <div class="bill-box">
+              <div class="k" data-i18n="bPayK">Payment method</div>
+              <div class="v" data-i18n="bPayV">Bank transfer — BCA VA</div>
+              <div class="d" data-i18n="bPayD">Virtual account ····· 8891 · invoices by email</div>
+            </div>
+          </div>
+          <table class="inv">
+            <thead><tr><th data-i18n="thInv">Invoice</th><th data-i18n="thPer">Period</th><th data-i18n="thStat">Status</th><th class="amt" data-i18n="thAmt">Amount</th><th></th></tr></thead>
+            <tbody>
+              <tr><td>INV-2026-007</td><td data-i18n="pJul">July 2026</td><td><span class="status due" data-i18n="stDue">Due 15 Jul</span></td><td class="amt">Rp 3.500.000</td><td><span class="dl" onclick="sampleInv()" data-i18n="dlView">View</span></td></tr>
+              <tr><td>INV-2026-006</td><td data-i18n="pJun">June 2026</td><td><span class="status paid" data-i18n="stPaid1">Paid</span></td><td class="amt">Rp 3.500.000</td><td><span class="dl" onclick="sampleInv()">PDF</span></td></tr>
+              <tr><td>INV-2026-005</td><td data-i18n="pMay">May 2026</td><td><span class="status paid" data-i18n="stPaid2">Paid</span></td><td class="amt">Rp 3.500.000</td><td><span class="dl" onclick="sampleInv()">PDF</span></td></tr>
+              <tr><td>INV-2026-004</td><td data-i18n="pApr">April 2026</td><td><span class="status paid" data-i18n="stPaid3">Paid</span></td><td class="amt">Rp 3.500.000</td><td><span class="dl" onclick="sampleInv()">PDF</span></td></tr>
+            </tbody>
+          </table>
+          <div class="sample-note" data-i18n="sampleNote">Billing entries above are illustrative for the pilot stage; live invoicing
+            is activated together with your production agreement.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span data-i18n="ftr1">© 2026 MASAGI · MASAGI HV — Helicopter View ERP</span>
+    <span data-i18n="ftr2">Precise by default</span>
+  </div>
+</footer>
+
+<script>
+/* ————— i18n ————— */
+const I18N_ID = {
+  area: "Akses Klien", lnkMkt: "Situs marketing", lnkProd: "Produk", lnkOpen: "Buka MASAGI HV →", lnkOut: "Keluar",
+  eyebrow: "Portal akses", hello: "Selamat datang kembali",
+  sub: "Akun, database, dan tagihanmu dalam satu tempat.",
+  hAccount: "Akun", kDb: "Database aktif", kAccess: "Akses perusahaan", kPlan: "Paket",
+  pwSum: "Ganti kata sandi", phCur: "Kata sandi saat ini", phNew: "Kata sandi baru (min. 6 karakter)", pwBtn: "Perbarui kata sandi",
+  hSupport: "Bantuan", supportTxt: "Butuh database baru, kursi pengguna tambahan, atau tugas yang diotomatiskan?",
+  cmsLink: "✦ Content Studio — kelola situs marketing",
+  hDbs: "Database", hDbsHint: "pindah, lalu buka konsol", dbLoading: "Memuat database…",
+  hBill: "Pusat tagihan", hBillHint: "data contoh — tahap pilot",
+  bPlanK: "Paket saat ini", bPlanD: "Rp 3.500.000 / bulan · perpanjangan 1 Agu 2026",
+  bPayK: "Metode pembayaran", bPayV: "Transfer bank — VA BCA", bPayD: "Virtual account ····· 8891 · invoice via email",
+  thInv: "Invoice", thPer: "Periode", thStat: "Status", thAmt: "Jumlah",
+  pJul: "Juli 2026", pJun: "Juni 2026", pMay: "Mei 2026", pApr: "April 2026",
+  stDue: "Jatuh tempo 15 Jul", stPaid1: "Lunas", stPaid2: "Lunas", stPaid3: "Lunas", dlView: "Lihat",
+  sampleNote: "Entri tagihan di atas hanya ilustrasi tahap pilot; penagihan aktif diaktifkan bersama perjanjian produksi.",
+  ftr1: "© 2026 MASAGI · MASAGI HV — ERP Helicopter View", ftr2: "Precise by default",
+};
+/* dynamic strings used by JS renderers */
+const DYN = {
+  en: { hello: n => "Welcome back, " + n + ".", companies: n => n + " companies", allCompanies: "All companies",
+        active: "Active", frozen: "Frozen", entries: n => n + " entries", lastAct: d => "last activity " + d,
+        open: "Open console →", sw: "Switch", swing: "Switching…", loadFail: "Could not load databases.",
+        pwOk: "Password updated.", pwFail: "Could not update password.", swFail: "Switch failed",
+        inv: "Sample invoice — PDF billing documents are issued with production accounts." },
+  id: { hello: n => "Selamat datang kembali, " + n + ".", companies: n => n + " perusahaan", allCompanies: "Semua perusahaan",
+        active: "Aktif", frozen: "Beku", entries: n => n + " entri", lastAct: d => "aktivitas terakhir " + d,
+        open: "Buka konsol →", sw: "Pindah", swing: "Memindahkan…", loadFail: "Gagal memuat database.",
+        pwOk: "Kata sandi diperbarui.", pwFail: "Kata sandi gagal diperbarui.", swFail: "Gagal pindah database",
+        inv: "Invoice contoh — dokumen tagihan PDF diterbitkan untuk akun produksi." },
+};
+let LANG = "en";
+const T = () => DYN[LANG];
+const enCache = {}, enPh = {};
+
+function applyLang(lang) {
+  LANG = lang;
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const k = el.dataset.i18n;
+    if (!(k in enCache)) enCache[k] = el.innerHTML;
+    el.innerHTML = (lang === "id" && I18N_ID[k]) ? I18N_ID[k] : enCache[k];
+  });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el => {
+    const k = el.dataset.i18nPh;
+    if (!(k in enPh)) enPh[k] = el.placeholder;
+    el.placeholder = (lang === "id" && I18N_ID[k]) ? I18N_ID[k] : enPh[k];
+  });
+  document.querySelectorAll(".lang-btn").forEach(b => b.classList.toggle("on", b.dataset.lang === lang));
+  try { localStorage.setItem("masagi-lang", lang); } catch (e) {}
+  if (lastMe) renderMe(lastMe);
+  if (lastDbs) renderDbs(lastDbs);
+}
+function applyTheme(t) {
+  document.documentElement.dataset.theme = t;
+  document.getElementById("themeBtn").textContent = t === "dark" ? "☀" : "☾";
+  try { localStorage.setItem("masagi-theme", t); } catch (e) {}
+}
+document.querySelectorAll(".lang-btn").forEach(b => b.onclick = () => applyLang(b.dataset.lang));
+document.getElementById("themeBtn").onclick = () =>
+  applyTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+
+/* ————— data ————— */
+let lastMe = null, lastDbs = null;
+
+function initials(name) {
+  return (name || "?").trim().split(/\s+/).slice(0, 2).map(w => w[0]).join("").toUpperCase();
+}
+
+function renderMe(me) {
+  document.getElementById("adminTools").style.display = me.role === "admin" ? "" : "none";
+  const name = me.full_name || me.username;
+  document.getElementById("hello").textContent = T().hello(name.split(" ")[0]);
+  document.getElementById("avatar").textContent = initials(name);
+  document.getElementById("meName").textContent = name;
+  document.getElementById("meUser").textContent = "@" + me.username;
+  document.getElementById("meRole").textContent = me.role;
+  document.getElementById("meDb").textContent = me.active_db;
+  document.getElementById("meCompanies").textContent =
+    me.companies.length ? T().companies(me.companies.length) : T().allCompanies;
+}
+
+async function loadMe() {
+  const r = await fetch("/api/me");
+  if (!r.ok) { location.href = "/login?next=access"; return null; }
+  lastMe = await r.json();
+  renderMe(lastMe);
+  return lastMe;
+}
+
+function renderDbs(data) {
+  const box = document.getElementById("dbList");
+  box.innerHTML = "";
+  data.databases.forEach(d => {
+    const el = document.createElement("div");
+    el.className = "db" + (d.active ? " active" : "");
+    const icon = d.icon || "▦";
+    const tint = d.color ? ' style="background:' + d.color + '22"' : "";
+    const meta = (d.entries != null ? T().entries(d.entries) : "") +
+                 (d.last_at ? " · " + T().lastAct(d.last_at.slice(0, 10)) : "");
+    el.innerHTML =
+      '<div class="ic"' + tint + '>' + icon + '</div>' +
+      '<div class="info"><div class="nm">' + d.name +
+        (d.active ? ' <span class="pill live">' + T().active + '</span>' : "") +
+        (d.frozen ? ' <span class="pill frozen">' + T().frozen + '</span>' : "") +
+      '</div><div class="meta">' + meta + '</div></div>' +
+      '<div class="act">' +
+        (d.active
+          ? '<a class="btn sm green" href="/app">' + T().open + '</a>'
+          : (d.can_enter ? '<button class="btn sm ghost" data-db="' + d.name + '">' + T().sw + '</button>' : "")) +
+      '</div>';
+    box.appendChild(el);
+  });
+  box.querySelectorAll("button[data-db]").forEach(b => {
+    b.onclick = async () => {
+      b.textContent = T().swing; b.disabled = true;
+      const r = await fetch("/api/databases/switch", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: b.dataset.db }),
+      });
+      if (r.ok) { await loadMe(); await loadDbs(); }
+      else { const e = await r.json().catch(() => ({})); alert(e.error || T().swFail); b.textContent = T().sw; b.disabled = false; }
+    };
+  });
+}
+
+async function loadDbs() {
+  const box = document.getElementById("dbList");
+  const r = await fetch("/api/databases");
+  if (!r.ok) { box.innerHTML = '<div style="color:var(--gray);font-size:13.5px">' + T().loadFail + '</div>'; return; }
+  lastDbs = await r.json();
+  renderDbs(lastDbs);
+}
+
+document.getElementById("pwForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const msg = document.getElementById("pwMsg");
+  msg.className = "msg";
+  const r = await fetch("/api/me/password", {
+    method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      current_password: document.getElementById("pwCur").value,
+      new_password: document.getElementById("pwNew").value,
+    }),
+  });
+  const d = await r.json().catch(() => ({}));
+  if (r.ok) { msg.textContent = T().pwOk; msg.className = "msg ok"; e.target.reset(); }
+  else { msg.textContent = d.error || T().pwFail; msg.className = "msg err"; }
+});
+
+document.getElementById("signOut").onclick = async e => {
+  e.preventDefault();
+  await fetch("/api/logout", { method: "POST" });
+  location.href = "/";
+};
+
+function sampleInv() { alert(T().inv); }
+
+/* ————— init ————— */
+let savedLang = null, savedTheme = null;
+try { savedLang = localStorage.getItem("masagi-lang"); savedTheme = localStorage.getItem("masagi-theme"); } catch (e) {}
+applyTheme(savedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+applyLang(savedLang || ((navigator.language || "").toLowerCase().startsWith("id") ? "id" : "en"));
+
+loadMe().then(me => { if (me) loadDbs(); });
+</script>
+</body>
+</html>

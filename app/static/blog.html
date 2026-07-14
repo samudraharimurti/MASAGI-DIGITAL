@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insight — MASAGI</title>
+<meta name="description" id="metaDesc" content="Insights and client stories from MASAGI — the helicopter view for growing SMEs in Indonesia and Southeast Asia.">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="MASAGI">
+<meta property="og:title" id="ogTitle" content="Insight — MASAGI">
+<meta property="og:description" id="ogDesc" content="Insights from MASAGI.">
+<link rel="icon" type="image/svg+xml" href="/static/assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json" id="articleLd"></script>
+<style>
+:root {
+  --paper: #ffffff; --paper-2: #f5f5f2; --ink: #21201e; --ink-2: #3c3b38;
+  --gray: #6b6e72; --line: #e4e4e0; --accent: #cc0000;
+  --forest: #17603c; --leaf: #27925a; --mint: #4cc98a;
+  --card: #ffffff; --nav-bg: rgba(255,255,255,.96); --green-ink: #17603c; --tint: #eaf5ef;
+}
+html[data-theme="dark"] {
+  --paper: #151613; --paper-2: #1b1c18; --ink: #f1f1ec; --ink-2: #d6d6cf;
+  --gray: #a3a69f; --line: #2b2c27;
+  --card: #1d1e1a; --nav-bg: rgba(21,22,19,.95); --green-ink: #57d496; --tint: rgba(47,184,119,.16);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Hanken Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: var(--paper); color: var(--ink); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+a { color: inherit; text-decoration: none; }
+.wrap { max-width: 780px; margin: 0 auto; padding: 0 28px; }
+header.top { position: sticky; top: 0; z-index: 40; background: var(--nav-bg);
+  backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
+.topbar { display: flex; align-items: center; justify-content: space-between; height: 66px; gap: 10px;
+  max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+.brand { display: flex; align-items: center; gap: 11px; }
+.brand svg { height: 26px; width: auto; }
+.brand .word { font-weight: 800; font-size: 19px; letter-spacing: .04em; }
+.right { display: flex; align-items: center; gap: 12px; }
+.btn { display: inline-block; font: inherit; font-weight: 700; font-size: 14px; cursor: pointer;
+  padding: 9px 18px; border-radius: 2px; border: 1px solid var(--ink); background: transparent; color: var(--ink); }
+.btn:hover { background: var(--ink); color: var(--paper); }
+.switches { display: flex; align-items: center; gap: 6px; }
+.lang-group { display: flex; border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
+.lang-btn { font: inherit; font-size: 11px; font-weight: 800; letter-spacing: .06em; cursor: pointer;
+  padding: 5px 9px; border: none; background: transparent; color: var(--gray); }
+.lang-btn.on { background: var(--ink); color: var(--paper); }
+.theme-btn { font-size: 14px; line-height: 1; cursor: pointer; width: 30px; height: 28px;
+  border: 1px solid var(--line); border-radius: 3px; background: transparent; color: var(--ink-2); }
+article { padding: 56px 0 30px; }
+.back { font-size: 13.5px; color: var(--accent); font-weight: 700; }
+.tag { display: inline-block; margin: 28px 0 18px; font-size: 11px; font-weight: 800; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--green-ink); background: var(--tint); padding: 6px 13px; border-radius: 99px; }
+h1 { font-size: clamp(30px, 5vw, 46px); font-weight: 800; letter-spacing: -.02em; line-height: 1.08; }
+.meta { color: var(--gray); font-size: 13.5px; margin-top: 16px; }
+.cover { height: 300px; border-radius: 8px; margin: 30px 0 8px; background-size: cover; background-position: center; border: 1px solid var(--line); }
+.content { font-size: 17.5px; color: var(--ink-2); margin-top: 30px; }
+.content p { margin-top: 22px; }
+.content p:first-child { margin-top: 0; }
+.content p:first-child::first-letter { font-size: 3em; font-weight: 800; float: left; line-height: .82; padding: 5px 12px 0 0; color: var(--accent); }
+.share { margin-top: 44px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--gray); font-size: 14.5px; }
+.share a { color: var(--accent); font-weight: 700; }
+.more { padding: 24px 0 70px; max-width: 780px; margin: 0 auto; padding-left: 28px; padding-right: 28px; }
+.more h3 { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--gray); margin-bottom: 18px; font-weight: 800; }
+.more-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.more-card { border: 1px solid var(--line); border-radius: 6px; padding: 20px; background: var(--card); cursor: pointer; transition: transform .15s, box-shadow .15s; }
+.more-card:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,.12); }
+.more-card .t { font-size: 10.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+.more-card h4 { font-size: 16px; font-weight: 700; margin-top: 8px; line-height: 1.3; }
+footer { border-top: 1px solid var(--line); padding: 20px 0; font-size: 12.5px; color: var(--gray); }
+.foot { display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+.notfound { padding: 90px 0; text-align: center; color: var(--gray); }
+@media (max-width: 640px) { .more-grid { grid-template-columns: 1fr; } .content { font-size: 16.5px; } .brand .word { display: none; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="topbar">
+    <a class="brand" href="/">
+      <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <polygon points="35,62 5,110 65,110" fill="#17603C"/>
+        <polygon points="85,38 45,110 125,110" fill="#27925A"/>
+        <polygon points="145,14 95,110 195,110" fill="#4CC98A"/>
+        <polygon points="145,14 132.5,38 157.5,38" fill="#0B3B24"/>
+      </svg>
+      <span class="word">MASAGI</span>
+    </a>
+    <div class="right">
+      <div class="switches">
+        <div class="lang-group">
+          <button class="lang-btn" data-lang="en" type="button">EN</button>
+          <button class="lang-btn" data-lang="id" type="button">ID</button>
+        </div>
+        <button class="theme-btn" id="themeBtn" type="button" title="Light / dark">☾</button>
+      </div>
+      <a class="btn" href="/#insights" id="allBtn">All insights</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="main">
+  <div class="notfound" id="loading">Loading…</div>
+</main>
+
+<footer>
+  <div class="foot">
+    <span>© 2026 MASAGI · MASAGI HV — Helicopter View ERP</span>
+    <span>Precise by default</span>
+  </div>
+</footer>
+
+<script>
+const L = {
+  en: { all: "All insights", back: "← All insights", keep: "Keep reading", loading: "Loading…",
+        nfTitle: "We couldn't find that story.", nfBody: "It may have moved.", nfLink: "Browse all insights",
+        share: "Found this useful?", shareLink: "Talk to us about your business →", err: "Couldn't load this story right now." },
+  id: { all: "Semua wawasan", back: "← Semua wawasan", keep: "Lanjut membaca", loading: "Memuat…",
+        nfTitle: "Kami tidak menemukan tulisan itu.", nfBody: "Mungkin sudah dipindahkan.", nfLink: "Lihat semua wawasan",
+        share: "Merasa tulisan ini berguna?", shareLink: "Ngobrol dengan kami tentang bisnismu →", err: "Tulisan ini belum bisa dimuat." },
+};
+let LANG = "en", CONTENT = null;
+const T = () => L[LANG];
+
+function esc(s) { return (s || "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+function locText(o, k) { const v = o[k + "_id"]; return (LANG === "id" && v) ? v : (o[k] || ""); }
+function fmtDate(d) { if (!d) return ""; const t = new Date(d); if (isNaN(t)) return d;
+  return t.toLocaleDateString(LANG === "id" ? "id-ID" : "en-GB", { day: "numeric", month: "long", year: "numeric" }); }
+function slugFromUrl() {
+  const parts = location.pathname.split("/").filter(Boolean);
+  const i = parts.indexOf("blog");
+  return decodeURIComponent((i >= 0 && parts[i + 1]) ? parts[i + 1] : (parts[parts.length - 1] || ""));
+}
+function paras(body) { return (body || "").split(/\n\s*\n/).map(p => "<p>" + esc(p.trim()).replace(/\n/g, "<br>") + "</p>").join(""); }
+const COVERS = ["linear-gradient(135deg,#0b3b24,#27925a)", "linear-gradient(135deg,#17603c,#4cc98a)",
+                "linear-gradient(135deg,#101511,#17603c)", "linear-gradient(135deg,#123c28,#0b3b24)"];
+
+function render() {
+  document.getElementById("allBtn").textContent = T().all;
+  const main = document.getElementById("main");
+  if (!CONTENT) { main.innerHTML = '<div class="notfound">' + T().loading + '</div>'; return; }
+  const list = CONTENT.insights || [];
+  const slug = slugFromUrl();
+  const idx = list.findIndex(p => p.slug === slug);
+  const post = list[idx];
+  document.querySelectorAll(".more").forEach(el => el.remove());
+  if (!post) {
+    document.title = "Insight — MASAGI";
+    main.innerHTML = '<div class="notfound"><h1 style="font-size:26px">' + T().nfTitle + '</h1>' +
+      '<p style="margin-top:14px">' + T().nfBody + ' <a style="color:var(--accent);font-weight:700" href="/#insights">' + T().nfLink + '</a></p></div>';
+    return;
+  }
+  const title = locText(post, "title"), excerpt = locText(post, "excerpt");
+  const cover = post.image ? "background-image:url('" + esc(post.image) + "')" : "background-image:" + COVERS[idx % COVERS.length];
+  document.title = title + " — MASAGI";
+  document.getElementById("metaDesc").setAttribute("content", excerpt || title);
+  document.getElementById("ogTitle").setAttribute("content", title + " — MASAGI");
+  document.getElementById("ogDesc").setAttribute("content", excerpt || title);
+  document.getElementById("articleLd").textContent = JSON.stringify({
+    "@context": "https://schema.org", "@type": "Article", "headline": post.title,
+    "datePublished": post.date || "", "author": { "@type": "Organization", "name": post.author || "MASAGI" },
+    "publisher": { "@type": "Organization", "name": "MASAGI",
+      "logo": { "@type": "ImageObject", "url": "https://masagi.id/static/assets/masagi-logo-onlight.svg" } },
+    "description": post.excerpt || "" });
+
+  main.innerHTML =
+    '<article>' +
+      '<a class="back" href="/#insights">' + T().back + '</a>' +
+      '<div><span class="tag">' + esc(post.tag || "Insight") + '</span></div>' +
+      '<h1>' + esc(title) + '</h1>' +
+      '<div class="meta">' + esc(fmtDate(post.date)) + (post.author ? " · " + esc(post.author) : "") + '</div>' +
+      '<div class="cover" style="' + cover + '"></div>' +
+      '<div class="content">' + paras(locText(post, "body") || excerpt) + '</div>' +
+      '<div class="share">' + T().share + ' <a href="mailto:hello@masagi.id?subject=MASAGI%20HV">' + T().shareLink + '</a></div>' +
+    '</article>';
+
+  const others = list.filter(p => p.slug !== slug).slice(0, 2);
+  if (others.length) {
+    main.insertAdjacentHTML("afterend",
+      '<section class="more"><h3>' + T().keep + '</h3><div class="more-grid">' +
+      others.map(p => '<div class="more-card" onclick="location.href=\'/blog/' + encodeURIComponent(p.slug) + '\'">' +
+        '<div class="t">' + esc(p.tag || "Insight") + '</div><h4>' + esc(locText(p, "title")) + '</h4></div>').join("") +
+      '</div></section>');
+  }
+}
+
+function applyLang(lang) {
+  LANG = lang; document.documentElement.lang = lang;
+  document.querySelectorAll(".lang-btn").forEach(b => b.classList.toggle("on", b.dataset.lang === lang));
+  try { localStorage.setItem("masagi-lang", lang); } catch (e) {}
+  render();
+}
+function applyTheme(t) {
+  document.documentElement.dataset.theme = t;
+  document.getElementById("themeBtn").textContent = t === "dark" ? "☀" : "☾";
+  try { localStorage.setItem("masagi-theme", t); } catch (e) {}
+}
+document.querySelectorAll(".lang-btn").forEach(b => b.onclick = () => applyLang(b.dataset.lang));
+document.getElementById("themeBtn").onclick = () =>
+  applyTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+
+let savedLang = null, savedTheme = null;
+try { savedLang = localStorage.getItem("masagi-lang"); savedTheme = localStorage.getItem("masagi-theme"); } catch (e) {}
+applyTheme(savedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+applyLang(savedLang || ((navigator.language || "").toLowerCase().startsWith("id") ? "id" : "en"));
+
+fetch("/api/site-content").then(r => r.json())
+  .then(c => { CONTENT = c; render(); })
+  .catch(() => { document.getElementById("main").innerHTML = '<div class="notfound">' + T().err + '</div>'; });
+</script>
+</body>
+</html>

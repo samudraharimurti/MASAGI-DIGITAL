@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" font-family="Arial,Helvetica,sans-serif">
+  <rect width="800" height="450" fill="#ffffff"/>
+  <rect width="800" height="42" fill="#f5f5f2"/>
+  <circle cx="22" cy="21" r="5" fill="#d6d6d2"/><circle cx="40" cy="21" r="5" fill="#d6d6d2"/><circle cx="58" cy="21" r="5" fill="#d6d6d2"/>
+  <text x="84" y="26" font-size="12" font-weight="bold" fill="#21201e">Dashboard — Group, 2026</text>
+  <g>
+    <rect x="24" y="60" width="176" height="66" rx="6" fill="#ffffff" stroke="#e4e4e0"/>
+    <text x="38" y="82" font-size="10" fill="#6b6e72" letter-spacing="1">REVENUE YTD</text>
+    <text x="38" y="107" font-size="19" font-weight="bold" fill="#21201e">Rp 27,8 B</text>
+    <rect x="216" y="60" width="176" height="66" rx="6" fill="#ffffff" stroke="#e4e4e0"/>
+    <text x="230" y="82" font-size="10" fill="#6b6e72" letter-spacing="1">NET PROFIT</text>
+    <text x="230" y="107" font-size="19" font-weight="bold" fill="#17603c">Rp 5,5 B</text>
+    <rect x="408" y="60" width="176" height="66" rx="6" fill="#ffffff" stroke="#e4e4e0"/>
+    <text x="422" y="82" font-size="10" fill="#6b6e72" letter-spacing="1">CASH BUFFER</text>
+    <text x="422" y="107" font-size="19" font-weight="bold" fill="#21201e">8,9 mo</text>
+    <rect x="600" y="60" width="176" height="66" rx="6" fill="#ffffff" stroke="#e4e4e0"/>
+    <text x="614" y="82" font-size="10" fill="#6b6e72" letter-spacing="1">BUDGET USED</text>
+    <text x="614" y="107" font-size="19" font-weight="bold" fill="#b26a00">64%</text>
+  </g>
+  <rect x="24" y="146" width="470" height="270" rx="6" fill="#ffffff" stroke="#e4e4e0"/>
+  <text x="40" y="172" font-size="11" font-weight="bold" fill="#3c3b38">Revenue vs expense — monthly</text>
+  <g>
+    <rect x="52"  y="290" width="26" height="96"  fill="#17603c"/><rect x="82"  y="318" width="26" height="68" fill="#4cc98a"/>
+    <rect x="126" y="272" width="26" height="114" fill="#17603c"/><rect x="156" y="306" width="26" height="80" fill="#4cc98a"/>
+    <rect x="200" y="252" width="26" height="134" fill="#17603c"/><rect x="230" y="296" width="26" height="90" fill="#4cc98a"/>
+    <rect x="274" y="262" width="26" height="124" fill="#17603c"/><rect x="304" y="286" width="26" height="100" fill="#4cc98a"/>
+    <rect x="348" y="234" width="26" height="152" fill="#17603c"/><rect x="378" y="278" width="26" height="108" fill="#4cc98a"/>
+    <rect x="422" y="216" width="26" height="170" fill="#17603c"/><rect x="452" y="262" width="26" height="124" fill="#4cc98a"/>
+    <line x1="40" y1="386" x2="478" y2="386" stroke="#e4e4e0" stroke-width="2"/>
+    <polyline points="65,264 139,250 213,228 287,238 361,206 435,186" fill="none" stroke="#cc0000" stroke-width="2.5"/>
+  </g>
+  <rect x="518" y="146" width="258" height="270" rx="6" fill="#ffffff" stroke="#e4e4e0"/>
+  <text x="534" y="172" font-size="11" font-weight="bold" fill="#3c3b38">Per company — profit</text>
+  <g font-size="12" fill="#21201e">
+    <text x="534" y="204">PT Trading Co</text><rect x="534" y="212" width="180" height="10" rx="5" fill="#eaf5ef"/><rect x="534" y="212" width="150" height="10" rx="5" fill="#17603c"/>
+    <text x="534" y="248">PT Services Co</text><rect x="534" y="256" width="180" height="10" rx="5" fill="#eaf5ef"/><rect x="534" y="256" width="112" height="10" rx="5" fill="#27925a"/>
+    <text x="534" y="292">PT Mfg Co</text><rect x="534" y="300" width="180" height="10" rx="5" fill="#eaf5ef"/><rect x="534" y="300" width="168" height="10" rx="5" fill="#17603c"/>
+    <text x="534" y="336">SG Holdings</text><rect x="534" y="344" width="180" height="10" rx="5" fill="#eaf5ef"/><rect x="534" y="344" width="78" height="10" rx="5" fill="#4cc98a"/>
+    <text x="534" y="386" font-size="11" fill="#6b6e72">Consolidated · intercompany eliminated</text>
+  </g>
+</svg>

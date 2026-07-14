@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank you — MASAGI Store</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="/static/assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root { --paper:#f5f5f2; --card:#ffffff; --ink:#21201e; --ink-2:#3c3b38; --gray:#6b6e72;
+  --line:#e4e4e0; --accent:#cc0000; --forest:#17603c; --tint:#eaf5ef; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:"Hanken Grotesk","Helvetica Neue",Helvetica,Arial,sans-serif; background:var(--paper);
+  color:var(--ink); min-height:100vh; display:flex; align-items:center; justify-content:center;
+  -webkit-font-smoothing:antialiased; line-height:1.5; padding:20px; }
+.card { width:min(560px,100%); background:var(--card); border:1px solid var(--line); border-radius:8px; padding:40px 38px; text-align:center; }
+.mark { width:74px; height:74px; margin:0 auto 20px; border-radius:50%; background:var(--tint);
+  display:flex; align-items:center; justify-content:center; }
+.mark svg { width:38px; height:38px; }
+h1 { font-size:clamp(24px,4vw,32px); font-weight:800; letter-spacing:-.015em; }
+.sub { color:var(--gray); font-size:14.5px; margin-top:10px; }
+.order { margin:24px auto 0; max-width:400px; text-align:left; border:1px solid var(--line);
+  border-radius:6px; padding:16px 18px; font-size:13.5px; display:grid; gap:6px; }
+.order .row { display:flex; justify-content:space-between; gap:10px; }
+.order .k { color:var(--gray); }
+.order .v { font-weight:700; }
+.next { margin-top:26px; display:grid; gap:10px; }
+.btn { display:inline-block; font:inherit; font-weight:800; font-size:15px; cursor:pointer;
+  padding:13px 24px; border-radius:3px; border:1px solid var(--forest); background:var(--forest); color:#fff; }
+.btn:hover { opacity:.9; }
+.btn.ghost { background:transparent; color:var(--ink); border-color:var(--ink); }
+.mail { margin-top:18px; font-size:12.5px; color:var(--gray); line-height:1.7; }
+.mail b { color:var(--ink-2); }
+.pending .mark { background:#fdf3e7; }
+.spin { display:inline-block; width:15px; height:15px; border:2px solid var(--line);
+  border-top-color:var(--forest); border-radius:50%; animation:sp 1s linear infinite; vertical-align:-3px; margin-right:7px; }
+@keyframes sp { to { transform:rotate(360deg); } }
+</style>
+</head>
+<body>
+  <div class="card pending" id="card">
+    <div class="mark" id="mark">
+      <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="35,62 5,110 65,110" fill="#17603C"/>
+        <polygon points="85,38 45,110 125,110" fill="#27925A"/>
+        <polygon points="145,14 95,110 195,110" fill="#4CC98A"/>
+        <polygon points="145,14 132.5,38 157.5,38" fill="#0B3B24"/>
+      </svg>
+    </div>
+    <h1 id="title"><span class="spin"></span>Confirming your payment…</h1>
+    <div class="sub" id="sub">We're waiting for the payment gateway to confirm. This page updates by itself.</div>
+    <div class="order" id="order" style="display:none"></div>
+    <div class="next" id="next"></div>
+    <div class="mail" id="mail"></div>
+  </div>
+
+<script>
+const orderId = new URLSearchParams(location.search).get("order") || "";
+const rp = n => "Rp " + n.toLocaleString("id-ID");
+let tries = 0;
+
+/* Access is granted by the server-side webhook only; this page just POLLS the
+   order status until the webhook has done its work. */
+function check() {
+  fetch("/api/store/order/" + encodeURIComponent(orderId))
+    .then(r => r.json()).then(o => {
+      if (o.error) { fail("We couldn't find that order."); return; }
+      if (o.status !== "paid") {
+        if (++tries > 40) { fail("Still unconfirmed — check your email in a few minutes."); return; }
+        setTimeout(check, 1500); return;
+      }
+      document.getElementById("card").classList.remove("pending");
+      document.getElementById("title").innerHTML = "You're in. 🎉";
+      document.getElementById("sub").textContent =
+        "Payment confirmed. Your account is ready and your files are waiting.";
+      const ord = document.getElementById("order");
+      ord.style.display = "grid";
+      ord.innerHTML =
+        '<div class="row"><span class="k">Order</span><span class="v">' + o.id + '</span></div>' +
+        '<div class="row"><span class="k">Invoice</span><span class="v">' + (o.invoice_no || "—") + '</span></div>' +
+        '<div class="row"><span class="k">Paid via</span><span class="v">' + (o.method || "—") + '</span></div>' +
+        '<div class="row"><span class="k">Total</span><span class="v">' + rp(o.total) + '</span></div>' +
+        o.items.map(i => '<div class="row"><span class="k">·</span><span>' + i.name + '</span></div>').join("");
+      document.getElementById("next").innerHTML =
+        '<a class="btn" href="/downloads">Open My Downloads →</a>' +
+        '<a class="btn ghost" href="/store">Keep browsing the store</a>';
+      document.getElementById("mail").innerHTML =
+        "We emailed <b>" + o.email + "</b> a receipt, your account details and a one-click " +
+        "sign-in link (valid 48 hours). First time here? That email has your password too.";
+    }).catch(() => setTimeout(check, 2000));
+}
+function fail(msg) {
+  document.getElementById("title").textContent = "Hmm.";
+  document.getElementById("sub").textContent = msg;
+  document.getElementById("next").innerHTML = '<a class="btn ghost" href="/store">← Back to the store</a>';
+}
+if (orderId) check(); else fail("No order reference found.");
+</script>
+</body>
+</html>

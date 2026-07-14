@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 120" role="img" aria-label="MASAGI">
+  <g>
+    <polygon points="35,62 5,110 65,110" fill="#1E7A4C"/>
+    <polygon points="85,38 45,110 125,110" fill="#31A96A"/>
+    <polygon points="145,14 95,110 195,110" fill="#57D496"/>
+    <polygon points="145,14 132.5,38 157.5,38" fill="#0B3B24"/>
+  </g>
+  <text x="222" y="108" font-family="'Arial Black','Segoe UI Black',Arial,sans-serif" font-weight="900" font-size="84" letter-spacing="1" fill="#FFFFFF">MASAGI</text>
+</svg>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MASAGI — Content Studio</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="/static/assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root { --paper:#f5f5f2; --card:#ffffff; --ink:#21201e; --ink-2:#3c3b38; --gray:#6b6e72;
+  --line:#e4e4e0; --accent:#cc0000; --forest:#17603c; --tint:#eaf5ef; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Hanken Grotesk","Helvetica Neue",Helvetica,Arial,sans-serif; background: var(--paper);
+  color: var(--ink); -webkit-font-smoothing: antialiased; line-height: 1.5; }
+a { color: inherit; text-decoration: none; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+header.top { background: #fff; border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 20; }
+.topbar { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 12px;
+  max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+.brand { display: flex; align-items: center; gap: 11px; font-weight: 800; font-size: 17px; }
+.brand svg { height: 24px; }
+.brand .area { font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--gray); margin-left: 6px; }
+.actions { display: flex; align-items: center; gap: 10px; }
+.status { font-size: 12.5px; color: var(--gray); }
+.status.ok { color: var(--forest); font-weight: 700; }
+.status.err { color: var(--accent); font-weight: 700; }
+.btn { font: inherit; font-weight: 700; font-size: 13.5px; cursor: pointer; padding: 9px 18px;
+  border-radius: 2px; border: 1px solid var(--ink); background: var(--ink); color: #fff; }
+.btn:hover { opacity: .85; }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn.ghost:hover { background: var(--ink); color: #fff; opacity: 1; }
+.btn.sm { padding: 6px 12px; font-size: 12px; }
+.btn.danger { border-color: var(--accent); color: var(--accent); background: transparent; }
+.btn.danger:hover { background: var(--accent); color: #fff; }
+main { padding: 36px 0 80px; }
+.eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 700;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 8px; }
+.eyebrow::before { content: ""; width: 30px; height: 3px; background: var(--accent); }
+h1 { font-size: 30px; font-weight: 800; letter-spacing: -.015em; }
+.sub { color: var(--gray); font-size: 14px; margin-top: 6px; }
+section.block { margin-top: 34px; }
+section.block > h2 { font-size: 13px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--ink-2); padding-bottom: 12px; border-bottom: 1px solid var(--line); margin-bottom: 16px;
+  display: flex; justify-content: space-between; align-items: center; }
+section.block > h2 .hint { font-size: 11px; letter-spacing: .03em; text-transform: none; color: var(--gray); font-weight: 600; }
+.row { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 20px; margin-bottom: 14px; }
+.row .rhead { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; }
+.row .idx { font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--forest); }
+.row .tools { display: flex; gap: 6px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid4 { display: grid; grid-template-columns: 130px 1fr 1fr; gap: 12px; }
+label { display: block; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--gray); margin-bottom: 5px; }
+input, select, textarea { font: inherit; font-size: 13.5px; width: 100%; padding: 9px 11px;
+  border: 1px solid var(--line); border-radius: 4px; background: #fff; color: var(--ink); outline: none; }
+input:focus, select:focus, textarea:focus { border-color: var(--forest); box-shadow: 0 0 0 3px rgba(23,96,60,.12); }
+textarea { min-height: 92px; resize: vertical; }
+.fld { margin-bottom: 12px; }
+.thumb { width: 130px; height: 74px; border: 1px solid var(--line); border-radius: 4px; object-fit: cover; background: var(--paper); }
+.note { font-size: 12px; color: var(--gray); margin-top: 8px; }
+.denied { padding: 80px 0; text-align: center; color: var(--gray); }
+@media (max-width: 760px) { .grid2, .grid4 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="topbar">
+    <a class="brand" href="/access">
+      <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <polygon points="35,62 5,110 65,110" fill="#17603C"/>
+        <polygon points="85,38 45,110 125,110" fill="#27925A"/>
+        <polygon points="145,14 95,110 195,110" fill="#4CC98A"/>
+        <polygon points="145,14 132.5,38 157.5,38" fill="#0B3B24"/>
+      </svg>
+      MASAGI <span class="area">Content Studio</span>
+    </a>
+    <div class="actions">
+      <span class="status" id="status"></span>
+      <a class="btn ghost sm" href="/" target="_blank">View site ↗</a>
+      <button class="btn ghost sm" id="reloadBtn" type="button">Reload</button>
+      <button class="btn sm" id="saveBtn" type="button">Save &amp; publish</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="main">
+  <span class="eyebrow">Admin</span>
+  <h1>Site content</h1>
+  <div class="sub">Everything here goes live on the marketing page the moment you save.
+    Leave an Indonesian field empty to fall back to the English text.</div>
+
+  <section class="block">
+    <h2>Hero carousel <span class="hint">slide 1 is the demo video — paste a YouTube / Vimeo / .mp4 link; empty = animated poster</span></h2>
+    <div id="slides"></div>
+    <button class="btn ghost sm" id="addSlide" type="button">+ Add slide</button>
+  </section>
+
+  <section class="block">
+    <h2>Insights &amp; news <span class="hint">shown as the clickable carousel on the site; each opens /blog/&lt;slug&gt;</span></h2>
+    <div id="posts"></div>
+    <button class="btn ghost sm" id="addPost" type="button">+ Add insight</button>
+    <div class="note">Empty image = branded gradient cover. Slug is generated from the title when left blank.</div>
+  </section>
+</main>
+
+<script>
+function el(html) { const d = document.createElement("div"); d.innerHTML = html.trim(); return d.firstChild; }
+function esc(s) { return (s || "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+const slidesEl = document.getElementById("slides");
+const postsEl = document.getElementById("posts");
+
+/* ——— hero slides ——— */
+function slideRow(s) {
+  s = s || {};
+  const row = el('<div class="row">' +
+    '<div class="rhead"><span class="idx">Slide</span><div class="tools">' +
+      '<button class="btn ghost sm" data-move="up" type="button">↑</button>' +
+      '<button class="btn ghost sm" data-move="down" type="button">↓</button>' +
+      '<button class="btn danger sm" data-del type="button">Remove</button></div></div>' +
+    '<div class="grid4">' +
+      '<div class="fld"><label>Type</label><select data-f="type"><option value="image">Image</option><option value="video">Video</option></select></div>' +
+      '<div class="fld"><label>Media URL (src)</label><input data-f="src" placeholder="/static/assets/… or https://youtu.be/…"></div>' +
+      '<div class="fld"><label>Poster (video only)</label><input data-f="poster" placeholder="/static/assets/hero-demo.svg"></div>' +
+    '</div>' +
+    '<div class="grid2">' +
+      '<div class="fld"><label>Caption — English</label><input data-f="caption"></div>' +
+      '<div class="fld"><label>Caption — Indonesia</label><input data-f="caption_id"></div>' +
+    '</div></div>');
+  row.querySelector('[data-f=type]').value = s.type === "video" ? "video" : "image";
+  row.querySelector('[data-f=src]').value = s.src || "";
+  row.querySelector('[data-f=poster]').value = s.poster || "";
+  row.querySelector('[data-f=caption]').value = s.caption || "";
+  row.querySelector('[data-f=caption_id]').value = s.caption_id || "";
+  wireTools(row, slidesEl, reindexSlides);
+  return row;
+}
+function reindexSlides() {
+  [].forEach.call(slidesEl.children, (r, i) => {
+    r.querySelector(".idx").textContent = "Slide " + (i + 1) +
+      (r.querySelector('[data-f=type]').value === "video" ? " · video" : " · picture");
+  });
+}
+document.getElementById("addSlide").onclick = () => { slidesEl.appendChild(slideRow({ type: "image" })); reindexSlides(); };
+
+/* ——— insights ——— */
+function postRow(p) {
+  p = p || {};
+  const row = el('<div class="row">' +
+    '<div class="rhead"><span class="idx">Insight</span><div class="tools">' +
+      '<button class="btn ghost sm" data-move="up" type="button">↑</button>' +
+      '<button class="btn ghost sm" data-move="down" type="button">↓</button>' +
+      '<button class="btn danger sm" data-del type="button">Remove</button></div></div>' +
+    '<div class="grid2">' +
+      '<div class="fld"><label>Title — English</label><input data-f="title"></div>' +
+      '<div class="fld"><label>Title — Indonesia</label><input data-f="title_id"></div>' +
+    '</div>' +
+    '<div class="grid4">' +
+      '<div class="fld"><label>Tag</label><input data-f="tag" placeholder="News / Client story"></div>' +
+      '<div class="fld"><label>Date</label><input data-f="date" type="date"></div>' +
+      '<div class="fld"><label>Slug (blank = from title)</label><input data-f="slug"></div>' +
+    '</div>' +
+    '<div class="grid2">' +
+      '<div class="fld"><label>Excerpt — English</label><textarea data-f="excerpt" style="min-height:64px"></textarea></div>' +
+      '<div class="fld"><label>Excerpt — Indonesia</label><textarea data-f="excerpt_id" style="min-height:64px"></textarea></div>' +
+    '</div>' +
+    '<div class="grid2">' +
+      '<div class="fld"><label>Body — English (blank line = new paragraph)</label><textarea data-f="body"></textarea></div>' +
+      '<div class="fld"><label>Body — Indonesia</label><textarea data-f="body_id"></textarea></div>' +
+    '</div>' +
+    '<div class="grid2">' +
+      '<div class="fld"><label>Cover image URL (optional)</label><input data-f="image"></div>' +
+      '<div class="fld"><label>Author</label><input data-f="author" placeholder="MASAGI Team"></div>' +
+    '</div></div>');
+  ["title","title_id","tag","date","slug","excerpt","excerpt_id","body","body_id","image","author"]
+    .forEach(k => { row.querySelector('[data-f=' + k + ']').value = p[k] || ""; });
+  wireTools(row, postsEl, reindexPosts);
+  return row;
+}
+function reindexPosts() {
+  [].forEach.call(postsEl.children, (r, i) => { r.querySelector(".idx").textContent = "Insight #" + (i + 1); });
+}
+document.getElementById("addPost").onclick = () => { postsEl.appendChild(postRow({ tag: "Insight", author: "MASAGI Team" })); reindexPosts(); };
+
+function wireTools(row, parent, reindex) {
+  row.querySelector("[data-del]").onclick = () => { row.remove(); reindex(); };
+  row.querySelector('[data-move=up]').onclick = () => { if (row.previousElementSibling) { parent.insertBefore(row, row.previousElementSibling); reindex(); } };
+  row.querySelector('[data-move=down]').onclick = () => { if (row.nextElementSibling) { parent.insertBefore(row.nextElementSibling, row); reindex(); } };
+}
+function collect(parent) {
+  return [].map.call(parent.children, r => {
+    const o = {};
+    [].forEach.call(r.querySelectorAll("[data-f]"), inp => { o[inp.getAttribute("data-f")] = inp.value.trim(); });
+    return o;
+  });
+}
+
+/* ——— load / save ——— */
+function setStatus(msg, cls) { const s = document.getElementById("status"); s.textContent = msg; s.className = "status" + (cls ? " " + cls : ""); }
+
+function load() {
+  setStatus("Loading…");
+  fetch("/api/site-content").then(r => r.json()).then(c => {
+    slidesEl.innerHTML = "";
+    ((c.hero || {}).slides || []).forEach(s => slidesEl.appendChild(slideRow(s)));
+    postsEl.innerHTML = "";
+    (c.insights || []).forEach(p => postsEl.appendChild(postRow(p)));
+    reindexSlides(); reindexPosts(); setStatus("");
+  }).catch(() => setStatus("Could not load content.", "err"));
+}
+document.getElementById("reloadBtn").onclick = load;
+
+document.getElementById("saveBtn").onclick = () => {
+  setStatus("Saving…");
+  const payload = { hero: { slides: collect(slidesEl) }, insights: collect(postsEl).filter(p => p.title) };
+  fetch("/api/site-content", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
+    .then(r => r.json().then(d => ({ ok: r.ok, d })))
+    .then(res => {
+      if (!res.ok) { setStatus(res.d.error || "Save failed.", "err"); return; }
+      slidesEl.innerHTML = "";
+      ((res.d.content.hero || {}).slides || []).forEach(s => slidesEl.appendChild(slideRow(s)));
+      postsEl.innerHTML = "";
+      (res.d.content.insights || []).forEach(p => postsEl.appendChild(postRow(p)));
+      reindexSlides(); reindexPosts();
+      setStatus("Saved — live on the site.", "ok");
+    }).catch(() => setStatus("Save failed — check your connection.", "err"));
+};
+
+/* admin gate (server already guards the route; this covers session expiry) */
+fetch("/api/me").then(r => r.ok ? r.json() : null).then(me => {
+  if (!me) { location.href = "/login?next=access"; return; }
+  if (me.role !== "admin") {
+    document.getElementById("main").innerHTML =
+      '<div class="denied"><h1 style="font-size:24px">Admins only</h1>' +
+      '<p style="margin-top:12px">Ask your administrator for access, or go back to <a style="color:var(--accent);font-weight:700" href="/access">your portal</a>.</p></div>';
+    return;
+  }
+  load();
+});
+</script>
+</body>
+</html>

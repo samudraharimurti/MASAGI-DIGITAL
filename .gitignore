@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Local secrets — Flask session key, DOKU credentials if set via .env
+app/.secret_key
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Local/generated data — databases, seeded files, customer records, mock emails
+# (data/ is recreated automatically on first run; nothing here should be shared)
+data/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.iml
