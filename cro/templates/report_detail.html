@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% from "_macros.html" import type_chip, progress_mini %}
+{% block title %}{{ t('report_week') }} {{ fmt_date(r['week_start']) }} - {{ fmt_date(r['week_end']) }}{% endblock %}
+{% block content %}
+<div class="tiles">
+  <div class="tile"><div class="tile-n">{{ data.get('new_submissions', [])|length }}</div><div class="tile-l">{{ t('rpt_new_subs') }}</div></div>
+  <div class="tile"><div class="tile-n">{{ data.get('stages_completed', [])|length }}</div><div class="tile-l">{{ t('rpt_stages_done') }}</div></div>
+  <div class="tile"><div class="tile-n">{{ data.get('certified', [])|length }}</div><div class="tile-l">{{ t('rpt_certified') }}</div></div>
+  <div class="tile {{ 'tile-warn' if data.get('overdue') }}"><div class="tile-n">{{ data.get('overdue', [])|length }}</div><div class="tile-l">{{ t('rpt_overdue') }}</div></div>
+</div>
+<div class="tiles">
+  <div class="tile"><div class="tile-n small">{{ fmt_money(data.get('revenue', {}).get('invoiced', 0)) }}</div><div class="tile-l">{{ t('rpt_invoiced') }}</div></div>
+  <div class="tile"><div class="tile-n small">{{ fmt_money(data.get('revenue', {}).get('collected', 0)) }}</div><div class="tile-l">{{ t('rpt_collected') }}</div></div>
+  <div class="tile"><div class="tile-n small">{{ fmt_money(data.get('revenue', {}).get('outstanding', 0)) }}</div><div class="tile-l">{{ t('rpt_outstanding') }}</div></div>
+</div>
+
+<div class="card">
+  <h3>{{ t('progress_by_client') }}</h3>
+  {% for grp in data.get('progress_by_client', []) %}
+  <div class="prog-client">
+    <div class="prog-client-name">{{ grp['company'] }} <span class="sub-text">{{ grp['client_name'] }}</span></div>
+    <table class="tbl">
+      <thead><tr><th>{{ t('code') }}</th><th>{{ t('product') }}</th><th>{{ t('type') }}</th>
+        <th>{{ t('current_stage') }}</th><th>{{ t('progress') }}</th><th>{{ t('current_note') }}</th></tr></thead>
+      <tbody>
+      {% for su in grp['submissions'] %}
+      <tr>
+        <td><strong>{{ su['code'] }}</strong></td>
+        <td>{{ su['product_name'] }}</td>
+        <td>{{ type_chip(su['service_type']) }}</td>
+        <td>{% if su['status'] == 'CERTIFIED' %}<span class="badge b-CERTIFIED">{{ t('st_CERTIFIED') }}</span>
+            {% else %}{{ (su['cur_id'] if lang == 'id' else su['cur_en']) or '-' }}{% endif %}</td>
+        <td>{{ progress_mini(su['done_n'], su['total_n']) }} <span class="sub-text">{{ su['done_n'] }}/{{ su['total_n'] }}</span></td>
+        <td>{{ su['cur_note'] or '-' }}</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="muted">{{ t('no_progress') }}</p>
+  {% endfor %}
+</div>
+
+<div class="card">
+  <div class="toolbar" style="margin-bottom:8px">
+    <h3 style="margin:0">{{ t('summary') }}</h3>
+    <span class="chip {{ 'chip-SNI' if r['llm_used'] }}">{{ t('llm_badge') if r['llm_used'] else t('rule_badge') }}</span>
+  </div>
+  <pre class="report-text">{{ r['summary_id'] if lang == 'id' else r['summary_en'] }}</pre>
+</div>
+
+<div class="card">
+  <details>
+    <summary>{{ t('raw_data') }}</summary>
+    <pre class="report-text small">{{ r['raw_json'] }}</pre>
+  </details>
+</div>
+{% endblock %}

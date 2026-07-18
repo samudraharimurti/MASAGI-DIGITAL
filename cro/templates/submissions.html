@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% from "_macros.html" import sub_badge, type_chip, progress_mini %}
+{% block title %}{{ t('submissions') }}{% endblock %}
+{% block content %}
+<div class="toolbar">
+  <form method="get" class="filters">
+    <select name="type" onchange="this.form.submit()">
+      <option value="">{{ t('type') }}: {{ t('all') }}</option>
+      <option value="SNI" {{ 'selected' if f_type == 'SNI' }}>SNI</option>
+      <option value="NPT" {{ 'selected' if f_type == 'NPT' }}>NPT</option>
+    </select>
+    <select name="status" onchange="this.form.submit()">
+      <option value="">{{ t('status') }}: {{ t('all') }}</option>
+      {% for s in ['ACTIVE','CERTIFIED','REJECTED','ON_HOLD'] %}
+      <option value="{{ s }}" {{ 'selected' if f_status == s }}>{{ t('st_' + s) }}</option>
+      {% endfor %}
+    </select>
+    <input type="text" name="q" value="{{ f_q }}" placeholder="{{ t('search') }}...">
+    <button class="btn" type="submit">{{ t('filter') }}</button>
+  </form>
+  {% if user['role'] == 'admin' %}
+  <a class="btn primary" href="{{ url_for('submission_new') }}">+ {{ t('new_submission') }}</a>
+  {% endif %}
+</div>
+
+<div class="card">
+  <table class="tbl">
+    <thead>
+      <tr><th>{{ t('code') }}</th><th>{{ t('client') }}</th><th>{{ t('product') }}</th>
+          <th>{{ t('type') }}</th><th>{{ t('current_stage') }}</th><th>{{ t('progress') }}</th>
+          <th>{{ t('started') }}</th><th>{{ t('status') }}</th></tr>
+    </thead>
+    <tbody>
+      {% for r in rows %}
+      <tr>
+        <td><a href="{{ url_for('submission_detail', sid=r['id']) }}"><strong>{{ r['code'] }}</strong></a></td>
+        <td>{{ r['company'] }}<div class="sub-text">{{ r['client_name'] }}</div></td>
+        <td>{{ r['product_name'] }}{% if r['brand'] %}<div class="sub-text">{{ r['brand'] }}</div>{% endif %}</td>
+        <td>{{ type_chip(r['service_type']) }}</td>
+        <td>{{ (r['cur_id'] if lang == 'id' else r['cur_en']) or '-' }}</td>
+        <td>{{ progress_mini(r['done_n'], r['total_n']) }}</td>
+        <td>{{ fmt_date(r['submitted_at']) }}</td>
+        <td>{{ sub_badge(r['status']) }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="8" class="muted">{{ t('no_submissions') }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

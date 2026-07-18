@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% from "_macros.html" import type_chip, due_chip %}
+{% block title %}{{ t('nav_dashboard') }}{% endblock %}
+{% block content %}
+
+<div class="tiles">
+  <div class="tile"><div class="tile-n">{{ kpis.active }}</div><div class="tile-l">{{ t('kpi_active') }}</div></div>
+  <div class="tile"><div class="tile-n">{{ kpis.certified }}</div><div class="tile-l">{{ t('kpi_certified') }}</div></div>
+  <div class="tile {{ 'tile-warn' if kpis.overdue }}"><div class="tile-n">{{ kpis.overdue }}</div><div class="tile-l">{{ t('kpi_overdue') }}</div></div>
+  {% if user['role'] == 'admin' %}
+  <div class="tile"><div class="tile-n small">{{ fmt_money(kpis.outstanding) }}</div><div class="tile-l">{{ t('kpi_outstanding') }}</div></div>
+  {% endif %}
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <h3>{{ t('sni_pipeline') }}</h3>
+    <div class="hbar-list">
+      {% for r in pipe_sni %}
+      <div class="hbar-row">
+        <div class="hbar-label">{{ r['ord'] }}. {{ stage_name(r) }}</div>
+        <div class="hbar-track"><div class="hbar-fill c1" style="width: {{ (100 * r['c'] / pipe_max)|round(0) }}%"></div></div>
+        <div class="hbar-val">{{ r['c'] }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="card">
+    <h3>{{ t('npt_pipeline') }}</h3>
+    <div class="hbar-list">
+      {% for r in pipe_npt %}
+      <div class="hbar-row">
+        <div class="hbar-label">{{ r['ord'] }}. {{ stage_name(r) }}</div>
+        <div class="hbar-track"><div class="hbar-fill c2" style="width: {{ (100 * r['c'] / pipe_max)|round(0) }}%"></div></div>
+        <div class="hbar-val">{{ r['c'] }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    <h3 style="margin-top:18px">{{ t('active_by_type') }}</h3>
+    <div class="dist">
+      <div class="dist-bar">
+        <div class="dist-seg c1" style="width: {{ (100 * dist.get('SNI', 0) / dist_total)|round(0) }}%"></div>
+        <div class="dist-seg c2" style="width: {{ (100 * dist.get('NPT', 0) / dist_total)|round(0) }}%"></div>
+      </div>
+      <div class="legend">
+        <span class="legend-item"><span class="swatch c1"></span>SNI - {{ dist.get('SNI', 0) }}</span>
+        <span class="legend-item"><span class="swatch c2"></span>NPT - {{ dist.get('NPT', 0) }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <h3>{{ t('deadlines') }}</h3>
+    {% if deadlines %}
+    <table class="tbl">
+      <thead><tr><th>{{ t('submission') }}</th><th>{{ t('stage') }}</th><th>{{ t('due') }}</th></tr></thead>
+      <tbody>
+      {% for d in deadlines %}
+      <tr>
+        <td><a href="{{ url_for('submission_detail', sid=d['sid']) }}">{{ d['code'] }}</a><div class="sub-text">{{ d['company'] }}</div></td>
+        <td>{{ d['name_id'] if lang == 'id' else d['name_en'] }}</td>
+        <td>{{ fmt_date(d['due']) }}<div>{{ due_chip(d['due']) }}</div></td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}<p class="muted">{{ t('deadline_none') }}</p>{% endif %}
+  </div>
+
+  <div class="card">
+    <h3>{{ t('compliance') }}</h3>
+    {% if compliance %}
+    <table class="tbl">
+      <tbody>
+      {% for c in compliance %}
+      <tr>
+        <td><a href="{{ url_for('submission_detail', sid=c['sid']) }}">{{ c['code'] }}</a> {{ type_chip(c['service_type']) }}</td>
+        <td>{% if c['kind'] == 'expiry' %}{{ t('expiry_due') }}{% elif c['service_type'] == 'SNI' %}{{ t('surv_due') }}{% else %}{{ t('report_due') }}{% endif %}</td>
+        <td>{{ fmt_date(c['due']) }}<div>{{ due_chip(c['due']) }}</div></td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}<p class="muted">{{ t('compliance_none') }}</p>{% endif %}
+
+    {% if user['role'] == 'admin' %}
+    <h3 style="margin-top:18px">{{ t('revenue') }}</h3>
+    <div class="rev-grid">
+      <div><div class="rev-n">{{ fmt_money(revenue.invoiced) }}</div><div class="rev-l">{{ t('rev_invoiced_month') }}</div></div>
+      <div><div class="rev-n">{{ fmt_money(revenue.collected) }}</div><div class="rev-l">{{ t('rev_collected_month') }}</div></div>
+      <div><div class="rev-n">{{ fmt_money(revenue.outstanding) }}</div><div class="rev-l">{{ t('rev_outstanding') }}</div></div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="card">
+  <h3>{{ t('activity') }}</h3>
+  <ul class="feed">
+    {% for a in activity %}
+    <li><span class="feed-time">{{ fmt_dt(a['created_at']) }}</span>
+        <span class="feed-user">{{ a['uname'] or 'System' }}</span> - {{ a['details'] }}</li>
+    {% else %}
+    <li class="muted">{{ t('none') }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

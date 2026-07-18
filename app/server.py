@@ -1,8 +1,12 @@
 """MASAGI HV ERP - Flask application: auth, REST API, Excel endpoints, static SPA."""
+import base64
 import functools
+import hashlib
+import hmac
 import json
 import os
 import secrets
+import time
 from datetime import datetime, timedelta
 
 from flask import (Flask, g, jsonify, redirect, request, send_file,
@@ -630,6 +634,57 @@ def api_login():
 def api_logout():
     session.clear()
     return jsonify({"ok": True})
+
+
+# --- MASAGI Account SSO -----------------------------------------------------
+# account.masagi.io signs a short-lived token; this endpoint verifies it and
+# opens a normal HV session for the mapped local user. Shared secret lives in
+# <repo>/data/portal/sso_secret (created by the portal app on first run).
+
+SSO_SECRET_FILE = os.environ.get("SSO_SECRET_FILE") or os.path.join(
+    BASE_DIR, os.pardir, "data", "portal", "sso_secret")
+
+
+def _sso_secret():
+    try:
+        with open(SSO_SECRET_FILE) as f:
+            return f.read().strip()
+    except OSError:
+        return None
+
+
+@app.get("/sso")
+def sso_login():
+    secret = _sso_secret()
+    token = request.args.get("token", "")
+    if not secret or "." not in token:
+        return redirect("/product?login=1")
+    body, sig = token.rsplit(".", 1)
+    expected = hmac.new(secret.encode(), body.encode(), hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(expected, sig):
+        return redirect("/product?login=1")
+    try:
+        payload = json.loads(base64.urlsafe_b64decode(body + "=" * (-len(body) % 4)))
+    except (ValueError, TypeError):
+        return redirect("/product?login=1")
+    if payload.get("sys") != "hv" or payload.get("exp", 0) < time.time():
+        return redirect("/product?login=1")
+
+    target_db = payload.get("db") or database.DEFAULT_DB
+    if target_db not in database.list_databases():
+        target_db = database.DEFAULT_DB
+    session.clear()
+    session["active_db"] = target_db
+    g.pop("db", None)
+    user = db().execute(
+        "SELECT * FROM users WHERE username=? AND is_active=1",
+        ((payload.get("u") or "").strip(),)).fetchone()
+    if user is None:
+        session.clear()
+        return redirect("/product?login=1")
+    session["user_id"] = user["id"]
+    session.permanent = True
+    return redirect("/app")
 
 
 @app.get("/api/me")

@@ -7,24 +7,24 @@
 <link rel="icon" type="image/svg+xml" href="/static/assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --paper: #ffffff; --paper-2: #f5f5f2; --ink: #21201e; --ink-2: #3c3b38;
-  --gray: #6b6e72; --line: #e4e4e0; --accent: #cc0000;
+  --paper: #ffffff; --paper-2: #F8FAFC; --ink: #1B2A4A; --ink-2: #334155;
+  --gray: #64748B; --line: #E2E8F0; --accent: #2563EB;
   --pine: #0b3b24; --forest: #17603c; --leaf: #27925a; --mint: #4cc98a;
   --card: #ffffff; --nav-bg: #ffffff; --tint: #eaf5ef; --green-ink: #17603c;
-  --warn-bg: #fdf3e7; --warn-ink: #b26a00; --err-bg: #fbecec; --err-ink: #cc0000;
+  --warn-bg: #fdf3e7; --warn-ink: #b26a00; --err-bg: #fbecec; --err-ink: #DC2626;
 }
 html[data-theme="dark"] {
-  --paper: #151613; --paper-2: #151613; --ink: #f1f1ec; --ink-2: #d6d6cf;
-  --gray: #a3a69f; --line: #2b2c27;
-  --card: #1d1e1a; --nav-bg: #191a16; --tint: rgba(47,184,119,.16); --green-ink: #57d496;
-  --warn-bg: rgba(200,140,30,.16); --warn-ink: #e8b46a; --err-bg: rgba(204,40,40,.16); --err-ink: #ff9d9d;
+  --paper: #0F172A; --paper-2: #0F172A; --ink: #F1F5F9; --ink-2: #CBD5E1;
+  --gray: #94A3B8; --line: #334155;
+  --card: #1E293B; --nav-bg: #111B30; --tint: rgba(47,184,119,.16); --green-ink: #57d496;
+  --warn-bg: rgba(200,140,30,.16); --warn-ink: #e8b46a; --err-bg: rgba(220,38,38,.16); --err-ink: #ff9d9d;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-  font-family: "Hanken Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background: var(--paper-2); color: var(--ink); -webkit-font-smoothing: antialiased; line-height: 1.5;
   min-height: 100vh; display: flex; flex-direction: column;
 }
@@ -104,7 +104,7 @@ details.pw input:focus { border-color: var(--green-ink); box-shadow: 0 0 0 3px r
 .db.active { border-color: var(--green-ink); box-shadow: 0 0 0 1px var(--green-ink); }
 .db .ic { width: 40px; height: 40px; border-radius: 6px; display: flex; align-items: center; justify-content: center;
   font-size: 17px; flex: none; background: var(--paper-2); }
-html[data-theme="dark"] .db .ic { background: #24251f; }
+html[data-theme="dark"] .db .ic { background: #243247; }
 .db .info { min-width: 0; }
 .db .nm { font-weight: 800; font-size: 14.5px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .db .meta { font-size: 12px; color: var(--gray); margin-top: 1px; }

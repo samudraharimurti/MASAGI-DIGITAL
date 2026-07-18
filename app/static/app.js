@@ -318,10 +318,10 @@ function chartDonut(items, opts = {}) {
 }
 
 // MASAGI design palette — green family + calm neutrals (one green accent, restrained)
-const PALETTE = ["#1e8a55", "#17603c", "#9fe0be", "#2fb877", "#5b6b80", "#1f9d57", "#c87a08", "#9aa6b1"];
-const C_REV = "#1e8a55", C_EXP = "#9aa6b1", C_PROFIT = "#1f9d57";
+const PALETTE = ["#2563EB", "#17603c", "#BFDBFE", "#3B82F6", "#5b6b80", "#1f9d57", "#c87a08", "#9aa6b1"];
+const C_REV = "#2563EB", C_EXP = "#9aa6b1", C_PROFIT = "#1f9d57";
 // AR aging bucket colours + status pill classes (Piutang)
-const AR_BUCKET_COLOR = { not_due: "#1f9d57", d1_30: "#1e8a55", d31_60: "#c87a08", d61_90: "#d2691e", d90: "#bd362f" };
+const AR_BUCKET_COLOR = { not_due: "#1f9d57", d1_30: "#2563EB", d31_60: "#c87a08", d61_90: "#d2691e", d90: "#bd362f" };
 const AR_STATUS_PILL = { current: "posted", late_1_30: "draft", late_31_60: "draft", late_61_90: "draft", bad: "bad", paid: "inactive" };
 const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const ROLE_LABELS = { admin: "Admin", finance: "Accountant", viewer: "Viewer/Auditor" };

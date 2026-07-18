@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% from "_macros.html" import sub_badge, stg_badge, type_chip, stepper, due_chip, inv_badge %}
+{% block title %}{{ s['code'] }}{% endblock %}
+{% block content %}
+
+<div class="card">
+  <div class="detail-head">
+    <div>
+      <div class="detail-title">{{ s['code'] }} {{ type_chip(s['service_type']) }} {{ sub_badge(s['status']) }}</div>
+      <div class="detail-sub">{{ s['product_name'] }}{% if s['brand'] %} - {{ s['brand'] }}{% endif %}
+        {% if s['standard_ref'] %}<span class="muted"> | {{ s['standard_ref'] }}</span>{% endif %}</div>
+      <div class="sub-text">{{ t('started') }}: {{ fmt_date(s['submitted_at']) }}</div>
+    </div>
+    <a class="btn" href="{{ url_for('portal') }}">{{ t('back') }}</a>
+  </div>
+
+  {% if s['status'] == 'CERTIFIED' %}
+  <div class="cert-box">
+    <div><span class="cert-l">{{ t('cert_number') }}</span><strong>{{ s['cert_number'] or '-' }}</strong></div>
+    <div><span class="cert-l">{{ t('certified_on') }}</span>{{ fmt_date(s['certified_at']) }}</div>
+    <div><span class="cert-l">{{ t('cert_expiry') }}</span>{{ fmt_date(s['cert_expiry']) }}</div>
+    <div><span class="cert-l">{{ t('next_obligation') }}</span>{{ fmt_date(s['next_surveillance']) }} {{ due_chip(s['next_surveillance']) }}</div>
+  </div>
+  {% endif %}
+
+  {{ stepper(stages) }}
+
+  {% if current %}
+  <div class="portal-current">
+    <h3>{{ t('current_stage') }}: {{ stage_name(current) }} {{ stg_badge(current['status']) }}</h3>
+    <p class="reg-note">{{ stage_note(current) }}</p>
+    <div class="stage-meta">
+      <span>{{ t('entered') }}: <strong>{{ fmt_date(current['entered_at']) }}</strong></span>
+      <span>{{ t('est_end') }}: <strong>{{ fmt_date(current['est_end']) }}</strong></span>
+    </div>
+    {% if current['client_notes'] %}
+    <div class="client-note"><strong>{{ t('notes') }}:</strong> {{ current['client_notes'] }}</div>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+
+<div class="card">
+  <h3>{{ t('stage_history') }}</h3>
+  <table class="tbl">
+    <thead><tr><th>#</th><th>{{ t('stage') }}</th><th>{{ t('est_end') }}</th><th>{{ t('completed') }}</th><th>{{ t('status') }}</th></tr></thead>
+    <tbody>
+      {% for st in stages %}
+      <tr class="{{ 'row-current' if st['status'] in ('IN_PROGRESS','ACTION') }}">
+        <td>{{ st['ord'] }}</td>
+        <td>{{ stage_name(st) }}{% if st['client_notes'] %}<div class="sub-text">{{ st['client_notes'] }}</div>{% endif %}</td>
+        <td>{{ fmt_date(st['est_end']) }}</td>
+        <td>{{ fmt_date(st['completed_at']) }}</td>
+        <td>{{ stg_badge(st['status']) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <h3>{{ t('documents') }}</h3>
+    <form method="post" action="{{ url_for('submission_upload', sid=s['id']) }}" enctype="multipart/form-data" class="inline-form">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <input type="file" name="file" required>
+      <button class="btn small">{{ t('upload') }}</button>
+    </form>
+    <ul class="doc-list">
+      {% for d in docs %}
+      <li><a href="{{ url_for('download_doc', doc_id=d['id']) }}">{{ d['file_name'] }}</a>
+        <span class="chip">{{ t('cat_' + d['category']) }}</span>
+        <span class="sub-text">{{ fmt_dt(d['uploaded_at']) }}</span></li>
+      {% else %}<li class="muted">{{ t('no_docs') }}</li>{% endfor %}
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>{{ t('comments') }}</h3>
+    <div class="comments">
+      {% for c in comments %}
+      <div class="comment {{ 'mine' if c['user_id'] == user['id'] }}">
+        <div class="comment-head">{{ c['uname'] or '?' }} <span>{{ fmt_dt(c['created_at']) }}</span></div>
+        <div>{{ c['body'] }}</div>
+      </div>
+      {% else %}<p class="muted">{{ t('none') }}</p>{% endfor %}
+    </div>
+    <form method="post" action="{{ url_for('submission_comment', sid=s['id']) }}">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <textarea name="body" rows="2" placeholder="{{ t('comment_placeholder') }}" required></textarea>
+      <div class="form-actions">
+        <button class="btn small primary">{{ t('add_comment') }}</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% if invoices %}
+<div class="card">
+  <h3>{{ t('linked_invoices') }}</h3>
+  <table class="tbl">
+    <tbody>
+    {% for i in invoices %}
+    {% if i['status'] != 'DRAFT' %}
+    <tr>
+      <td><a href="{{ url_for('invoice_detail', iid=i['id']) }}">{{ i['number'] }}</a></td>
+      <td>{{ fmt_date(i['due_date']) }}</td>
+      <td>{{ fmt_money(i['total']) }}</td>
+      <td>{{ inv_badge(i['disp']) }}</td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+{% endblock %}

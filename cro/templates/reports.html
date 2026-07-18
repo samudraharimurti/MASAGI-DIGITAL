@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}{{ t('weekly_reports') }}{% endblock %}
+{% block content %}
+<div class="toolbar">
+  <span class="chip">{{ t('llm_status') }}: {{ t('llm_on') if llm_on else t('llm_off') }}</span>
+  {% if user['role'] == 'admin' %}
+  <form method="post" action="{{ url_for('reports_generate') }}">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <button class="btn primary">{{ t('generate_report') }}</button>
+  </form>
+  {% endif %}
+</div>
+<div class="card">
+  <table class="tbl">
+    <thead><tr><th>{{ t('report_week') }}</th><th>{{ t('generated_at') }}</th><th></th><th></th></tr></thead>
+    <tbody>
+      {% for r in rows %}
+      <tr>
+        <td><a href="{{ url_for('report_detail', rid=r['id']) }}"><strong>{{ fmt_date(r['week_start']) }} - {{ fmt_date(r['week_end']) }}</strong></a></td>
+        <td>{{ fmt_dt(r['generated_at']) }}</td>
+        <td><span class="chip {{ 'chip-SNI' if r['llm_used'] }}">{{ t('llm_badge') if r['llm_used'] else t('rule_badge') }}</span></td>
+        <td><a class="btn tiny" href="{{ url_for('report_detail', rid=r['id']) }}">{{ t('view') }}</a></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4" class="muted">{{ t('no_reports') }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

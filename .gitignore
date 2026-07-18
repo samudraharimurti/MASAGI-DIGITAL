@@ -15,6 +15,7 @@ app/.secret_key
 # Local/generated data — databases, seeded files, customer records, mock emails
 # (data/ is recreated automatically on first run; nothing here should be shared)
 data/
+cro/data/
 
 # OS / editor
 .DS_Store

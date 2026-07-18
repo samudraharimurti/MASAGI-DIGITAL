@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}{{ t('new_invoice') }}{% endblock %}
+{% block content %}
+<div class="card form-card wide-form">
+  <form method="post" id="invoice-form">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <div class="form-grid">
+      <label>{{ t('select_client') }} *
+        <select name="client_id" id="inv-client" required>
+          <option value=""></option>
+          {% for c in clients %}<option value="{{ c['id'] }}">{{ c['company'] }} - {{ c['name'] }}</option>{% endfor %}
+        </select>
+      </label>
+      <label>{{ t('link_submission') }}
+        <select name="submission_id" id="inv-sub">
+          <option value="">{{ t('none') }}</option>
+          {% for s in subs %}<option value="{{ s['id'] }}" data-client="{{ s['client_id'] }}">{{ s['code'] }} - {{ s['product_name'] }}</option>{% endfor %}
+        </select>
+      </label>
+      <label>{{ t('issue_date') }}
+        <input type="date" name="issue_date" value="{{ today }}">
+      </label>
+      <label>{{ t('due_date') }}
+        <input type="date" name="due_date">
+      </label>
+      <label>{{ t('tax_mode') }}
+        <select name="tax_mode" id="inv-taxmode"
+                data-ppn="{{ st.get('ppn_percent', '11') }}" data-pph="{{ st.get('pph_percent', '2') }}">
+          <option value="PPh" {{ 'selected' if st.get('tax_mode', 'PPh') == 'PPh' }}>{{ t('tax_pph') }}</option>
+          <option value="PPN" {{ 'selected' if st.get('tax_mode') == 'PPN' }}>{{ t('tax_ppn') }}</option>
+          <option value="NONE" {{ 'selected' if st.get('tax_mode') == 'NONE' }}>{{ t('tax_none') }}</option>
+        </select>
+      </label>
+      <label>%
+        <input type="number" name="tax_percent" step="0.1" min="0" max="100" id="inv-tax"
+               value="{{ st.get('pph_percent', '2') if st.get('tax_mode', 'PPh') == 'PPh' else st.get('ppn_percent', '11') }}">
+      </label>
+      <label class="span2">{{ t('notes') }}
+        <input type="text" name="notes">
+      </label>
+    </div>
+
+    <h3>{{ t('items') }}</h3>
+    <table class="tbl" id="items-table">
+      <thead><tr><th style="width:55%">{{ t('item_desc') }}</th><th>{{ t('qty') }}</th>
+        <th>{{ t('unit_price') }}</th><th>{{ t('line_total') }}</th><th></th></tr></thead>
+      <tbody>
+        <tr class="item-row">
+          <td><input type="text" name="item_desc"></td>
+          <td><input type="number" name="item_qty" value="1" min="0" step="0.5" class="qty"></td>
+          <td><input type="number" name="item_price" value="0" min="0" step="1000" class="price"></td>
+          <td class="row-total">Rp 0</td>
+          <td><button type="button" class="btn tiny remove-row">&#10005;</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" class="btn small" id="add-row">+ {{ t('add_row') }}</button>
+
+    <div class="totals-preview">
+      <div>{{ t('subtotal') }}: <span id="pv-sub">Rp 0</span></div>
+      <div id="pv-tax-row"><span id="pv-tax-label">{{ t('tax_pph') }}</span>: <span id="pv-tax">Rp 0</span></div>
+      <div class="grand">{{ t('total') }}: <span id="pv-total">Rp 0</span></div>
+    </div>
+
+    <div class="form-actions">
+      <a class="btn" href="{{ url_for('invoices_list') }}">{{ t('cancel') }}</a>
+      <button class="btn primary" type="submit">{{ t('create') }}</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

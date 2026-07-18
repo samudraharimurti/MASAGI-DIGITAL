@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MASAGI Account — Sign in</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='22' fill='%231B2A4A'/%3E%3Cpolygon points='30,58 12,92 48,92' fill='%231E7A4C'/%3E%3Cpolygon points='58,42 34,92 82,92' fill='%2331A96A'/%3E%3Cpolygon points='78,26 48,92 106,92' fill='%2357D496'/%3E%3Cpolygon points='78,26 70.5,42 85.5,42' fill='%230B3B24'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* MASAGI Account — synchronized with the masagi.io landing design system */
+:root {
+  --navy:#1B2A4A; --accent:#2563EB; --bg:#F8FAFC; --surface:#FFFFFF;
+  --text:#1B2A4A; --text-2:#64748B; --border:#E2E8F0;
+  --shadow:0 18px 44px rgba(27,42,74,.10);
+}
+html[data-theme="dark"] {
+  --accent:#3B82F6; --bg:#0F172A; --surface:#1E293B;
+  --text:#F1F5F9; --text-2:#94A3B8; --border:#334155;
+  --shadow:0 18px 44px rgba(0,0,0,.40);
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family:'Inter','Helvetica Neue',Arial,sans-serif; background:var(--bg); color:var(--text);
+  line-height:1.6; -webkit-font-smoothing:antialiased; min-height:100vh;
+  display:flex; flex-direction:column;
+}
+a { color:inherit; text-decoration:none; }
+
+header { border-bottom:1px solid var(--border); background:var(--surface); }
+.topbar { max-width:1080px; margin:0 auto; padding:0 22px; height:68px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:18px; letter-spacing:.03em; }
+.brand svg { height:28px; width:auto; }
+.brand .sub { font-weight:500; font-size:10.5px; letter-spacing:.3em; display:block; margin-top:-3px; color:var(--text-2); }
+.controls { display:flex; align-items:center; gap:8px; }
+.lang-group { display:flex; border:1px solid var(--border); border-radius:5px; overflow:hidden; }
+.lang-btn { font:inherit; font-size:11.5px; font-weight:700; cursor:pointer; padding:6px 10px;
+  border:0; background:transparent; color:var(--text-2); }
+.lang-btn.on { background:var(--accent); color:#fff; }
+.theme-btn { font-size:14px; cursor:pointer; width:32px; height:30px; border:1px solid var(--border);
+  border-radius:5px; background:transparent; color:var(--text-2); }
+
+main { flex:1; display:flex; align-items:center; justify-content:center; padding:40px 20px; }
+.panel { width:min(460px,100%); }
+.panel.wide { width:min(760px,100%); }
+.eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11.5px; font-weight:700;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
+.eyebrow::before { content:""; width:28px; height:3px; background:var(--accent); }
+h1 { font-size:clamp(24px,4vw,32px); font-weight:800; letter-spacing:-.015em; line-height:1.15; }
+.lead { color:var(--text-2); font-size:14.5px; margin-top:8px; }
+
+.card { margin-top:26px; background:var(--surface); border:1px solid var(--border); border-radius:14px;
+  padding:30px; box-shadow:var(--shadow); }
+label { display:block; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--text-2); margin:14px 0 6px; }
+input { width:100%; font:inherit; font-size:14.5px; color:var(--text); background:var(--bg);
+  border:1px solid var(--border); border-radius:7px; padding:12px 13px; outline:none;
+  transition:border-color .2s, box-shadow .2s; }
+input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(37,99,235,.18); }
+.btn { display:inline-block; width:100%; font:inherit; font-weight:700; font-size:15px; cursor:pointer;
+  text-align:center; padding:13px; border-radius:7px; border:0; background:var(--accent); color:#fff;
+  margin-top:20px; transition:opacity .15s, transform .15s; }
+.btn:hover { opacity:.9; transform:translateY(-1px); }
+.err { display:none; margin-top:14px; font-size:13px; font-weight:700; color:#b42323;
+  background:rgba(180,35,35,.08); border:1px solid rgba(180,35,35,.25); border-radius:7px; padding:10px 12px; }
+.note { margin-top:16px; font-size:12px; color:var(--text-2); }
+
+/* chooser */
+.who { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:6px; }
+.who .em { font-size:13px; color:var(--text-2); }
+.who a { font-size:13px; font-weight:700; color:#b42323; cursor:pointer; }
+.systems { display:grid; grid-template-columns:1fr; gap:16px; margin-top:26px; }
+@media (min-width:640px) { .systems { grid-template-columns:1fr 1fr; } }
+.sys { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:28px;
+  box-shadow:var(--shadow); display:flex; flex-direction:column; transition:transform .15s, border-color .15s; }
+.sys:hover { transform:translateY(-3px); border-color:var(--accent); }
+.sys .ic { width:52px; height:52px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+  margin-bottom:16px; background:linear-gradient(135deg,var(--navy),var(--accent)); }
+.sys .ic svg { width:30px; height:30px; }
+.sys h3 { font-size:19px; font-weight:800; }
+.sys p { font-size:13.5px; color:var(--text-2); margin:6px 0 20px; flex:1; }
+.sys .open { display:inline-block; font:inherit; font-weight:700; font-size:14px; cursor:pointer;
+  text-align:center; padding:11px; border-radius:7px; border:0; background:var(--accent); color:#fff; }
+.sys .open:hover { opacity:.9; }
+.empty { margin-top:26px; background:var(--surface); border:1px dashed var(--border); border-radius:14px;
+  padding:30px; text-align:center; color:var(--text-2); font-size:14px; }
+
+footer { border-top:1px solid var(--border); background:var(--surface); padding:16px 0; }
+.foot { max-width:1080px; margin:0 auto; padding:0 22px; display:flex; justify-content:space-between;
+  gap:12px; flex-wrap:wrap; font-size:12px; color:var(--text-2); }
+.hidden { display:none !important; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="topbar">
+    <a class="brand" href="https://masagi.io">
+      <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <polygon points="35,62 5,110 65,110" fill="#1E7A4C"/>
+        <polygon points="85,38 45,110 125,110" fill="#31A96A"/>
+        <polygon points="145,14 95,110 195,110" fill="#57D496"/>
+        <polygon points="145,14 132.5,38 157.5,38" fill="#0B3B24"/>
+      </svg>
+      <span>MASAGI<span class="sub" data-i18n="brandSub">ACCOUNT</span></span>
+    </a>
+    <div class="controls">
+      <div class="lang-group">
+        <button class="lang-btn" data-lang="en" type="button">EN</button>
+        <button class="lang-btn" data-lang="id" type="button">ID</button>
+      </div>
+      <button class="theme-btn" id="themeBtn" type="button" title="Light / dark">☾</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- ——— sign in ——— -->
+  <div class="panel" id="loginPanel">
+    <span class="eyebrow" data-i18n="loginEyebrow">Client access</span>
+    <h1 data-i18n="loginTitle">Sign in to MASAGI.</h1>
+    <p class="lead" data-i18n="loginLead">One account for every MASAGI system your team uses.</p>
+    <form class="card" id="loginForm">
+      <label for="fEmail">Email</label>
+      <input id="fEmail" type="email" autocomplete="email" required placeholder="you@company.co.id">
+      <label for="fPw" data-i18n="pwLabel">Password</label>
+      <input id="fPw" type="password" autocomplete="current-password" required>
+      <div class="err" id="loginErr"></div>
+      <button class="btn" type="submit" data-i18n="signIn">Sign in</button>
+      <p class="note" data-i18n="loginNote">No account yet? Access is provisioned by the MASAGI team —
+        write to samudra@masagi.io.</p>
+    </form>
+  </div>
+
+  <!-- ——— system chooser ——— -->
+  <div class="panel wide hidden" id="chooser">
+    <span class="eyebrow" data-i18n="chEyebrow">Your workspaces</span>
+    <h1 id="chTitle" data-i18n="chTitle">Choose a system.</h1>
+    <div class="who"><span class="em" id="whoEmail"></span>
+      <a id="signOut" data-i18n="signOut">Sign out</a></div>
+    <div class="systems" id="systems"></div>
+    <div class="empty hidden" id="noSystems" data-i18n="noSystems">Your account has no systems yet —
+      contact the MASAGI team to get access.</div>
+  </div>
+</main>
+
+<footer>
+  <div class="foot">
+    <span>© 2026 MASAGI Digital</span>
+    <span><a href="https://masagi.io" style="font-weight:700" data-i18n="backSite">← masagi.io</a></span>
+  </div>
+</footer>
+
+<script>
+var I18N = {
+  en: { brandSub:"ACCOUNT", loginEyebrow:"Client access", loginTitle:"Sign in to MASAGI.",
+        loginLead:"One account for every MASAGI system your team uses.",
+        pwLabel:"Password", signIn:"Sign in",
+        loginNote:"No account yet? Access is provisioned by the MASAGI team — write to samudra@masagi.io.",
+        chEyebrow:"Your workspaces", chTitle:"Choose a system.", signOut:"Sign out",
+        noSystems:"Your account has no systems yet — contact the MASAGI team to get access.",
+        backSite:"← masagi.io", open:"Open", denied:"You don't have access to that system.",
+        hello:"Welcome back" },
+  id: { brandSub:"AKUN", loginEyebrow:"Akses klien", loginTitle:"Masuk ke MASAGI.",
+        loginLead:"Satu akun untuk semua sistem MASAGI yang dipakai timmu.",
+        pwLabel:"Kata sandi", signIn:"Masuk",
+        loginNote:"Belum punya akun? Akses disiapkan oleh tim MASAGI — tulis ke samudra@masagi.io.",
+        chEyebrow:"Ruang kerjamu", chTitle:"Pilih sistem.", signOut:"Keluar",
+        noSystems:"Akunmu belum punya sistem — hubungi tim MASAGI untuk mendapat akses.",
+        backSite:"← masagi.io", open:"Buka", denied:"Kamu tidak punya akses ke sistem itu.",
+        hello:"Selamat datang kembali" },
+};
+var LANG = "en", ME = null;
+
+var SYS_ICONS = {
+  hv: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 3v18h18"/><rect x="6" y="12" width="3" height="6" fill="#57D496" stroke="none"/><rect x="11" y="8" width="3" height="10" fill="#fff" stroke="none"/><rect x="16" y="5" width="3" height="13" fill="#57D496" stroke="none"/></svg>',
+  crom: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M9 12l2 2 4-5"/><path d="M12 2l7 4v6c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6z"/></svg>',
+};
+
+function applyLang(lang) {
+  LANG = I18N[lang] ? lang : "en";
+  document.documentElement.lang = LANG;
+  var dict = I18N[LANG];
+  document.querySelectorAll("[data-i18n]").forEach(function (el) {
+    var k = el.getAttribute("data-i18n");
+    if (dict[k] !== undefined) el.textContent = dict[k];
+  });
+  document.querySelectorAll(".lang-btn").forEach(function (b) {
+    b.classList.toggle("on", b.getAttribute("data-lang") === LANG);
+  });
+  try { localStorage.setItem("masagi-lang", LANG); } catch (e) {}
+  if (ME) renderChooser();
+}
+function applyTheme(t) {
+  document.documentElement.setAttribute("data-theme", t);
+  document.getElementById("themeBtn").textContent = t === "dark" ? "☀" : "☾";
+  try { localStorage.setItem("masagi-theme", t); } catch (e) {}
+}
+document.querySelectorAll(".lang-btn").forEach(function (b) {
+  b.addEventListener("click", function () { applyLang(b.getAttribute("data-lang")); });
+});
+document.getElementById("themeBtn").addEventListener("click", function () {
+  applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
+});
+
+function renderChooser() {
+  document.getElementById("loginPanel").classList.add("hidden");
+  document.getElementById("chooser").classList.remove("hidden");
+  document.getElementById("whoEmail").textContent = ME.email;
+  document.getElementById("chTitle").textContent =
+    I18N[LANG].hello + (ME.name ? ", " + ME.name.split(" ")[0] : "") + ".";
+  var box = document.getElementById("systems");
+  box.innerHTML = "";
+  ME.systems.forEach(function (s) {
+    var div = document.createElement("div");
+    div.className = "sys";
+    div.innerHTML =
+      '<div class="ic">' + (SYS_ICONS[s.key] || "") + '</div>' +
+      '<h3>' + s.name + '</h3>' +
+      '<p>' + (LANG === "id" ? s.desc_id : s.desc_en) + '</p>' +
+      '<a class="open" href="/launch/' + s.key + '">' + I18N[LANG].open + ' →</a>';
+    box.appendChild(div);
+  });
+  document.getElementById("noSystems").classList.toggle("hidden", ME.systems.length > 0);
+}
+function showLogin(msg) {
+  document.getElementById("chooser").classList.add("hidden");
+  document.getElementById("loginPanel").classList.remove("hidden");
+  if (msg) { var e = document.getElementById("loginErr"); e.textContent = msg; e.style.display = "block"; }
+}
+
+document.getElementById("loginForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var err = document.getElementById("loginErr"); err.style.display = "none";
+  fetch("/api/login", { method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email: document.getElementById("fEmail").value,
+                           password: document.getElementById("fPw").value }) })
+    .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+    .then(function (res) {
+      if (!res.ok) { err.textContent = res.d.error || "Sign-in failed."; err.style.display = "block"; return; }
+      load();
+    });
+});
+document.getElementById("signOut").addEventListener("click", function () {
+  fetch("/api/logout", { method: "POST" }).then(function () { ME = null; showLogin(); });
+});
+
+function load() {
+  fetch("/api/me").then(function (r) { return r.ok ? r.json() : null; }).then(function (me) {
+    if (me) { ME = me; renderChooser(); }
+    else if (new URLSearchParams(location.search).get("denied")) showLogin(I18N[LANG].denied);
+  });
+}
+
+var st = null, sl = null;
+try { st = localStorage.getItem("masagi-theme"); sl = localStorage.getItem("masagi-lang"); } catch (e) {}
+applyTheme(st || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+applyLang(sl || ((navigator.language || "").toLowerCase().indexOf("id") === 0 ? "id" : "en"));
+load();
+</script>
+</body>
+</html>

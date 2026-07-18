@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}{{ t('nav_notifications') }}{% endblock %}
+{% block content %}
+<div class="toolbar">
+  <span class="chip">{{ unread }} {{ t('unread') }}</span>
+  {% if unread %}
+  <form method="post" action="{{ url_for('notifications_read') }}">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <button class="btn">{{ t('mark_all_read') }}</button>
+  </form>
+  {% endif %}
+</div>
+<div class="card">
+  <ul class="feed notif-list">
+    {% for n in rows %}
+    <li class="{{ 'unread' if not n['is_read'] }}">
+      <span class="feed-time">{{ fmt_dt(n['created_at']) }}</span>
+      <strong>{{ n['title_id'] if lang == 'id' else n['title_en'] }}</strong> -
+      {{ n['body_id'] if lang == 'id' else n['body_en'] }}
+      {% if n['link'] %} <a href="{{ n['link'] }}">{{ t('view') }} &rarr;</a>{% endif %}
+    </li>
+    {% else %}
+    <li class="muted">{{ t('no_notifications') }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

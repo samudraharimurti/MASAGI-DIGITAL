@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+<meta charset="utf-8">
+<title>{{ inv['number'] }}</title>
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: "Inter", "Segoe UI", system-ui, sans-serif; color: #14262b; background: #fff;
+         max-width: 800px; margin: 0 auto; padding: 40px 32px; font-size: 14px; }
+  .top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; }
+  .mark { width: 44px; height: 44px; border-radius: 10px; background: #0E8195; color: #fff; font-size: 24px;
+          font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .mark-logo { height: 46px; width: auto; }
+  .pph-note { margin-top: 8px; font-style: italic; }
+  .co { display: flex; gap: 12px; align-items: center; }
+  .co-name { font-size: 19px; font-weight: 700; }
+  .co-sub { color: #5a6080; font-size: 12px; }
+  h1 { font-size: 26px; color: #0E8195; text-align: right; }
+  .inv-no { text-align: right; color: #5a6080; }
+  .meta { display: flex; justify-content: space-between; margin: 24px 0; gap: 24px; }
+  .meta h4 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #5a6080; margin-bottom: 6px; }
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; }
+  th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: #5a6080;
+       border-bottom: 2px solid #0E8195; padding: 8px 6px; }
+  td { padding: 10px 6px; border-bottom: 1px solid #e7e9f7; vertical-align: top; }
+  .r { text-align: right; }
+  .totals { margin-left: auto; width: 300px; }
+  .totals div { display: flex; justify-content: space-between; padding: 6px 6px; }
+  .totals .grand { font-weight: 700; font-size: 17px; border-top: 2px solid #14262b; margin-top: 4px; }
+  .foot { margin-top: 40px; padding-top: 16px; border-top: 1px solid #e7e9f7; color: #5a6080; font-size: 12px; }
+  .print-bar { text-align: center; margin-bottom: 24px; }
+  .print-bar button { background: #0E8195; color: #fff; border: 0; border-radius: 8px; padding: 10px 22px;
+                      font-size: 14px; cursor: pointer; }
+  .print-bar p { color: #5a6080; font-size: 12px; margin-top: 6px; }
+  @media print { .print-bar { display: none; } body { padding: 0; } }
+</style>
+</head>
+<body>
+<div class="print-bar">
+  <button onclick="window.print()">{{ t('print') }}</button>
+  <p>{{ t('print_hint') }}</p>
+</div>
+<div class="top">
+  <div class="co">
+    <img class="mark-logo" src="{{ url_for('static', filename='logo.svg') }}" alt="MASAGI">
+    <div>
+      <div class="co-name">{{ settings.get('company_name', 'MASAGI CROM') }}</div>
+      <div class="co-sub">{{ settings.get('company_address', '') }}<br>
+        {{ settings.get('company_email', '') }} | {{ settings.get('company_phone', '') }}</div>
+    </div>
+  </div>
+  <div>
+    <h1>{{ t('invoice') | upper }}</h1>
+    <div class="inv-no">{{ inv['number'] }}</div>
+  </div>
+</div>
+
+<div class="meta">
+  <div>
+    <h4>{{ t('bill_to') }}</h4>
+    <strong>{{ inv['company'] }}</strong><br>
+    {{ inv['client_name'] }}<br>
+    {{ inv['client_email'] }}{% if inv['client_phone'] %}<br>{{ inv['client_phone'] }}{% endif %}
+  </div>
+  <div style="text-align:right">
+    <h4>{{ t('date') }}</h4>
+    {{ t('issue_date') }}: {{ fmt_date(inv['issue_date']) }}<br>
+    {{ t('due_date') }}: <strong>{{ fmt_date(inv['due_date']) }}</strong>
+  </div>
+</div>
+
+<table>
+  <thead><tr><th style="width:58%">{{ t('item_desc') }}</th><th class="r">{{ t('qty') }}</th>
+    <th class="r">{{ t('unit_price') }}</th><th class="r">{{ t('line_total') }}</th></tr></thead>
+  <tbody>
+    {% for it in items %}
+    <tr><td>{{ it['description'] }}</td><td class="r">{{ it['qty']|int if it['qty'] == it['qty']|int else it['qty'] }}</td>
+      <td class="r">{{ fmt_money(it['unit_price']) }}</td><td class="r">{{ fmt_money(it['total']) }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="totals">
+  <div><span>{{ t('subtotal') }}</span><span>{{ fmt_money(inv['subtotal']) }}</span></div>
+  {% if inv['tax_mode'] == 'PPN' %}
+  <div><span>{{ t('tax_ppn') }} {{ inv['tax_percent'] }}%</span><span>+ {{ fmt_money(inv['tax_amount']) }}</span></div>
+  {% elif inv['tax_mode'] == 'PPh' %}
+  <div><span>{{ t('tax_pph') }} {{ inv['tax_percent'] }}%</span><span>- {{ fmt_money(inv['tax_amount']) }}</span></div>
+  {% endif %}
+  <div class="grand"><span>{{ t('amount_due') if inv['tax_mode'] == 'PPh' else t('total') }}</span><span>{{ fmt_money(inv['total']) }}</span></div>
+  {% if paid %}
+  <div><span>{{ t('paid_amount') }}</span><span>{{ fmt_money(paid) }}</span></div>
+  <div><span>{{ t('balance') }}</span><span>{{ fmt_money(balance) }}</span></div>
+  {% endif %}
+</div>
+
+<div class="foot">
+  {% if inv['tax_mode'] == 'PPh' %}<p class="pph-note">{{ t('pph_note') }}</p>{% endif %}
+  {% if inv['notes'] %}<p>{{ inv['notes'] }}</p>{% endif %}
+  <p>{{ settings.get('invoice_footer', '') }}</p>
+  <p style="margin-top:10px">{{ t('thank_you') }}</p>
+</div>
+</body>
+</html>

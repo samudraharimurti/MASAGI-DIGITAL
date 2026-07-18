@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ code }}{% endblock %}
+{% block content %}
+<div class="card center-card">
+  <h2 style="font-size:48px; margin:0">{{ code }}</h2>
+  <p>{{ message }}</p>
+  <a class="btn" href="{{ url_for('home') }}">{{ t('back') }}</a>
+</div>
+{% endblock %}
+{% block anon %}
+<div class="login-wrap"><div class="login-card"><h2>{{ code }}</h2><p>{{ message }}</p>
+<a class="btn" href="{{ url_for('login') }}">{{ t('back') }}</a></div></div>
+{% endblock %}

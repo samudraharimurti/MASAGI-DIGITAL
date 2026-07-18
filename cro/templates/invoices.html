@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% from "_macros.html" import inv_badge %}
+{% block title %}{{ t('invoices') }}{% endblock %}
+{% block content %}
+{% if user['role'] == 'admin' %}
+<div class="toolbar">
+  <div></div>
+  <a class="btn primary" href="{{ url_for('invoice_new') }}">+ {{ t('new_invoice') }}</a>
+</div>
+{% endif %}
+<div class="card">
+  <table class="tbl">
+    <thead>
+      <tr><th>{{ t('invoice_number') }}</th>{% if user['role'] == 'admin' %}<th>{{ t('client') }}</th>{% endif %}
+          <th>{{ t('link_submission') }}</th><th>{{ t('issue_date') }}</th><th>{{ t('due_date') }}</th>
+          <th>{{ t('total') }}</th><th>{{ t('paid_amount') }}</th><th>{{ t('status') }}</th></tr>
+    </thead>
+    <tbody>
+      {% for r in rows %}
+      <tr>
+        <td><a href="{{ url_for('invoice_detail', iid=r['id']) }}"><strong>{{ r['number'] }}</strong></a></td>
+        {% if user['role'] == 'admin' %}<td>{{ r['company'] }}</td>{% endif %}
+        <td>{{ r['sub_code'] or '-' }}</td>
+        <td>{{ fmt_date(r['issue_date']) }}</td>
+        <td>{{ fmt_date(r['due_date']) }}</td>
+        <td>{{ fmt_money(r['total']) }}</td>
+        <td>{{ fmt_money(r['paid']) }}</td>
+        <td>{{ inv_badge(r['disp']) }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="8" class="muted">{{ t('no_invoices') }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

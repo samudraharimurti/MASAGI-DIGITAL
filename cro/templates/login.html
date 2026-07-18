@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ t('sign_in') }}{% endblock %}
+{% block anon %}
+<div class="login-wrap">
+  <div class="login-card">
+    <div class="login-top">
+      <div class="lang-switch">
+        <a href="{{ url_for('set_lang', code='en') }}" class="{{ 'on' if lang == 'en' }}">EN</a><a
+           href="{{ url_for('set_lang', code='id') }}" class="{{ 'on' if lang == 'id' }}">ID</a>
+      </div>
+      <button class="icon-btn" id="theme-toggle" title="{{ t('theme') }}"><span class="sun">&#9728;</span><span class="moon">&#9789;</span></button>
+    </div>
+    <div class="brand login-brand">
+      <img class="brand-logo" src="{{ url_for('static', filename='logo.svg') }}" alt="MASAGI">
+      <div class="brand-meta">
+        <span class="brand-cro">CRO</span>
+        <span class="brand-sub">{{ t('tagline') }}</span>
+      </div>
+    </div>
+    <p class="login-sub">{{ t('sign_in_sub') }}</p>
+    <form method="post" action="{{ url_for('login') }}">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <label>{{ t('email') }}
+        <input type="email" name="email" required autofocus autocomplete="username">
+      </label>
+      <label>{{ t('password') }}
+        <input type="password" name="password" required autocomplete="current-password">
+      </label>
+      <button class="btn primary wide" type="submit">{{ t('sign_in') }}</button>
+    </form>
+    <div class="demo-box">
+      <strong>{{ t('demo_accounts') }}</strong>
+      <div>admin@masagicrom.local / admin123</div>
+      <div>inputter@masagicrom.local / inputter123</div>
+      <div>client@pelumasnusantara.co.id / client123</div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}{{ t('users') }}{% endblock %}
+{% block content %}
+<div class="toolbar">
+  <div></div>
+  <a class="btn primary" href="{{ url_for('user_form') }}">+ {{ t('new_user') }}</a>
+</div>
+<div class="card">
+  <table class="tbl">
+    <thead><tr><th>{{ t('name') }}</th><th>{{ t('email') }}</th><th>{{ t('role') }}</th>
+      <th>{{ t('company') }}</th><th>{{ t('phone') }}</th><th>{{ t('status') }}</th><th></th></tr></thead>
+    <tbody>
+      {% for u in rows %}
+      <tr>
+        <td><strong>{{ u['name'] }}</strong></td>
+        <td>{{ u['email'] }}</td>
+        <td><span class="chip">{{ t('role_' + u['role']) }}</span></td>
+        <td>{{ u['company'] }}</td>
+        <td>{{ u['phone'] }}</td>
+        <td>{% if u['active'] %}<span class="badge g-COMPLETED">{{ t('active') }}</span>
+            {% else %}<span class="badge g-FAILED">{{ t('inactive') }}</span>{% endif %}</td>
+        <td><a class="btn tiny" href="{{ url_for('user_form', uid=u['id']) }}">{{ t('edit') }}</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

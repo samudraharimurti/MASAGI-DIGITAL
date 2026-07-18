@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% from "_macros.html" import sub_badge, type_chip, progress_mini, inv_badge %}
+{% block title %}{{ t('nav_portal') }}{% endblock %}
+{% block heading %}{{ t('portal_welcome') }}, {{ user['name'] }}{% endblock %}
+{% block content %}
+
+<div class="tiles">
+  <div class="tile"><div class="tile-n">{{ subs|selectattr('status', 'equalto', 'ACTIVE')|list|length }}</div><div class="tile-l">{{ t('kpi_active') }}</div></div>
+  <div class="tile"><div class="tile-n">{{ subs|selectattr('status', 'equalto', 'CERTIFIED')|list|length }}</div><div class="tile-l">{{ t('kpi_certified') }}</div></div>
+  <div class="tile"><div class="tile-n">{{ invoices|rejectattr('disp', 'in', ['PAID','CANCELLED'])|list|length }}</div><div class="tile-l">{{ t('my_invoices') }}</div></div>
+</div>
+
+<div class="card">
+  <h3>{{ t('my_submissions') }}</h3>
+  <p class="muted">{{ t('portal_progress_hint') }}</p>
+  <table class="tbl">
+    <thead><tr><th>{{ t('code') }}</th><th>{{ t('product') }}</th><th>{{ t('type') }}</th>
+      <th>{{ t('current_stage') }}</th><th>{{ t('progress') }}</th><th>{{ t('status') }}</th></tr></thead>
+    <tbody>
+      {% for r in subs %}
+      <tr>
+        <td><a href="{{ url_for('portal_submission', sid=r['id']) }}"><strong>{{ r['code'] }}</strong></a></td>
+        <td>{{ r['product_name'] }}</td>
+        <td>{{ type_chip(r['service_type']) }}</td>
+        <td>{{ (r['cur_id'] if lang == 'id' else r['cur_en']) or '-' }}</td>
+        <td>{{ progress_mini(r['done_n'], r['total_n']) }}</td>
+        <td>{{ sub_badge(r['status']) }}</td>
+      </tr>
+      {% else %}<tr><td colspan="6" class="muted">{{ t('no_submissions') }}</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <h3>{{ t('my_invoices') }}</h3>
+    <table class="tbl">
+      <tbody>
+      {% for i in invoices %}
+      <tr>
+        <td><a href="{{ url_for('invoice_detail', iid=i['id']) }}">{{ i['number'] }}</a></td>
+        <td>{{ fmt_date(i['due_date']) }}</td>
+        <td>{{ fmt_money(i['total']) }}</td>
+        <td>{{ inv_badge(i['disp']) }}</td>
+      </tr>
+      {% else %}<tr><td class="muted">{{ t('no_invoices') }}</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <h3>{{ t('nav_notifications') }}</h3>
+    <ul class="feed">
+      {% for n in notes %}
+      <li class="{{ 'unread' if not n['is_read'] }}">
+        <span class="feed-time">{{ fmt_dt(n['created_at']) }}</span>
+        <strong>{{ n['title_id'] if lang == 'id' else n['title_en'] }}</strong> -
+        {{ n['body_id'] if lang == 'id' else n['body_en'] }}
+      </li>
+      {% else %}<li class="muted">{{ t('no_notifications') }}</li>{% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

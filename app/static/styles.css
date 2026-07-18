@@ -1,17 +1,17 @@
-/* MASAGI HV styles — MASAGI design system (green #1e8a55 on ink / light) */
+/* MASAGI HV styles — MASAGI design system (blue #2563EB — synchronized with masagi.io landing) */
 @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 :root {
-  --font-ui: Arial, "Helvetica Neue", Helvetica, "Segoe UI", system-ui, sans-serif;
+  --font-ui: "Inter", Arial, "Helvetica Neue", Helvetica, "Segoe UI", system-ui, sans-serif;
   --font-brand: "Chakra Petch", Arial, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
   --sidebar-bg: #ffffff;
   --sidebar-text: #5b6166;
   --sidebar-border: #e6e8eb;
   --sidebar-active-fg: #ffffff;
-  --accent: #1e8a55;
-  --accent-dark: #136b41;
-  --accent-bright: #1e8a55;
-  --accent-soft: #e4f4eb;
+  --accent: #2563EB;
+  --accent-dark: #1D4ED8;
+  --accent-bright: #2563EB;
+  --accent-soft: #DBEAFE;
   --green: #1f9d57;
   --red: #bd362f;
   --amber: #c87a08;
@@ -28,8 +28,8 @@ html[data-theme="dark"] {
   --sidebar-text: #93a0ab;
   --sidebar-border: #1a2027;
   --sidebar-active-fg: #06181b;
-  --accent-bright: #2fb877;
-  --accent-soft: rgba(47, 184, 119, .16);
+  --accent-bright: #3B82F6;
+  --accent-soft: rgba(59, 130, 246, .16);
   --green: #5fd08c;
   --red: #e57373;
   --bg: #0c0f12;
@@ -43,7 +43,7 @@ html[data-theme="dark"] input, html[data-theme="dark"] select, html[data-theme="
   background: #0f1316; color: var(--text);
 }
 html[data-theme="dark"] input:focus, html[data-theme="dark"] select:focus, html[data-theme="dark"] textarea:focus {
-  outline-color: #14503a;
+  outline-color: #1E3A8A;
 }
 html[data-theme="dark"] .btn { background: var(--card); color: var(--text); }
 html[data-theme="dark"] .btn:hover { background: #1b2127; }
@@ -57,10 +57,10 @@ html[data-theme="dark"] .tbl tr.section td { background: #1a2026; }
 html[data-theme="dark"] .modal, html[data-theme="dark"] .modal-head { background: var(--card); }
 html[data-theme="dark"] .pill.posted, html[data-theme="dark"] .pill.active { background: rgba(81,163,81,.2); color: #8fd08f; }
 html[data-theme="dark"] .pill.draft, html[data-theme="dark"] .pill.on_hold { background: rgba(248,148,6,.18); color: #f5b35c; }
-html[data-theme="dark"] .pill.completed { background: rgba(30,138,85,.2); color: #57d496; }
+html[data-theme="dark"] .pill.completed { background: rgba(37,99,235,.2); color: #60A5FA; }
 html[data-theme="dark"] .pill.inactive { background: rgba(154,166,177,.15); color: var(--muted); }
 html[data-theme="dark"] .pill.bad { background: rgba(229,115,115,.16); color: #ef9a9a; }
-html[data-theme="dark"] .scope-badge { background: var(--accent-soft); color: #57d496; }
+html[data-theme="dark"] .scope-badge { background: var(--accent-soft); color: #60A5FA; }
 html[data-theme="dark"] .budget-grid input:hover, html[data-theme="dark"] .budget-grid input:focus { background: #0f1316; }
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; height: 100%; }
@@ -158,7 +158,7 @@ input, select, textarea {
   font: inherit; color: inherit; background: #fff;
   border: 1px solid var(--border); border-radius: 7px; padding: 7px 10px;
 }
-input:focus, select:focus, textarea:focus { outline: 2px solid #b9e2cc; border-color: var(--accent); }
+input:focus, select:focus, textarea:focus { outline: 2px solid #BFDBFE; border-color: var(--accent); }
 .btn {
   font: inherit; border: 1px solid var(--border); background: #fff; color: var(--text);
   padding: 7px 14px; border-radius: 7px; cursor: pointer; font-weight: 500;
@@ -210,8 +210,8 @@ html[data-theme="dark"] .warn.watch { background: rgba(200,122,8,.16); border-co
 .tbl tr:hover td { background: #f7f9fa; }
 .tbl tr.total td { font-weight: 700; border-top: 2px solid var(--text); background: #fafbfc; }
 .tbl tr.section td { font-weight: 700; background: #eef3f4; }
-.tbl tr.tb-group td { font-weight: 600; background: rgba(30,138,85,.06); }
-html[data-theme="dark"] .tbl tr.tb-group td { background: rgba(30,138,85,.10); }
+.tbl tr.tb-group td { font-weight: 600; background: rgba(37,99,235,.06); }
+html[data-theme="dark"] .tbl tr.tb-group td { background: rgba(37,99,235,.10); }
 .tbl .pos { color: var(--green); } .tbl .neg { color: var(--red); }
 .clickable { cursor: pointer; }
 

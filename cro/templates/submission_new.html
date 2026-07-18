@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ t('new_submission') }}{% endblock %}
+{% block content %}
+<div class="card form-card">
+  <form method="post">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <div class="form-grid">
+      <label>{{ t('select_client') }} *
+        <select name="client_id" required>
+          <option value=""></option>
+          {% for c in clients %}<option value="{{ c['id'] }}">{{ c['company'] }} - {{ c['name'] }}</option>{% endfor %}
+        </select>
+      </label>
+      <label>{{ t('service_type') }} *
+        <select name="service_type" required>
+          <option value="SNI">SNI - Sertifikasi Produk (Tipe 5)</option>
+          <option value="NPT">NPT - Nomor Pelumas Terdaftar</option>
+        </select>
+      </label>
+      <label>{{ t('product_name') }} *
+        <input type="text" name="product_name" required>
+      </label>
+      <label>{{ t('brand') }}
+        <input type="text" name="brand">
+      </label>
+      <label class="span2">{{ t('standard_ref') }}
+        <input type="text" name="standard_ref" placeholder="{{ t('standard_ref_hint') }}">
+      </label>
+      <label class="span2">{{ t('product_desc') }}
+        <textarea name="product_desc" rows="3"></textarea>
+      </label>
+    </div>
+    <div class="form-actions">
+      <a class="btn" href="{{ url_for('submissions') }}">{{ t('cancel') }}</a>
+      <button class="btn primary" type="submit">{{ t('create') }}</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

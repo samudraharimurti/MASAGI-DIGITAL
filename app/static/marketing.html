@@ -35,28 +35,28 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 /* ————— MASAGI marketing — Bain-inspired palette: paper white, charcoal ink,
    one restrained red accent; brand greens live in the logo and data visuals.
    Dual theme: light (default) + dark via html[data-theme="dark"]. */
 :root {
-  --paper: #ffffff; --paper-2: #f5f5f2; --ink: #21201e; --ink-2: #3c3b38;
-  --gray: #6b6e72; --line: #e4e4e0; --accent: #cc0000;
+  --paper: #ffffff; --paper-2: #F8FAFC; --ink: #1B2A4A; --ink-2: #334155;
+  --gray: #64748B; --line: #E2E8F0; --accent: #2563EB;
   --pine: #0b3b24; --forest: #17603c; --leaf: #27925a; --mint: #4cc98a;
-  --card: #ffffff; --inverse: #21201e; --green-ink: #17603c;
+  --card: #ffffff; --inverse: #1B2A4A; --green-ink: #17603c;
   --tint: #eaf5ef; --tint-line: #d2ecdd; --nav-bg: rgba(255,255,255,.96);
 }
 html[data-theme="dark"] {
-  --paper: #151613; --paper-2: #1b1c18; --ink: #f1f1ec; --ink-2: #d6d6cf;
-  --gray: #a3a69f; --line: #2b2c27;
-  --card: #1d1e1a; --inverse: #0e0f0c; --green-ink: #57d496;
-  --tint: rgba(47,184,119,.14); --tint-line: rgba(47,184,119,.32); --nav-bg: rgba(21,22,19,.95);
+  --paper: #0F172A; --paper-2: #1A2438; --ink: #F1F5F9; --ink-2: #CBD5E1;
+  --gray: #94A3B8; --line: #334155;
+  --card: #1E293B; --inverse: #0B1222; --green-ink: #57d496;
+  --tint: rgba(47,184,119,.14); --tint-line: rgba(47,184,119,.32); --nav-bg: rgba(15,23,42,.95);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  font-family: "Hanken Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background: var(--paper); color: var(--ink); -webkit-font-smoothing: antialiased;
   line-height: 1.5;
 }
@@ -84,7 +84,7 @@ nav.links a:hover { color: var(--ink); border-bottom-color: var(--accent); }
 .btn-solid { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .btn-solid:hover { opacity: .85; }
 .btn-red { background: var(--accent); color: #fff; border-color: var(--accent); }
-.btn-red:hover { background: #a80000; border-color: #a80000; }
+.btn-red:hover { background: #1D4ED8; border-color: #1D4ED8; }
 
 /* language + theme switches */
 .switches { display: flex; align-items: center; gap: 6px; }
@@ -118,23 +118,23 @@ p.lead { font-size: clamp(16px, 1.8vw, 19px); color: var(--gray); max-width: 62c
 
 /* hero media carousel — CMS-driven (1 demo video + product pictures);
    slides render as literal product screenshots: always light */
-.carousel { position: relative; border: 1px solid #e4e4e0; border-radius: 8px; overflow: hidden;
+.carousel { position: relative; border: 1px solid #E2E8F0; border-radius: 8px; overflow: hidden;
   box-shadow: 0 30px 70px rgba(33,32,30,.14); background: #fff; }
 .c-viewport { overflow: hidden; }
 .c-track { display: flex; transition: transform .45s ease; }
-.c-slide { flex: 0 0 100%; aspect-ratio: 16 / 9; position: relative; background: #f5f5f2; }
+.c-slide { flex: 0 0 100%; aspect-ratio: 16 / 9; position: relative; background: #F8FAFC; }
 .c-slide img, .c-slide video, .c-slide iframe { width: 100%; height: 100%; object-fit: cover; display: block; border: 0; }
 .c-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; width: 38px; height: 38px;
-  border-radius: 50%; border: 1px solid #e4e4e0; background: rgba(255,255,255,.94); color: #21201e;
+  border-radius: 50%; border: 1px solid #E2E8F0; background: rgba(255,255,255,.94); color: #1B2A4A;
   font-size: 19px; line-height: 1; cursor: pointer; transition: background .15s, color .15s; }
-.c-arrow:hover { background: #21201e; color: #fff; }
+.c-arrow:hover { background: #1B2A4A; color: #fff; }
 .c-arrow.prev { left: 12px; } .c-arrow.next { right: 12px; }
 .c-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  padding: 10px 16px; border-top: 1px solid #e4e4e0; background: #fff; }
-.c-caption { font-size: 12.5px; font-weight: 700; color: #3c3b38; }
+  padding: 10px 16px; border-top: 1px solid #E2E8F0; background: #fff; }
+.c-caption { font-size: 12.5px; font-weight: 700; color: #334155; }
 .c-dots { display: flex; gap: 7px; }
 .c-dot { width: 8px; height: 8px; border-radius: 50%; border: 0; padding: 0; background: #d6d6d2; cursor: pointer; }
-.c-dot.on { background: #cc0000; }
+.c-dot.on { background: #2563EB; }
 .c-badge { position: absolute; top: 12px; left: 12px; z-index: 3; font-size: 10.5px; font-weight: 800;
   letter-spacing: .08em; text-transform: uppercase; color: #fff; background: rgba(11,15,12,.72);
   border-radius: 99px; padding: 5px 12px; }
@@ -262,8 +262,8 @@ p.lead { font-size: clamp(16px, 1.8vw, 19px); color: var(--gray); max-width: 62c
 .cta-band .inner { display: flex; align-items: center; justify-content: space-between; gap: 30px; flex-wrap: wrap; }
 .cta-band h2 { color: #fff; }
 .cta-band p { color: rgba(255,255,255,.85); margin-top: 10px; font-size: 16px; }
-.cta-band .btn { background: #fff; color: #21201e; border-color: #fff; font-size: 15.5px; padding: 14px 30px; }
-.cta-band .btn:hover { background: #21201e; color: #fff; border-color: #21201e; }
+.cta-band .btn { background: #fff; color: #1B2A4A; border-color: #fff; font-size: 15.5px; padding: 14px 30px; }
+.cta-band .btn:hover { background: #1B2A4A; color: #fff; border-color: #1B2A4A; }
 
 /* ————— footer ————— */
 footer { background: var(--inverse); color: #cfcfca; padding: 64px 0 36px; }

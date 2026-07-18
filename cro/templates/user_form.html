@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}{{ t('edit') if row else t('new_user') }}{% endblock %}
+{% block content %}
+<div class="card form-card">
+  <form method="post">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <div class="form-grid">
+      <label>{{ t('name') }} *
+        <input type="text" name="name" value="{{ row['name'] if row }}" required>
+      </label>
+      <label>{{ t('email') }} *
+        <input type="email" name="email" value="{{ row['email'] if row }}" required>
+      </label>
+      <label>{{ t('role') }} *
+        <select name="role" required>
+          {% for r in ['admin', 'inputter', 'client'] %}
+          <option value="{{ r }}" {{ 'selected' if row and row['role'] == r }}>{{ t('role_' + r) }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>{{ t('company') }}
+        <input type="text" name="company" value="{{ row['company'] if row }}">
+      </label>
+      <label>{{ t('phone') }}
+        <input type="text" name="phone" value="{{ row['phone'] if row }}">
+      </label>
+      <label>{{ t('new_password') }}{{ '' if row else ' *' }}
+        <input type="password" name="password" autocomplete="new-password" {{ '' if row else 'required' }}>
+        {% if row %}<span class="hint">{{ t('pw_hint') }}</span>{% endif %}
+      </label>
+      <label class="check span2">
+        <input type="checkbox" name="active" value="1" {{ 'checked' if (not row) or row['active'] }}> {{ t('active') }}
+      </label>
+    </div>
+    <div class="form-actions">
+      <a class="btn" href="{{ url_for('users_list') }}">{{ t('cancel') }}</a>
+      <button class="btn primary" type="submit">{{ t('save') }}</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

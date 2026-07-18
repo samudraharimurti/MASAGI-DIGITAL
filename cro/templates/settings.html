@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}{{ t('settings') }}{% endblock %}
+{% block content %}
+<div class="card form-card">
+  <form method="post">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <div class="form-grid">
+      <label>{{ t('company_name') }}
+        <input type="text" name="company_name" value="{{ settings.get('company_name', '') }}">
+      </label>
+      <label>{{ t('tax_mode') }}
+        <select name="tax_mode">
+          <option value="PPh" {{ 'selected' if settings.get('tax_mode', 'PPh') == 'PPh' }}>{{ t('tax_pph') }}</option>
+          <option value="PPN" {{ 'selected' if settings.get('tax_mode') == 'PPN' }}>{{ t('tax_ppn') }}</option>
+          <option value="NONE" {{ 'selected' if settings.get('tax_mode') == 'NONE' }}>{{ t('tax_none') }}</option>
+        </select>
+      </label>
+      <label>{{ t('pph_percent') }}
+        <input type="number" name="pph_percent" step="0.1" min="0" max="100" value="{{ settings.get('pph_percent', '2') }}">
+      </label>
+      <label>{{ t('ppn_percent') }}
+        <input type="number" name="ppn_percent" step="0.1" min="0" max="100" value="{{ settings.get('ppn_percent', '11') }}">
+      </label>
+      <label class="span2">{{ t('company_address') }}
+        <input type="text" name="company_address" value="{{ settings.get('company_address', '') }}">
+      </label>
+      <label>{{ t('company_email') }}
+        <input type="email" name="company_email" value="{{ settings.get('company_email', '') }}">
+      </label>
+      <label>{{ t('company_phone') }}
+        <input type="text" name="company_phone" value="{{ settings.get('company_phone', '') }}">
+      </label>
+      <label class="span2">{{ t('invoice_footer') }}
+        <textarea name="invoice_footer" rows="2">{{ settings.get('invoice_footer', '') }}</textarea>
+      </label>
+    </div>
+    <p><span class="chip">{{ t('llm_status') }}: {{ t('llm_on') if llm_on else t('llm_off') }}</span></p>
+    <div class="form-actions">
+      <button class="btn primary" type="submit">{{ t('save') }}</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

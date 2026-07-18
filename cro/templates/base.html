@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ t('app_name') }}{% endblock %} - {{ t('app_name') }}</title>
+<script>(function(){var s=localStorage.getItem('theme');if(!s){s=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',s);})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% if user %}
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <img class="brand-logo" src="{{ url_for('static', filename='logo.svg') }}" alt="MASAGI">
+      <div class="brand-meta">
+        <span class="brand-cro">CROM</span>
+        <span class="brand-sub">{{ t('tagline') }}</span>
+      </div>
+    </div>
+    <nav>
+      {% if user['role'] in ('admin', 'inputter') %}
+      <a href="{{ url_for('dashboard') }}" class="{{ 'on' if request.path == '/dashboard' }}">{{ t('nav_dashboard') }}</a>
+      <a href="{{ url_for('submissions') }}" class="{{ 'on' if request.path.startswith('/submissions') }}">{{ t('nav_submissions') }}</a>
+      {% if user['role'] == 'admin' %}
+      <a href="{{ url_for('invoices_list') }}" class="{{ 'on' if request.path.startswith('/invoices') }}">{{ t('nav_invoices') }}</a>
+      {% endif %}
+      <a href="{{ url_for('reports_list') }}" class="{{ 'on' if request.path.startswith('/reports') }}">{{ t('nav_reports') }}</a>
+      {% if user['role'] == 'admin' %}
+      <a href="{{ url_for('users_list') }}" class="{{ 'on' if request.path.startswith('/users') }}">{{ t('nav_users') }}</a>
+      <a href="{{ url_for('settings_page') }}" class="{{ 'on' if request.path.startswith('/settings') }}">{{ t('nav_settings') }}</a>
+      {% endif %}
+      {% else %}
+      <a href="{{ url_for('portal') }}" class="{{ 'on' if request.path == '/portal' }}">{{ t('nav_portal') }}</a>
+      <a href="{{ url_for('invoices_list') }}" class="{{ 'on' if request.path.startswith('/invoices') }}">{{ t('nav_invoices') }}</a>
+      {% endif %}
+      <a href="{{ url_for('notifications_page') }}" class="{{ 'on' if request.path.startswith('/notifications') }}">
+        {{ t('nav_notifications') }}{% if unread %} <span class="nav-badge">{{ unread }}</span>{% endif %}
+      </a>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="who">{{ user['name'] }}<span>{{ t('role_' + user['role']) }}</span></div>
+      <a class="logout" href="{{ url_for('logout') }}">{{ t('logout') }}</a>
+    </div>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <h1>{% block heading %}{{ self.title() }}{% endblock %}</h1>
+      <div class="top-actions">
+        <div class="lang-switch">
+          <a href="{{ url_for('set_lang', code='en') }}" class="{{ 'on' if lang == 'en' }}">EN</a><a
+             href="{{ url_for('set_lang', code='id') }}" class="{{ 'on' if lang == 'id' }}">ID</a>
+        </div>
+        <button class="icon-btn" id="theme-toggle" title="{{ t('theme') }}" aria-label="{{ t('theme') }}">
+          <span class="sun">&#9728;</span><span class="moon">&#9789;</span>
+        </button>
+        <a class="icon-btn bell" href="{{ url_for('notifications_page') }}" title="{{ t('nav_notifications') }}">
+          &#128276;{% if unread %}<span class="bell-badge">{{ unread }}</span>{% endif %}
+        </a>
+      </div>
+    </header>
+    {% with msgs = get_flashed_messages(with_categories=true) %}
+      {% if msgs %}
+      <div class="flashes">
+        {% for cat, m in msgs %}<div class="flash flash-{{ cat }}">{{ m }}</div>{% endfor %}
+      </div>
+      {% endif %}
+    {% endwith %}
+    <main class="content">{% block content %}{% endblock %}</main>
+  </div>
+</div>
+{% else %}
+{% with msgs = get_flashed_messages(with_categories=true) %}
+  {% if msgs %}
+  <div class="flashes floating">
+    {% for cat, m in msgs %}<div class="flash flash-{{ cat }}">{{ m }}</div>{% endfor %}
+  </div>
+  {% endif %}
+{% endwith %}
+{% block anon %}{% endblock %}
+{% endif %}
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

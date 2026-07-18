@@ -1,0 +1,43 @@
+{% macro sub_badge(status) -%}
+<span class="badge b-{{ status }}">{{ t('st_' + status) }}</span>
+{%- endmacro %}
+
+{% macro stg_badge(status) -%}
+<span class="badge g-{{ status }}">{{ t('sg_' + status) }}</span>
+{%- endmacro %}
+
+{% macro inv_badge(status) -%}
+<span class="badge i-{{ status }}">{{ t('st_' + status) }}</span>
+{%- endmacro %}
+
+{% macro type_chip(stype) -%}
+<span class="chip chip-{{ stype }}">{{ stype }}</span>
+{%- endmacro %}
+
+{% macro stepper(stages) -%}
+<div class="stepper">
+  {% for st in stages %}
+  <div class="step {{ 'done' if st['status']=='COMPLETED' else 'current' if st['status']=='IN_PROGRESS' else 'act' if st['status']=='ACTION' else 'failed' if st['status']=='FAILED' else '' }}">
+    <div class="dot">{% if st['status']=='COMPLETED' %}&#10003;{% elif st['status']=='ACTION' %}!{% elif st['status']=='FAILED' %}&#10005;{% else %}{{ st['ord'] }}{% endif %}</div>
+    <div class="lbl">{{ stage_name(st) }}</div>
+  </div>
+  {% if not loop.last %}<div class="conn {{ 'done' if st['status']=='COMPLETED' else '' }}"></div>{% endif %}
+  {% endfor %}
+</div>
+{%- endmacro %}
+
+{% macro progress_mini(done, total) -%}
+<div class="mini-progress" title="{{ done }}/{{ total }}">
+  <div class="mini-fill" style="width: {{ (100 * done / total)|round(0) if total else 0 }}%"></div>
+</div>
+{%- endmacro %}
+
+{% macro due_chip(iso) -%}
+{% set d = days_until(iso) %}
+{% if d is not none %}
+  {% if d < 0 %}<span class="due-chip late">{{ t('overdue_by') }} {{ -d }} {{ t('days') }}</span>
+  {% elif d == 0 %}<span class="due-chip warn">{{ t('due') }} {{ t('today') }}</span>
+  {% elif d <= 7 %}<span class="due-chip warn">{{ t('due_in') }} {{ d }} {{ t('days') }}</span>
+  {% else %}<span class="due-chip">{{ t('due_in') }} {{ d }} {{ t('days') }}</span>{% endif %}
+{% endif %}
+{%- endmacro %}

@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+{% from "_macros.html" import sub_badge, stg_badge, type_chip, stepper, due_chip, inv_badge %}
+{% block title %}{{ s['code'] }}{% endblock %}
+{% block content %}
+
+<div class="card">
+  <div class="detail-head">
+    <div>
+      <div class="detail-title">{{ s['code'] }} {{ type_chip(s['service_type']) }} {{ sub_badge(s['status']) }}</div>
+      <div class="detail-sub">{{ s['product_name'] }}{% if s['brand'] %} - {{ s['brand'] }}{% endif %}
+        {% if s['standard_ref'] %}<span class="muted"> | {{ s['standard_ref'] }}</span>{% endif %}</div>
+      <div class="sub-text">{{ s['company'] }} - {{ s['client_name'] }} ({{ s['client_email'] }}) | {{ t('started') }}: {{ fmt_date(s['submitted_at']) }}</div>
+    </div>
+    <div class="head-actions">
+      {% if user['role'] == 'admin' and s['status'] in ('ACTIVE', 'ON_HOLD') %}
+      <form method="post" action="{{ url_for('submission_hold', sid=s['id']) }}">
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <button class="btn">{{ t('unhold') if s['status'] == 'ON_HOLD' else t('hold') }}</button>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+  {% if s['product_desc'] %}<p class="muted" style="margin:8px 0 0">{{ s['product_desc'] }}</p>{% endif %}
+
+  {% if s['status'] == 'CERTIFIED' %}
+  <div class="cert-box">
+    <div><span class="cert-l">{{ t('cert_number') }}</span><strong>{{ s['cert_number'] or '-' }}</strong></div>
+    <div><span class="cert-l">{{ t('certified_on') }}</span>{{ fmt_date(s['certified_at']) }}</div>
+    <div><span class="cert-l">{{ t('cert_expiry') }}</span>{{ fmt_date(s['cert_expiry']) }}</div>
+    <div><span class="cert-l">{{ t('next_obligation') }}</span>{{ fmt_date(s['next_surveillance']) }} {{ due_chip(s['next_surveillance']) }}</div>
+    <form method="post" action="{{ url_for('surveillance_done', sid=s['id']) }}">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <button class="btn small">{{ t('mark_surveillance_done') }}</button>
+    </form>
+  </div>
+  {% endif %}
+
+  {{ stepper(stages) }}
+</div>
+
+{% if current and s['status'] == 'ACTIVE' %}
+<div class="card current-stage">
+  <h3>{{ t('current_stage') }}: {{ stage_name(current) }} {{ stg_badge(current['status']) }}
+      {% if current['cycle'] > 1 %}<span class="chip">{{ t('cycle') }} {{ current['cycle'] }}</span>{% endif %}</h3>
+  <p class="reg-note">{{ stage_note(current) }}</p>
+  <div class="stage-meta">
+    <span>{{ t('entered') }}: <strong>{{ fmt_date(current['entered_at']) }}</strong></span>
+    <span>{{ t('est_end') }}: <strong>{{ fmt_date(current['est_end']) }}</strong> {{ due_chip(current['action_due'] or current['est_end']) }}</span>
+    {% if current['status'] == 'ACTION' %}<span>{{ t('corrective_action') }}: <strong>{{ fmt_date(current['action_due']) }}</strong></span>{% endif %}
+  </div>
+
+  <div class="stage-actions">
+    <form method="post" action="{{ url_for('stage_complete', st_id=current['id']) }}" class="inline-form">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      {% if current['ord'] == stages|length %}
+      <span class="hint">{{ t('final_stage_hint') }}</span>
+      <input type="text" name="cert_number" placeholder="{{ t('cert_number') }}">
+      {% endif %}
+      <button class="btn primary">&#10003; {{ t('complete_stage') }}</button>
+    </form>
+    {% if current['status'] == 'IN_PROGRESS' %}
+    <form method="post" action="{{ url_for('stage_corrective', st_id=current['id']) }}" class="inline-form">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <input type="number" name="days" value="30" min="1" max="180" title="{{ t('corrective_days') }}" style="width:70px">
+      <input type="text" name="note" placeholder="{{ t('notes') }}...">
+      <button class="btn warn" title="{{ t('corrective_hint') }}">! {{ t('corrective_action') }}</button>
+    </form>
+    {% else %}
+    <form method="post" action="{{ url_for('stage_resume', st_id=current['id']) }}" class="inline-form">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <button class="btn">{{ t('resume_stage') }}</button>
+    </form>
+    {% endif %}
+    {% if user['role'] == 'admin' %}
+    <form method="post" action="{{ url_for('stage_fail', st_id=current['id']) }}" class="inline-form"
+          data-confirm="{{ t('confirm_fail') }}">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <button class="btn danger">&#10005; {{ t('fail_submission') }}</button>
+    </form>
+    {% endif %}
+  </div>
+
+  <form method="post" action="{{ url_for('stage_notes', st_id=current['id']) }}" class="notes-form">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <div class="grid-2">
+      <label>{{ t('internal_notes') }}
+        <textarea name="internal_notes" rows="3">{{ current['internal_notes'] }}</textarea>
+      </label>
+      <label>{{ t('client_notes') }}
+        <textarea name="client_notes" rows="3">{{ current['client_notes'] }}</textarea>
+      </label>
+    </div>
+    <button class="btn small">{{ t('save_notes') }}</button>
+  </form>
+</div>
+{% endif %}
+
+<div class="card">
+  <h3>{{ t('stage_history') }}</h3>
+  <table class="tbl">
+    <thead><tr><th>#</th><th>{{ t('stage') }}</th><th>{{ t('planned_days') }}</th><th>{{ t('entered') }}</th>
+        <th>{{ t('est_end') }}</th><th>{{ t('completed') }}</th><th>{{ t('cycle') }}</th><th>{{ t('status') }}</th>
+        {% if s['status'] == 'ACTIVE' %}<th></th>{% endif %}</tr></thead>
+    <tbody>
+      {% for st in stages %}
+      <tr class="{{ 'row-current' if st['status'] in ('IN_PROGRESS','ACTION') }}">
+        <td>{{ st['ord'] }}</td>
+        <td>{{ stage_name(st) }}{% if st['client_notes'] %}<div class="sub-text">{{ st['client_notes'] }}</div>{% endif %}</td>
+        <td>
+          {% if s['status'] == 'ACTIVE' %}
+          <form method="post" action="{{ url_for('stage_plandays', st_id=st['id']) }}" class="plan-form">
+            <input type="hidden" name="csrf" value="{{ csrf }}">
+            <input type="number" name="days" value="{{ st['days'] }}" min="1" max="365" title="{{ t('plan_hint') }}">
+            <button class="btn tiny" title="{{ t('adjust_plan') }}">&#10003;</button>
+          </form>
+          {% else %}{{ st['days'] }} {{ t('days') }}{% endif %}
+          {% if reg_days.get(st['key']) and reg_days.get(st['key']) != st['days'] %}
+          <div class="sub-text">{{ t('reg_plan') }}: {{ reg_days.get(st['key']) }} {{ t('days') }}</div>
+          {% endif %}
+        </td>
+        <td>{{ fmt_date(st['entered_at']) }}</td>
+        <td>{{ fmt_date(st['est_end']) }}</td>
+        <td>{{ fmt_date(st['completed_at']) }}</td>
+        <td>{{ st['cycle'] }}</td>
+        <td>{{ stg_badge(st['status']) }}</td>
+        {% if s['status'] == 'ACTIVE' %}
+        <td>
+          {% if st['status'] == 'COMPLETED' %}
+          <form method="post" action="{{ url_for('stage_revert', st_id=st['id']) }}" data-confirm="{{ t('confirm_revert') }}">
+            <input type="hidden" name="csrf" value="{{ csrf }}">
+            <button class="btn tiny">&#8634; {{ t('revert_here') }}</button>
+          </form>
+          {% endif %}
+        </td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <h3>{{ t('documents') }}</h3>
+    <form method="post" action="{{ url_for('submission_upload', sid=s['id']) }}" enctype="multipart/form-data" class="inline-form">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <input type="file" name="file" required>
+      <select name="category">
+        <option value="INTERNAL">{{ t('cat_INTERNAL') }}</option>
+        <option value="CERTIFICATE">{{ t('cat_CERTIFICATE') }}</option>
+      </select>
+      <button class="btn small">{{ t('upload') }}</button>
+    </form>
+    <ul class="doc-list">
+      {% for d in docs %}
+      <li><a href="{{ url_for('download_doc', doc_id=d['id']) }}">{{ d['file_name'] }}</a>
+        <span class="chip">{{ t('cat_' + d['category']) }}</span>
+        <span class="sub-text">{{ d['uname'] or '' }} - {{ fmt_dt(d['uploaded_at']) }}</span></li>
+      {% else %}<li class="muted">{{ t('no_docs') }}</li>{% endfor %}
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>{{ t('comments') }}</h3>
+    <div class="comments">
+      {% for c in comments %}
+      <div class="comment {{ 'mine' if user and c['user_id'] == user['id'] }} {{ 'internal' if c['internal'] }}">
+        <div class="comment-head">{{ c['uname'] or '?' }}{% if c['internal'] %} &#128274;{% endif %}
+          <span>{{ fmt_dt(c['created_at']) }}</span></div>
+        <div>{{ c['body'] }}</div>
+      </div>
+      {% else %}<p class="muted">{{ t('none') }}</p>{% endfor %}
+    </div>
+    <form method="post" action="{{ url_for('submission_comment', sid=s['id']) }}">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <textarea name="body" rows="2" placeholder="{{ t('comment_placeholder') }}" required></textarea>
+      <div class="form-actions" style="justify-content: space-between">
+        <label class="check"><input type="checkbox" name="internal" value="1"> {{ t('internal_comment') }}</label>
+        <button class="btn small primary">{{ t('add_comment') }}</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <h3>{{ t('linked_invoices') }}</h3>
+    <table class="tbl">
+      <tbody>
+      {% for i in invoices %}
+      <tr>
+        <td>{% if user['role'] == 'admin' %}<a href="{{ url_for('invoice_detail', iid=i['id']) }}">{{ i['number'] }}</a>{% else %}{{ i['number'] }}{% endif %}</td>
+        <td>{{ fmt_money(i['total']) }}</td>
+        <td>{{ inv_badge(i['disp']) }}</td>
+      </tr>
+      {% else %}<tr><td class="muted">{{ t('none') }}</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <h3>{{ t('activity') }}</h3>
+    <ul class="feed">
+      {% for a in activity %}
+      <li><span class="feed-time">{{ fmt_dt(a['created_at']) }}</span> {{ a['details'] }}</li>
+      {% else %}<li class="muted">{{ t('none') }}</li>{% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}
