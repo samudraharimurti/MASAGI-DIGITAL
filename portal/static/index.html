@@ -69,9 +69,11 @@ input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(37,99,235,.1
 .note { margin-top:16px; font-size:12px; color:var(--text-2); }
 
 /* chooser */
-.who { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:6px; }
+.who { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:6px; flex-wrap:wrap; }
 .who .em { font-size:13px; color:var(--text-2); }
+.who-links { display:flex; align-items:center; gap:16px; }
 .who a { font-size:13px; font-weight:700; color:#b42323; cursor:pointer; }
+.who a#adminLink { color:var(--accent); }
 .systems { display:grid; grid-template-columns:1fr; gap:16px; margin-top:26px; }
 @media (min-width:640px) { .systems { grid-template-columns:1fr 1fr; } }
 .sys { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:28px;
@@ -140,7 +142,10 @@ footer { border-top:1px solid var(--border); background:var(--surface); padding:
     <span class="eyebrow" data-i18n="chEyebrow">Your workspaces</span>
     <h1 id="chTitle" data-i18n="chTitle">Choose a system.</h1>
     <div class="who"><span class="em" id="whoEmail"></span>
-      <a id="signOut" data-i18n="signOut">Sign out</a></div>
+      <span class="who-links">
+        <a href="/admin" id="adminLink" class="hidden" data-i18n="adminLink">Admin panel →</a>
+        <a id="signOut" data-i18n="signOut">Sign out</a>
+      </span></div>
     <div class="systems" id="systems"></div>
     <div class="empty hidden" id="noSystems" data-i18n="noSystems">Your account has no systems yet —
       contact the MASAGI team to get access.</div>
@@ -163,7 +168,7 @@ var I18N = {
         chEyebrow:"Your workspaces", chTitle:"Choose a system.", signOut:"Sign out",
         noSystems:"Your account has no systems yet — contact the MASAGI team to get access.",
         backSite:"← masagi.io", open:"Open", denied:"You don't have access to that system.",
-        hello:"Welcome back" },
+        hello:"Welcome back", adminLink:"Admin panel →" },
   id: { brandSub:"AKUN", loginEyebrow:"Akses klien", loginTitle:"Masuk ke MASAGI.",
         loginLead:"Satu akun untuk semua sistem MASAGI yang dipakai timmu.",
         pwLabel:"Kata sandi", signIn:"Masuk",
@@ -171,7 +176,7 @@ var I18N = {
         chEyebrow:"Ruang kerjamu", chTitle:"Pilih sistem.", signOut:"Keluar",
         noSystems:"Akunmu belum punya sistem — hubungi tim MASAGI untuk mendapat akses.",
         backSite:"← masagi.io", open:"Buka", denied:"Kamu tidak punya akses ke sistem itu.",
-        hello:"Selamat datang kembali" },
+        hello:"Selamat datang kembali", adminLink:"Panel admin →" },
 };
 var LANG = "en", ME = null;
 
@@ -210,6 +215,7 @@ function renderChooser() {
   document.getElementById("loginPanel").classList.add("hidden");
   document.getElementById("chooser").classList.remove("hidden");
   document.getElementById("whoEmail").textContent = ME.email;
+  document.getElementById("adminLink").classList.toggle("hidden", !ME.is_admin);
   document.getElementById("chTitle").textContent =
     I18N[LANG].hello + (ME.name ? ", " + ME.name.split(" ")[0] : "") + ".";
   var box = document.getElementById("systems");

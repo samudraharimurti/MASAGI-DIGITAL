@@ -567,8 +567,13 @@ def _slugify(text):
 
 @app.get("/api/site-content")
 def api_site_content_get():
-    # Public: powers the marketing hero carousel and insights section.
-    return jsonify(read_site_content())
+    # Public: powers the marketing hero carousel and insights section, and is
+    # fetched cross-origin by the landing page (masagi.io) for its Media
+    # section — CORS-open since this is read-only, non-sensitive content.
+    resp = jsonify(read_site_content())
+    resp.headers["Access-Control-Allow-Origin"] = "*"
+    resp.headers["Cache-Control"] = "public, max-age=60"
+    return resp
 
 
 @app.post("/api/site-content")

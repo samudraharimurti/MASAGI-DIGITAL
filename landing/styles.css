@@ -100,6 +100,20 @@ h3 { font-size: 19px; font-weight: 700; }
   border-radius: 6px; border-bottom: none !important;
 }
 .menu .menu-cta:hover { opacity: .9; }
+.menu .menu-cta.ghost {
+  background: transparent; color: rgba(255, 255, 255, .92) !important;
+  border: 1px solid rgba(255, 255, 255, .45);
+}
+.navbar.scrolled .menu .menu-cta.ghost { color: var(--text) !important; border-color: var(--border); }
+.menu .menu-cta.ghost:hover { background: rgba(255, 255, 255, .12); opacity: 1; }
+.navbar.scrolled .menu .menu-cta.ghost:hover { background: var(--surface2); }
+
+/* compact login link shown next to the hamburger below 1024px, since the
+   full menu (containing the real Login button) is hidden until opened */
+.mobile-login {
+  display: none; font-size: 13.5px; font-weight: 700; padding: 8px 14px;
+  border-radius: 6px; background: var(--accent); color: #fff !important;
+}
 
 .nav-controls { display: flex; align-items: center; gap: 9px; }
 .lang-group { display: flex; border: 1px solid rgba(255, 255, 255, .45); border-radius: 5px; overflow: hidden; transition: border-color .3s; }
@@ -311,4 +325,5 @@ html[data-theme="dark"] .footer { background: #0B1222; }
 @media (max-width: 1023.5px) {
   .menu { display: none; }
   .menu.mobile-open { display: flex; }
+  .mobile-login { display: inline-block; }
 }

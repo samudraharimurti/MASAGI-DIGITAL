@@ -34,6 +34,7 @@ Group=nginx
 WorkingDirectory=/var/www/masagi-digital/portal
 Environment=HV_URL=https://hv.masagi.io
 Environment=CROM_URL=https://cro.masagi.io
+Environment=HV_INTERNAL_URL=http://127.0.0.1:8010
 ExecStart=/var/www/masagi-digital/app/venv/bin/gunicorn --workers 2 --timeout 60 --bind 127.0.0.1:8015 server:app
 Restart=on-failure
 RestartSec=3

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MASAGI Account — Admin</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='22' fill='%231B2A4A'/%3E%3Cpolygon points='30,58 12,92 48,92' fill='%231E7A4C'/%3E%3Cpolygon points='58,42 34,92 82,92' fill='%2331A96A'/%3E%3Cpolygon points='78,26 48,92 106,92' fill='%2357D496'/%3E%3Cpolygon points='78,26 70.5,42 85.5,42' fill='%230B3B24'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#1B2A4A; --accent:#2563EB; --bg:#F8FAFC; --surface:#FFFFFF;
+  --text:#1B2A4A; --text-2:#64748B; --border:#E2E8F0;
+  --shadow:0 10px 30px rgba(27,42,74,.08); --green:#1E7A4C; --danger:#b42323;
+}
+html[data-theme="dark"] {
+  --accent:#3B82F6; --bg:#0F172A; --surface:#1E293B;
+  --text:#F1F5F9; --text-2:#94A3B8; --border:#334155;
+  --shadow:0 10px 30px rgba(0,0,0,.4); --green:#57D496; --danger:#ef9a9a;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Inter','Helvetica Neue',Arial,sans-serif; background:var(--bg); color:var(--text);
+  line-height:1.55; -webkit-font-smoothing:antialiased; min-height:100vh; }
+a { color:inherit; text-decoration:none; }
+.hidden { display:none !important; }
+
+header { border-bottom:1px solid var(--border); background:var(--surface); position:sticky; top:0; z-index:20; }
+.topbar { max-width:1100px; margin:0 auto; padding:0 22px; height:64px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:17px; }
+.brand svg { height:24px; }
+.brand .sub { font-size:10.5px; letter-spacing:.28em; color:var(--text-2); font-weight:600; }
+.tabs { display:flex; gap:4px; }
+.tab { font:inherit; font-size:13.5px; font-weight:700; cursor:pointer; padding:9px 14px;
+  border:0; border-radius:7px; background:transparent; color:var(--text-2); }
+.tab.on { background:var(--accent); color:#fff; }
+.controls { display:flex; align-items:center; gap:10px; font-size:13px; }
+.theme-btn { font-size:14px; cursor:pointer; width:30px; height:28px; border:1px solid var(--border);
+  border-radius:5px; background:transparent; color:var(--text-2); }
+.controls a { font-weight:700; color:var(--accent); }
+
+main { max-width:1100px; margin:0 auto; padding:32px 22px 80px; }
+.section-title { font-size:22px; font-weight:800; margin-bottom:4px; }
+.section-sub { color:var(--text-2); font-size:13.5px; margin-bottom:22px; }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:12px;
+  padding:24px; box-shadow:var(--shadow); margin-bottom:20px; }
+.card h2 { font-size:15px; font-weight:800; margin-bottom:14px; display:flex; align-items:center;
+  justify-content:space-between; gap:10px; flex-wrap:wrap; }
+.btn { display:inline-flex; align-items:center; gap:6px; font:inherit; font-weight:700; font-size:13.5px;
+  cursor:pointer; padding:9px 16px; border-radius:7px; border:1px solid var(--border);
+  background:var(--surface); color:var(--text); transition:opacity .15s; }
+.btn:hover { opacity:.85; }
+.btn.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+.btn.danger { background:transparent; color:var(--danger); border-color:var(--danger); }
+.btn.sm { padding:6px 11px; font-size:12.5px; }
+
+table { width:100%; border-collapse:collapse; font-size:13.5px; }
+th { text-align:left; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--text-2);
+  padding:8px 10px; border-bottom:1px solid var(--border); }
+td { padding:10px 10px; border-bottom:1px solid var(--border); vertical-align:middle; }
+tr:last-child td { border-bottom:0; }
+.pill { display:inline-block; font-size:10.5px; font-weight:800; letter-spacing:.04em; border-radius:99px;
+  padding:2px 9px; background:var(--bg); border:1px solid var(--border); color:var(--text-2); }
+.pill.admin { background:rgba(37,99,235,.12); color:var(--accent); border-color:transparent; }
+.pill.inactive { background:rgba(180,35,35,.1); color:var(--danger); border-color:transparent; }
+.muted { color:var(--text-2); }
+.row-actions { display:flex; gap:6px; justify-content:flex-end; }
+
+label { display:block; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--text-2); margin:12px 0 5px; }
+label:first-child { margin-top:0; }
+input, select, textarea { width:100%; font:inherit; font-size:14px; color:var(--text); background:var(--bg);
+  border:1px solid var(--border); border-radius:7px; padding:10px 12px; outline:none; }
+input:focus, select:focus, textarea:focus { border-color:var(--accent); }
+textarea { resize:vertical; min-height:64px; }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:0 14px; }
+.grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:0 14px; }
+.check { display:flex; align-items:center; gap:8px; margin-top:14px; font-size:13.5px; }
+.check input { width:auto; }
+.msg { margin-top:12px; font-size:13px; font-weight:700; padding:9px 12px; border-radius:7px; display:none; }
+.msg.show { display:block; }
+.msg.ok { background:rgba(30,122,76,.1); color:var(--green); }
+.msg.err { background:rgba(180,35,35,.1); color:var(--danger); }
+
+/* modal */
+.overlay { position:fixed; inset:0; background:rgba(15,23,42,.55); display:none;
+  align-items:flex-start; justify-content:center; padding:5vh 20px; z-index:50; overflow-y:auto; }
+.overlay.show { display:flex; }
+.modal { width:min(560px,100%); background:var(--surface); border-radius:14px; padding:26px;
+  box-shadow:0 30px 70px rgba(0,0,0,.3); }
+.modal-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+.modal-head h3 { font-size:17px; font-weight:800; }
+.modal-head button { background:none; border:0; font-size:20px; cursor:pointer; color:var(--text-2); }
+.modal-actions { display:flex; justify-content:flex-end; gap:10px; margin-top:20px; }
+
+.db-list { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+.db-chip { font-size:12.5px; font-weight:700; padding:6px 12px; border-radius:99px;
+  background:var(--bg); border:1px solid var(--border); }
+
+.tint-note { font-size:12.5px; color:var(--text-2); background:var(--bg); border:1px dashed var(--border);
+  border-radius:8px; padding:10px 12px; margin-top:14px; }
+
+.lang-tabs { display:flex; gap:6px; margin-bottom:10px; }
+.lang-tabs button { font:inherit; font-size:12px; font-weight:700; cursor:pointer; padding:5px 12px;
+  border-radius:6px; border:1px solid var(--border); background:transparent; color:var(--text-2); }
+.lang-tabs button.on { background:var(--accent); color:#fff; border-color:var(--accent); }
+.lang-pane { display:none; }
+.lang-pane.on { display:block; }
+.hero-slide { border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:14px; }
+.hero-slide h4 { font-size:12.5px; font-weight:800; color:var(--text-2); margin-bottom:10px; text-transform:uppercase; letter-spacing:.05em; }
+
+@media (max-width:720px) { .grid2, .grid3 { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="topbar">
+    <a class="brand" href="/">
+      <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <polygon points="35,62 5,110 65,110" fill="#1E7A4C"/>
+        <polygon points="85,38 45,110 125,110" fill="#31A96A"/>
+        <polygon points="145,14 95,110 195,110" fill="#57D496"/>
+        <polygon points="145,14 132.5,38 157.5,38" fill="#0B3B24"/>
+      </svg>
+      <span>MASAGI<br><span class="sub">ADMIN</span></span>
+    </a>
+    <div class="tabs">
+      <button class="tab on" data-tab="users" type="button">Users &amp; Access</button>
+      <button class="tab" data-tab="databases" type="button">Trial Databases</button>
+      <button class="tab" data-tab="content" type="button">Landing Content</button>
+    </div>
+    <div class="controls">
+      <button class="theme-btn" id="themeBtn" type="button" title="Light / dark">☾</button>
+      <a href="/">← Workspaces</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div id="deniedBox" class="hidden">
+    <div class="card"><h2>Admins only</h2>
+      <p class="muted">Sign in with an admin account to see this page. <a href="/" style="color:var(--accent);font-weight:700">← Back</a></p></div>
+  </div>
+
+  <div id="content" class="hidden">
+
+    <!-- ═══════════ USERS & ACCESS ═══════════ -->
+    <section id="tab-users">
+      <div class="section-title">Users &amp; Access</div>
+      <div class="section-sub">Every account that can sign in to MASAGI, and which systems + databases they reach.</div>
+      <div class="card">
+        <h2>All accounts <button class="btn primary sm" id="newUserBtn" type="button">+ New account</button></h2>
+        <table>
+          <thead><tr><th>Email</th><th>Name</th><th>HV access</th><th>CROM access</th><th>Status</th><th></th></tr></thead>
+          <tbody id="userRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ═══════════ TRIAL DATABASES ═══════════ -->
+    <section id="tab-databases" class="hidden">
+      <div class="section-title">Trial Databases</div>
+      <div class="section-sub">Spin up a fresh MASAGI HV database for a demo or trial client, then assign a user to it above.</div>
+      <div class="card">
+        <h2>Existing HV databases</h2>
+        <div class="db-list" id="dbList"><span class="muted">Loading…</span></div>
+        <div id="dbMsg" class="msg"></div>
+      </div>
+      <div class="card">
+        <h2>Create a new trial database</h2>
+        <label for="newDbName">Database name</label>
+        <input id="newDbName" placeholder="e.g. TRIAL-PT-Contoh">
+        <div class="check"><input type="checkbox" id="newDbSeed" checked>
+          <label for="newDbSeed" style="margin:0;text-transform:none;font-weight:500;letter-spacing:0;color:var(--text)">Include demo data (recommended — gives the trial user something to see immediately)</label></div>
+        <div class="modal-actions" style="justify-content:flex-start">
+          <button class="btn primary" id="createDbBtn" type="button">Create database</button>
+        </div>
+        <div id="createDbMsg" class="msg"></div>
+        <div class="tint-note">This mints a one-time internal sign-in as your own MASAGI HV admin
+          identity and calls HV's own database API — the same thing happens as if you created it
+          inside the HV console yourself.</div>
+      </div>
+    </section>
+
+    <!-- ═══════════ LANDING CONTENT ═══════════ -->
+    <section id="tab-content" class="hidden">
+      <div class="section-title">Landing Page Content</div>
+      <div class="section-sub">Edits here go live on masagi.io immediately — no deploy needed.
+        For blog posts &amp; news, use MASAGI HV's own content studio (linked below).</div>
+
+      <div class="card">
+        <h2>Blog &amp; news <span class="pill">separate CMS</span></h2>
+        <p class="muted" style="margin-bottom:12px">Insight articles and the Media section on the
+          landing page are managed inside MASAGI HV, where they already live alongside the rest of
+          your content — no need for a second place to edit them.</p>
+        <a class="btn primary" href="https://hv.masagi.io/admin/content" target="_blank" rel="noopener">Open Blog &amp; Insights CMS →</a>
+      </div>
+
+      <div class="card">
+        <h2>Hero carousel (3 slides)</h2>
+        <div id="heroEditor"></div>
+      </div>
+
+      <div class="card">
+        <h2>About section</h2>
+        <div class="lang-tabs" data-group="about">
+          <button class="on" data-lang="en" type="button">English</button>
+          <button data-lang="id" type="button">Indonesia</button>
+        </div>
+        <div class="lang-pane on" data-group="about" data-lang="en">
+          <label>Lead paragraph</label><textarea id="about_lead_en"></textarea>
+          <label>Mission</label><textarea id="about_mission_en"></textarea>
+          <label>Vision</label><textarea id="about_vision_en"></textarea>
+        </div>
+        <div class="lang-pane" data-group="about" data-lang="id">
+          <label>Paragraf pembuka</label><textarea id="about_lead_id"></textarea>
+          <label>Misi</label><textarea id="about_mission_id"></textarea>
+          <label>Visi</label><textarea id="about_vision_id"></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Services descriptions</h2>
+        <div class="lang-tabs" data-group="services">
+          <button class="on" data-lang="en" type="button">English</button>
+          <button data-lang="id" type="button">Indonesia</button>
+        </div>
+        <div class="lang-pane on" data-group="services" data-lang="en">
+          <label>MASAGI-HV description</label><textarea id="services_hv_desc_en"></textarea>
+          <label>MASAGI-CROM description</label><textarea id="services_crom_desc_en"></textarea>
+        </div>
+        <div class="lang-pane" data-group="services" data-lang="id">
+          <label>Deskripsi MASAGI-HV</label><textarea id="services_hv_desc_id"></textarea>
+          <label>Deskripsi MASAGI-CROM</label><textarea id="services_crom_desc_id"></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Contact info</h2>
+        <div class="grid2">
+          <div>
+            <label>Headquarters (EN)</label><input id="contact_hq_en">
+            <label>Headquarters (ID)</label><input id="contact_hq_id">
+          </div>
+          <div>
+            <label>Email</label><input id="contact_email">
+            <label>Hours (EN)</label><input id="contact_hours_en">
+            <label>Hours (ID)</label><input id="contact_hours_id">
+          </div>
+        </div>
+      </div>
+
+      <button class="btn primary" id="saveContentBtn" type="button">Save landing content</button>
+      <div id="contentMsg" class="msg" style="margin-top:12px"></div>
+    </section>
+
+  </div>
+</main>
+
+<!-- ═══════════ USER MODAL ═══════════ -->
+<div class="overlay" id="userOverlay">
+  <div class="modal">
+    <div class="modal-head"><h3 id="userModalTitle">New account</h3>
+      <button id="userModalClose" type="button">&times;</button></div>
+    <input type="hidden" id="uId">
+    <label>Email</label><input id="uEmail" type="email" placeholder="client@company.co.id">
+    <label>Name</label><input id="uName" placeholder="Client name">
+    <label id="uPwLabel">Password</label><input id="uPw" type="text" placeholder="Set a password">
+    <div class="grid2">
+      <div>
+        <label>MASAGI HV username</label><input id="uHvUser" placeholder="e.g. admin">
+      </div>
+      <div>
+        <label>MASAGI HV database</label>
+        <select id="uHvDb"><option value="">— none —</option></select>
+      </div>
+    </div>
+    <label>MASAGI CROM email</label><input id="uCromEmail" placeholder="client@masagicrom.local">
+    <div class="check"><input type="checkbox" id="uIsAdmin">
+      <label for="uIsAdmin" style="margin:0;text-transform:none;font-weight:500;letter-spacing:0;color:var(--text)">Admin — can manage users, databases and landing content</label></div>
+    <div class="check"><input type="checkbox" id="uIsActive" checked>
+      <label for="uIsActive" style="margin:0;text-transform:none;font-weight:500;letter-spacing:0;color:var(--text)">Active</label></div>
+    <div id="userMsg" class="msg"></div>
+    <div class="modal-actions">
+      <button class="btn" id="userCancelBtn" type="button">Cancel</button>
+      <button class="btn primary" id="userSaveBtn" type="button">Save account</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function applyTheme(t){ document.documentElement.setAttribute("data-theme",t);
+  document.getElementById("themeBtn").textContent = t==="dark"?"☀":"☾";
+  try{ localStorage.setItem("masagi-theme",t); }catch(e){} }
+document.getElementById("themeBtn").addEventListener("click", function(){
+  applyTheme(document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark"); });
+var st=null; try{ st=localStorage.getItem("masagi-theme"); }catch(e){}
+applyTheme(st || (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));
+
+function esc(s){ return (s==null?"":String(s)).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+function flash(el, msg, ok){ el.textContent = msg; el.className = "msg show " + (ok?"ok":"err"); }
+
+/* ═══════════ tabs ═══════════ */
+document.querySelectorAll(".tab").forEach(function(btn){
+  btn.addEventListener("click", function(){
+    document.querySelectorAll(".tab").forEach(function(b){ b.classList.toggle("on", b===btn); });
+    var key = btn.getAttribute("data-tab");
+    ["users","databases","content"].forEach(function(k){
+      document.getElementById("tab-"+k).classList.toggle("hidden", k!==key);
+    });
+  });
+});
+
+/* ═══════════ users & access ═══════════ */
+var USERS = [], DATABASES = [];
+
+function loadUsers(){
+  fetch("/api/admin/users").then(function(r){ return r.json(); }).then(function(d){
+    USERS = d.users || [];
+    var rows = document.getElementById("userRows");
+    rows.innerHTML = USERS.map(function(u){
+      return "<tr>" +
+        "<td>"+esc(u.email)+(u.is_admin?' <span class="pill admin">ADMIN</span>':"")+"</td>" +
+        "<td>"+esc(u.name)+"</td>" +
+        "<td>"+(u.hv_username ? esc(u.hv_username)+(u.hv_db?" @ "+esc(u.hv_db):"") : '<span class="muted">—</span>')+"</td>" +
+        "<td>"+(u.crom_email ? esc(u.crom_email) : '<span class="muted">—</span>')+"</td>" +
+        "<td>"+(u.is_active ? '<span class="pill">active</span>' : '<span class="pill inactive">inactive</span>')+"</td>" +
+        "<td class=\"row-actions\">" +
+          "<button class=\"btn sm\" data-edit=\""+u.id+"\">Edit</button>" +
+          "<button class=\"btn sm danger\" data-del=\""+u.id+"\">Delete</button>" +
+        "</td></tr>";
+    }).join("") || "<tr><td colspan=6 class=\"muted\">No accounts yet.</td></tr>";
+    rows.querySelectorAll("[data-edit]").forEach(function(b){
+      b.addEventListener("click", function(){ openUserModal(USERS.find(function(u){ return u.id==b.dataset.edit; })); });
+    });
+    rows.querySelectorAll("[data-del]").forEach(function(b){
+      b.addEventListener("click", function(){ deleteUser(+b.dataset.del); });
+    });
+  });
+}
+
+function fillHvDbSelect(selected){
+  var sel = document.getElementById("uHvDb");
+  sel.innerHTML = '<option value="">— none —</option>' +
+    DATABASES.map(function(n){ return '<option value="'+esc(n)+'"'+(n===selected?" selected":"")+'>'+esc(n)+'</option>'; }).join("");
+}
+
+function openUserModal(u){
+  document.getElementById("userMsg").className = "msg";
+  document.getElementById("userModalTitle").textContent = u ? "Edit account" : "New account";
+  document.getElementById("uId").value = u ? u.id : "";
+  document.getElementById("uEmail").value = u ? u.email : "";
+  document.getElementById("uEmail").disabled = !!u;
+  document.getElementById("uName").value = u ? u.name : "";
+  document.getElementById("uPw").value = "";
+  document.getElementById("uPw").placeholder = u ? "Leave blank to keep current password" : "Set a password";
+  document.getElementById("uPwLabel").textContent = u ? "New password (optional)" : "Password";
+  fillHvDbSelect(u ? u.hv_db : "");
+  document.getElementById("uHvUser").value = u ? u.hv_username : "";
+  document.getElementById("uCromEmail").value = u ? u.crom_email : "";
+  document.getElementById("uIsAdmin").checked = u ? u.is_admin : false;
+  document.getElementById("uIsActive").checked = u ? u.is_active : true;
+  document.getElementById("userOverlay").classList.add("show");
+}
+document.getElementById("newUserBtn").addEventListener("click", function(){ openUserModal(null); });
+document.getElementById("userModalClose").addEventListener("click", closeUserModal);
+document.getElementById("userCancelBtn").addEventListener("click", closeUserModal);
+function closeUserModal(){ document.getElementById("userOverlay").classList.remove("show"); }
+
+document.getElementById("userSaveBtn").addEventListener("click", function(){
+  var id = document.getElementById("uId").value;
+  var body = {
+    email: document.getElementById("uEmail").value.trim(),
+    name: document.getElementById("uName").value.trim(),
+    password: document.getElementById("uPw").value,
+    hv_username: document.getElementById("uHvUser").value.trim(),
+    hv_db: document.getElementById("uHvDb").value,
+    crom_email: document.getElementById("uCromEmail").value.trim(),
+    is_admin: document.getElementById("uIsAdmin").checked,
+    is_active: document.getElementById("uIsActive").checked,
+  };
+  var url = id ? "/api/admin/users/"+id : "/api/admin/users";
+  var method = id ? "PUT" : "POST";
+  fetch(url, { method: method, headers: {"Content-Type":"application/json"}, body: JSON.stringify(body) })
+    .then(function(r){ return r.json().then(function(d){ return {ok:r.ok, d:d}; }); })
+    .then(function(res){
+      if (!res.ok) { flash(document.getElementById("userMsg"), res.d.error || "Save failed.", false); return; }
+      closeUserModal(); loadUsers();
+    });
+});
+
+function deleteUser(id){
+  var u = USERS.find(function(x){ return x.id===id; });
+  if (!confirm("Delete " + (u?u.email:"this account") + "? This can't be undone.")) return;
+  fetch("/api/admin/users/"+id, { method:"DELETE" })
+    .then(function(r){ return r.json().then(function(d){ return {ok:r.ok, d:d}; }); })
+    .then(function(res){
+      if (!res.ok) { alert(res.d.error || "Delete failed."); return; }
+      loadUsers();
+    });
+}
+
+/* ═══════════ trial databases ═══════════ */
+function loadDatabases(){
+  var box = document.getElementById("dbList"), msg = document.getElementById("dbMsg");
+  msg.className = "msg";
+  fetch("/api/admin/hv-databases").then(function(r){ return r.json().then(function(d){ return {ok:r.ok, d:d}; }); })
+    .then(function(res){
+      if (!res.ok) { box.innerHTML = ""; flash(msg, res.d.error || "Could not reach MASAGI HV.", false); return; }
+      DATABASES = res.d.databases || [];
+      box.innerHTML = DATABASES.map(function(n){ return '<span class="db-chip">'+esc(n)+'</span>'; }).join("") ||
+        '<span class="muted">No databases found.</span>';
+      fillHvDbSelect(document.getElementById("uHvDb").value);
+    });
+}
+document.getElementById("createDbBtn").addEventListener("click", function(){
+  var name = document.getElementById("newDbName").value.trim();
+  var msg = document.getElementById("createDbMsg");
+  if (!name) { flash(msg, "Give the trial database a name first.", false); return; }
+  var btn = document.getElementById("createDbBtn");
+  btn.disabled = true; btn.textContent = "Creating…";
+  fetch("/api/admin/hv-databases", { method:"POST", headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({ name: name, seed_demo: document.getElementById("newDbSeed").checked }) })
+    .then(function(r){ return r.json().then(function(d){ return {ok:r.ok, d:d}; }); })
+    .then(function(res){
+      btn.disabled = false; btn.textContent = "Create database";
+      if (!res.ok) { flash(msg, res.d.error || "Could not create database.", false); return; }
+      flash(msg, "Created “" + res.d.name + "” — it's ready to assign to a user above.", true);
+      document.getElementById("newDbName").value = "";
+      loadDatabases();
+    });
+});
+
+/* ═══════════ landing content ═══════════ */
+document.querySelectorAll(".lang-tabs").forEach(function(tabs){
+  var group = tabs.getAttribute("data-group");
+  tabs.querySelectorAll("button").forEach(function(b){
+    b.addEventListener("click", function(){
+      tabs.querySelectorAll("button").forEach(function(x){ x.classList.toggle("on", x===b); });
+      document.querySelectorAll('.lang-pane[data-group="'+group+'"]').forEach(function(p){
+        p.classList.toggle("on", p.getAttribute("data-lang")===b.getAttribute("data-lang"));
+      });
+    });
+  });
+});
+
+function heroSlideHtml(i){
+  return '<div class="hero-slide"><h4>Slide '+(i+1)+'</h4>' +
+    '<div class="lang-tabs" data-group="hero'+i+'"><button class="on" data-lang="en" type="button">English</button>' +
+    '<button data-lang="id" type="button">Indonesia</button></div>' +
+    '<div class="lang-pane on" data-group="hero'+i+'" data-lang="en">' +
+      '<label>Eyebrow</label><input id="hero'+i+'_eyebrow_en">' +
+      '<label>Title</label><input id="hero'+i+'_title_en">' +
+      '<label>Subtext</label><textarea id="hero'+i+'_sub_en"></textarea></div>' +
+    '<div class="lang-pane" data-group="hero'+i+'" data-lang="id">' +
+      '<label>Eyebrow</label><input id="hero'+i+'_eyebrow_id">' +
+      '<label>Judul</label><input id="hero'+i+'_title_id">' +
+      '<label>Subteks</label><textarea id="hero'+i+'_sub_id"></textarea></div></div>';
+}
+document.getElementById("heroEditor").innerHTML = [0,1,2].map(heroSlideHtml).join("");
+document.querySelectorAll('.lang-tabs[data-group^="hero"]').forEach(function(tabs){
+  var group = tabs.getAttribute("data-group");
+  tabs.querySelectorAll("button").forEach(function(b){
+    b.addEventListener("click", function(){
+      tabs.querySelectorAll("button").forEach(function(x){ x.classList.toggle("on", x===b); });
+      document.querySelectorAll('.lang-pane[data-group="'+group+'"]').forEach(function(p){
+        p.classList.toggle("on", p.getAttribute("data-lang")===b.getAttribute("data-lang"));
+      });
+    });
+  });
+});
+
+function loadContent(){
+  fetch("/api/public/landing-content").then(function(r){ return r.json(); }).then(function(c){
+    (c.hero||[]).forEach(function(slide, i){
+      Object.keys(slide).forEach(function(k){
+        var el = document.getElementById("hero"+i+"_"+k);
+        if (el) el.value = slide[k];
+      });
+    });
+    Object.keys(c.about||{}).forEach(function(k){ var el=document.getElementById("about_"+k); if(el) el.value=c.about[k]; });
+    Object.keys(c.services||{}).forEach(function(k){ var el=document.getElementById("services_"+k); if(el) el.value=c.services[k]; });
+    Object.keys(c.contact||{}).forEach(function(k){ var el=document.getElementById("contact_"+k); if(el) el.value=c.contact[k]; });
+  });
+}
+
+document.getElementById("saveContentBtn").addEventListener("click", function(){
+  var hero = [0,1,2].map(function(i){
+    return {
+      eyebrow_en: document.getElementById("hero"+i+"_eyebrow_en").value,
+      eyebrow_id: document.getElementById("hero"+i+"_eyebrow_id").value,
+      title_en: document.getElementById("hero"+i+"_title_en").value,
+      title_id: document.getElementById("hero"+i+"_title_id").value,
+      sub_en: document.getElementById("hero"+i+"_sub_en").value,
+      sub_id: document.getElementById("hero"+i+"_sub_id").value,
+    };
+  });
+  var body = {
+    hero: hero,
+    about: {
+      lead_en: document.getElementById("about_lead_en").value, lead_id: document.getElementById("about_lead_id").value,
+      mission_en: document.getElementById("about_mission_en").value, mission_id: document.getElementById("about_mission_id").value,
+      vision_en: document.getElementById("about_vision_en").value, vision_id: document.getElementById("about_vision_id").value,
+    },
+    services: {
+      hv_desc_en: document.getElementById("services_hv_desc_en").value, hv_desc_id: document.getElementById("services_hv_desc_id").value,
+      crom_desc_en: document.getElementById("services_crom_desc_en").value, crom_desc_id: document.getElementById("services_crom_desc_id").value,
+    },
+    contact: {
+      hq_en: document.getElementById("contact_hq_en").value, hq_id: document.getElementById("contact_hq_id").value,
+      email: document.getElementById("contact_email").value,
+      hours_en: document.getElementById("contact_hours_en").value, hours_id: document.getElementById("contact_hours_id").value,
+    },
+  };
+  var msg = document.getElementById("contentMsg");
+  fetch("/api/admin/landing-content", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body) })
+    .then(function(r){ return r.json().then(function(d){ return {ok:r.ok, d:d}; }); })
+    .then(function(res){
+      if (!res.ok) { flash(msg, res.d.error || "Save failed.", false); return; }
+      flash(msg, "Saved — live on masagi.io now.", true);
+    });
+});
+
+/* ═══════════ gate + boot ═══════════ */
+fetch("/api/me").then(function(r){ return r.ok ? r.json() : null; }).then(function(me){
+  if (!me || !me.is_admin) {
+    document.getElementById("deniedBox").classList.remove("hidden");
+    return;
+  }
+  document.getElementById("content").classList.remove("hidden");
+  loadUsers(); loadDatabases(); loadContent();
+});
+</script>
+</body>
+</html>

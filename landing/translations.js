@@ -12,7 +12,8 @@ const TRANSLATIONS = {
     "nav.services": "Our Services",
     "nav.media": "Media",
     "nav.contact": "Location & Contact",
-    "nav.cta": "Sign In",
+    "nav.cta": "Talk to us",
+    "nav.login": "Login",
 
     "hero.s1.eyebrow": "MASAGI Digital",
     "hero.s1.title": "Systems that let you see your business clearly.",
@@ -116,7 +117,8 @@ const TRANSLATIONS = {
     "nav.services": "Layanan Kami",
     "nav.media": "Media",
     "nav.contact": "Lokasi & Kontak",
-    "nav.cta": "Masuk",
+    "nav.cta": "Hubungi kami",
+    "nav.login": "Masuk",
 
     "hero.s1.eyebrow": "MASAGI Digital",
     "hero.s1.title": "Sistem yang membuat bisnismu terlihat jernih.",
