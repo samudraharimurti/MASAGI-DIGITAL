@@ -93,23 +93,35 @@ def init_db():
         with open(SSO_SECRET_FILE, "w") as f:
             f.write(secrets.token_hex(32))
     # first-run seed: one admin account with a generated password, written to
-    # FIRST-LOGIN.txt — read it, sign in, then delete the file.
+    # FIRST-LOGIN.txt — read it, sign in, then delete the file. Wrapped
+    # against the UNIQUE(email) constraint because gunicorn boots multiple
+    # workers, each importing (and so seeding) this module independently.
     if conn.execute("SELECT COUNT(*) c FROM users").fetchone()["c"] == 0:
         pw = secrets.token_urlsafe(10)
-        conn.execute(
-            "INSERT INTO users(email,name,password_hash,created_at) VALUES(?,?,?,?)",
-            ("samudra@masagi.io", "Samudra",
-             generate_password_hash(pw), datetime.utcnow().isoformat()))
-        uid = conn.execute("SELECT id FROM users WHERE email='samudra@masagi.io'").fetchone()["id"]
-        conn.execute("INSERT INTO grants VALUES(?,?,?,?)", (uid, "hv", "admin", "MASAGI-GROUP"))
-        conn.execute("INSERT INTO grants VALUES(?,?,?,?)", (uid, "crom", "admin@masagicrom.local", ""))
-        with open(FIRST_LOGIN_FILE, "w") as f:
-            f.write("MASAGI Account — first sign-in\n"
-                    "  email:    samudra@masagi.io\n"
-                    "  password: %s\n"
-                    "Sign in, then delete this file.\n" % pw)
-    conn.commit()
+        try:
+            conn.execute(
+                "INSERT INTO users(email,name,password_hash,created_at) VALUES(?,?,?,?)",
+                ("samudra@masagi.io", "Samudra",
+                 generate_password_hash(pw), datetime.utcnow().isoformat()))
+            uid = conn.execute("SELECT id FROM users WHERE email='samudra@masagi.io'").fetchone()["id"]
+            conn.execute("INSERT INTO grants VALUES(?,?,?,?)", (uid, "hv", "admin", "MASAGI-GROUP"))
+            conn.execute("INSERT INTO grants VALUES(?,?,?,?)", (uid, "crom", "admin@masagicrom.local", ""))
+            with open(FIRST_LOGIN_FILE, "w") as f:
+                f.write("MASAGI Account — first sign-in\n"
+                        "  email:    samudra@masagi.io\n"
+                        "  password: %s\n"
+                        "Sign in, then delete this file.\n" % pw)
+            conn.commit()
+        except sqlite3.IntegrityError:
+            pass  # another worker won the race and seeded it first
     conn.close()
+
+
+# Runs unconditionally at import time (not just under `python server.py`) so
+# the database, seed user, and shared SSO secret all exist before gunicorn
+# serves the first request — gunicorn imports this module, it never executes
+# the `if __name__ == "__main__"` block below.
+init_db()
 
 
 # ------------------------------------------------------------------- tokens
@@ -268,7 +280,6 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         _cli(sys.argv)
     else:
-        init_db()
         port = int(os.environ.get("PORT", 8015))
         print("MASAGI Account portal running at http://127.0.0.1:%d" % port)
         app.run(host=os.environ.get("HOST", "127.0.0.1"), port=port, debug=False)
