@@ -307,11 +307,45 @@ html[data-theme="dark"] .footer { background: #0B1222; }
   html { scroll-behavior: auto; }
 }
 
+/* ================= TRUST STRIP ================= */
+.trust { background: var(--surface); border-bottom: 1px solid var(--border); padding: 34px 0; }
+.trust-label { display: block; text-align: center; font-size: 12px; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--text-2); }
+.trust-logos { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; justify-content: center; margin-top: 22px; }
+.logo-tile { width: 150px; height: 70px; display: flex; align-items: center; justify-content: center;
+  border-radius: 10px; padding: 12px 18px; }
+.logo-tile img { max-height: 40px; max-width: 118px; width: auto; object-fit: contain; display: block;
+  filter: grayscale(1); opacity: .62; transition: filter .25s, opacity .25s; }
+.logo-tile:hover img { filter: grayscale(0); opacity: 1; }
+.logo-word { font-weight: 800; font-size: 18px; letter-spacing: .01em; color: var(--text-2);
+  opacity: .72; transition: opacity .25s, color .25s; white-space: nowrap; }
+.logo-tile:hover .logo-word { opacity: 1; color: var(--text); }
+
+/* ================= HOW IT WORKS ================= */
+.steps { display: grid; grid-template-columns: 1fr; gap: 22px; margin-top: 44px; }
+.step-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 28px; }
+.step-n { font-size: 14px; font-weight: 800; color: var(--accent); letter-spacing: .1em; }
+.step-card h3 { font-size: 19px; font-weight: 700; margin: 12px 0 8px; color: var(--text); }
+.step-card p { color: var(--text-2); font-size: 14.5px; }
+
+/* ================= CASE STUDY ================= */
+.case .case-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+.eyebrow-green { color: #1E7A4C; }
+.eyebrow-green::before { background: #1E7A4C; }
+.case h2 { font-size: clamp(26px, 4vw, 42px); font-weight: 800; line-height: 1.16; letter-spacing: -.02em;
+  margin-bottom: 16px; color: var(--text); }
+.case-sub { font-size: clamp(16px, 2vw, 20px); line-height: 1.5; color: var(--text-2); max-width: 64ch;
+  margin: 0 auto 18px; }
+.case-role { font-weight: 700; font-size: 15px; color: var(--text); }
+.case-org { color: var(--text-2); font-size: 13.5px; margin-bottom: 22px; }
+.case-link { font-weight: 700; font-size: 14px; color: var(--accent); }
+
 /* ================= BREAKPOINTS ================= */
 @media (min-width: 768px) {
   .about-grid { grid-template-columns: repeat(3, 1fr); }
   .stats { grid-template-columns: repeat(4, 1fr); }
   .media-grid { grid-template-columns: repeat(3, 1fr); }
+  .steps { grid-template-columns: repeat(3, 1fr); }
   .f-row { grid-template-columns: 1fr 1fr; }
   .foot-grid { grid-template-columns: 1.4fr 1fr 1fr 1fr; }
 }

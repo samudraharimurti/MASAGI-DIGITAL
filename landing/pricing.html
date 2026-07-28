@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing — MASAGI Digital</title>
+<meta name="description" content="Every MASAGI system is tailored to your entities, workflow and reporting formats — so pricing is scoped to what you actually need. Book a scoping call for a clear quote.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://masagi.io/pricing">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Pricing — MASAGI Digital">
+<meta property="og:description" content="Priced to your business, not a plan tier. Tailored MASAGI-HV and MASAGI-CROM engagements.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='22' fill='%231B2A4A'/%3E%3Cpolygon points='30,58 12,92 48,92' fill='%231E7A4C'/%3E%3Cpolygon points='58,42 34,92 82,92' fill='%2331A96A'/%3E%3Cpolygon points='78,26 48,92 106,92' fill='%2357D496'/%3E%3Cpolygon points='78,26 70.5,42 85.5,42' fill='%230B3B24'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#1B2A4A; --accent:#2563EB; --bg:#FFFFFF; --surface:#F8FAFC;
+  --text:#1B2A4A; --text-2:#64748B; --border:#E2E8F0; --card:#FFFFFF;
+  --card-sh:0 18px 44px rgba(27,42,74,.08); --nav-bg:rgba(255,255,255,.95);
+}
+html[data-theme="dark"] {
+  --accent:#3B82F6; --bg:#0B1220; --surface:#0F1A2E; --text:#EAF0F8;
+  --text-2:#9FB0C6; --border:#26344C; --card:#14213A;
+  --card-sh:0 18px 44px rgba(0,0,0,.45); --nav-bg:rgba(11,18,32,.92);
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body { font-family:'Inter','Helvetica Neue',Arial,sans-serif; background:var(--bg); color:var(--text);
+  line-height:1.6; -webkit-font-smoothing:antialiased; transition:background .3s,color .3s; }
+a { color:var(--accent); text-decoration:none; }
+.wrap { max-width:1180px; margin:0 auto; padding:0 22px; }
+input, textarea { width:100%; font:inherit; font-size:14.5px; color:var(--text); background:var(--card);
+  border:1px solid var(--border); border-radius:7px; padding:12px 13px; outline:none; resize:vertical;
+  transition:border-color .2s, box-shadow .2s; }
+input:focus, textarea:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(37,99,235,.18); }
+label { display:block; font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--text-2); margin-bottom:6px; }
+
+/* nav */
+header { position:sticky; top:0; z-index:100; background:var(--nav-bg); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border); }
+.nav-inner { display:flex; align-items:center; justify-content:space-between; gap:14px; height:72px; }
+.brand { display:flex; align-items:center; gap:10px; color:var(--text); }
+.brand svg { height:30px; width:auto; display:block; }
+.brand .word { font-weight:800; font-size:19px; letter-spacing:.04em; line-height:1; }
+.brand .word .sub { font-weight:500; font-size:10.5px; letter-spacing:.34em; display:block; margin-top:-2px; opacity:.72; }
+.menu { display:none; align-items:center; gap:24px; font-size:14.5px; font-weight:600; }
+.menu a { color:var(--text); opacity:.9; }
+.menu a.on { color:var(--accent); opacity:1; }
+.menu a:hover { opacity:1; }
+.controls { display:flex; align-items:center; gap:10px; }
+.lang-group { display:flex; border:1px solid var(--border); border-radius:6px; overflow:hidden; }
+.lang-btn { font:inherit; font-size:11.5px; font-weight:700; letter-spacing:.05em; cursor:pointer;
+  padding:6px 10px; border:0; background:transparent; color:var(--text-2); }
+.lang-btn.on { background:var(--accent); color:#fff; }
+.theme-btn { font-size:14px; cursor:pointer; width:34px; height:32px; border:1px solid var(--border);
+  border-radius:6px; background:transparent; color:var(--text-2); }
+.btn-solid { background:var(--accent); color:#fff !important; padding:10px 18px; border-radius:6px;
+  font-size:14px; font-weight:600; box-shadow:0 10px 26px rgba(37,99,235,.30); white-space:nowrap; }
+.btn-ghost { padding:10px 16px; border-radius:6px; font-size:14px; font-weight:600; color:var(--text) !important;
+  border:1px solid var(--border); white-space:nowrap; }
+
+.eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:12px; font-weight:700;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
+.eyebrow::before { content:""; width:30px; height:3px; background:var(--accent); }
+
+/* header section */
+.head { padding:80px 0 56px; background:var(--surface); text-align:center; border-bottom:1px solid var(--border); }
+.head .inner { max-width:720px; margin:0 auto; }
+.head h1 { font-size:clamp(32px,4.6vw,50px); font-weight:800; line-height:1.1; letter-spacing:-.02em; margin-bottom:16px; }
+.head p { color:var(--text-2); font-size:clamp(15.5px,1.8vw,18px); }
+
+/* cards */
+.cards { padding:72px 0; }
+.cards .grid { max-width:1000px; margin:0 auto; display:grid; grid-template-columns:1fr; gap:24px; }
+.pcard { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:34px 30px; box-shadow:var(--card-sh); }
+.pcard .mark { width:46px; height:46px; border-radius:11px; display:block; margin-bottom:16px; }
+.pcard .mark.hv { background:linear-gradient(135deg,#1B2A4A,#2563EB); }
+.pcard .mark.crom { background:linear-gradient(135deg,#1E7A4C,#57D496); }
+.pcard h2 { font-size:24px; font-weight:800; letter-spacing:-.01em; }
+.pcard .tagline { color:var(--text-2); font-size:14px; margin:6px 0 18px; }
+.pcard .price { font-size:34px; font-weight:800; letter-spacing:-.02em; margin-bottom:4px; }
+.pcard .price-sub { color:var(--text-2); font-size:13.5px; margin-bottom:22px; }
+.pcard ul { list-style:none; display:grid; gap:11px; margin-bottom:26px; }
+.pcard li { display:flex; gap:11px; font-size:14.5px; }
+.pcard li::before { content:"✓"; color:#31A96A; font-weight:800; flex:none; }
+.pcard .cta { display:block; text-align:center; background:var(--accent); color:#fff; font-weight:600;
+  font-size:15px; padding:13px; border-radius:6px; box-shadow:0 10px 26px rgba(37,99,235,.30); }
+
+/* includes */
+.includes { padding:8px 0 72px; }
+.includes .inner { max-width:1000px; margin:0 auto; }
+.includes h3 { font-size:20px; font-weight:700; margin-bottom:24px; text-align:center; }
+.inc-grid { display:grid; grid-template-columns:1fr; gap:22px; }
+.inc-n { width:26px; height:26px; border-radius:7px; background:rgba(37,99,235,.12); color:var(--accent);
+  font-weight:800; display:flex; align-items:center; justify-content:center; margin-bottom:12px; }
+.inc-item h4 { font-size:15.5px; font-weight:700; margin-bottom:6px; }
+.inc-item p { color:var(--text-2); font-size:14px; }
+
+/* scoping form */
+.scoping { padding:72px 0 96px; background:var(--surface); border-top:1px solid var(--border); }
+.scoping .inner { max-width:640px; margin:0 auto; }
+.scoping .head-txt { text-align:center; margin-bottom:28px; }
+.scoping h2 { font-size:clamp(24px,3vw,32px); font-weight:800; letter-spacing:-.015em; margin-bottom:10px; }
+.scoping .head-txt p { color:var(--text-2); font-size:15.5px; }
+.scoping form { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:28px; box-shadow:var(--card-sh); }
+.f2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px; }
+.fld { margin-bottom:16px; }
+.scoping button { width:100%; background:var(--accent); color:#fff; font:inherit; font-weight:600; font-size:15px;
+  padding:14px; border:none; border-radius:6px; cursor:pointer; box-shadow:0 10px 26px rgba(37,99,235,.30); }
+.scoping .note { margin-top:14px; font-size:12px; color:var(--text-2); text-align:center; }
+
+/* footer */
+footer { background:var(--navy); color:#C7D2E4; padding:48px 0 30px; }
+html[data-theme="dark"] footer { background:#0A1222; }
+.foot-inner { display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; align-items:center; }
+.foot-brand { display:flex; align-items:center; gap:10px; }
+.foot-brand svg { height:26px; width:auto; }
+.foot-brand span { font-weight:800; font-size:18px; letter-spacing:.04em; color:#fff; }
+.foot-links { display:flex; gap:22px; font-size:14px; flex-wrap:wrap; }
+.foot-links a { color:#C7D2E4; }
+.foot-links a:hover { color:#fff; }
+.foot-copy { font-size:12.5px; color:#7E8DA8; }
+
+@media (min-width:768px) {
+  .cards .grid { grid-template-columns:1fr 1fr; }
+  .inc-grid { grid-template-columns:repeat(3,1fr); }
+}
+@media (min-width:1024px) { .menu { display:flex; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-inner">
+    <a class="brand" href="/">
+      <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <polygon points="35,62 5,110 65,110" fill="#1E7A4C"/><polygon points="85,38 45,110 125,110" fill="#31A96A"/>
+        <polygon points="145,14 95,110 195,110" fill="#57D496"/><polygon points="145,14 132.5,38 157.5,38" fill="#0B3B24"/>
+      </svg>
+      <span class="word">MASAGI<span class="sub">DIGITAL</span></span>
+    </a>
+    <nav class="menu">
+      <a href="/#services" data-i18n="nav.products">Products</a>
+      <a href="/pricing" class="on" data-i18n="nav.pricing">Pricing</a>
+      <a href="/#media" data-i18n="nav.resources">Resources</a>
+      <a href="/#about" data-i18n="nav.about">About</a>
+    </nav>
+    <div class="controls">
+      <div class="lang-group">
+        <button class="lang-btn" data-lang="en" type="button">EN</button>
+        <button class="lang-btn" data-lang="id" type="button">ID</button>
+      </div>
+      <button class="theme-btn" id="themeBtn" type="button" title="Light / dark">☾</button>
+      <a class="btn-ghost" href="https://account.masagi.io" data-i18n="nav.signin">Sign in</a>
+      <a class="btn-solid" href="https://account.masagi.io" data-i18n="nav.start">Start free</a>
+    </div>
+  </div>
+</header>
+
+<!-- HEADER -->
+<section class="head">
+  <div class="wrap inner">
+    <span class="eyebrow" data-i18n="h.eyebrow">Pricing</span>
+    <h1 data-i18n="h.title">Priced to your business, not a plan tier.</h1>
+    <p data-i18n="h.sub">Every MASAGI system is tailored to your entities, workflow and reporting formats — so pricing is scoped to what you actually need. Tell us how your operation runs and we'll come back with a clear quote.</p>
+  </div>
+</section>
+
+<!-- PRODUCT CARDS -->
+<section class="cards">
+  <div class="wrap grid">
+    <div class="pcard">
+      <span class="mark hv"></span>
+      <h2>MASAGI-HV</h2>
+      <p class="tagline" data-i18n="hv.tagline">Helicopter View ERP — consolidated finance.</p>
+      <div class="price" data-i18n="custom">Custom</div>
+      <div class="price-sub" data-i18n="hv.scope">Scoped to your entities &amp; reporting</div>
+      <ul>
+        <li data-i18n="hv.f1">Tailored chart of accounts &amp; entities</li>
+        <li data-i18n="hv.f2">Consolidation, bank import, budgets</li>
+        <li data-i18n="hv.f3">Board-ready Excel &amp; PDF reporting</li>
+        <li data-i18n="hv.f4">Onboarding &amp; bilingual support</li>
+      </ul>
+      <a class="cta" href="#scoping" data-i18n="getquote">Get a quote</a>
+    </div>
+    <div class="pcard">
+      <span class="mark crom"></span>
+      <h2>MASAGI-CROM</h2>
+      <p class="tagline" data-i18n="crom.tagline">Certification &amp; Regulatory Operations.</p>
+      <div class="price" data-i18n="custom">Custom</div>
+      <div class="price-sub" data-i18n="crom.scope">Scoped to your scheme &amp; client volume</div>
+      <ul>
+        <li data-i18n="crom.f1">Pipeline mapped to your scheme</li>
+        <li data-i18n="crom.f2">Client portal with live tracker</li>
+        <li data-i18n="crom.f3">Deadline, renewal &amp; surveillance alerts</li>
+        <li data-i18n="crom.f4">Weekly reports &amp; bilingual updates</li>
+      </ul>
+      <a class="cta" href="#scoping" data-i18n="getquote">Get a quote</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INCLUDED -->
+<section class="includes">
+  <div class="wrap inner">
+    <h3 data-i18n="inc.title">What every engagement includes</h3>
+    <div class="inc-grid">
+      <div class="inc-item"><div class="inc-n">1</div><h4 data-i18n="inc.1t">Discovery &amp; mapping</h4><p data-i18n="inc.1b">We sit with your team and learn how the month really runs before configuring anything.</p></div>
+      <div class="inc-item"><div class="inc-n">2</div><h4 data-i18n="inc.2t">Tailored setup</h4><p data-i18n="inc.2b">Your accounts, workflow and reporting formats — configured, not templated.</p></div>
+      <div class="inc-item"><div class="inc-n">3</div><h4 data-i18n="inc.3t">Onboarding &amp; support</h4><p data-i18n="inc.3b">Go-live support and bilingual EN/ID help so your team is productive fast.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SCOPING FORM -->
+<section class="scoping" id="scoping">
+  <div class="wrap inner">
+    <div class="head-txt">
+      <h2 data-i18n="form.title">Book a scoping call</h2>
+      <p data-i18n="form.sub">Tell us a little about your operation and we'll come back with a tailored quote.</p>
+    </div>
+    <form id="scopeForm" novalidate>
+      <div class="f2">
+        <div><label data-i18n="form.name">Name</label><input id="sName" type="text" data-i18n-ph="form.namePh" placeholder="Your name" required></div>
+        <div><label data-i18n="form.email">Email</label><input id="sEmail" type="email" data-i18n-ph="form.emailPh" placeholder="you@company.co.id" required></div>
+      </div>
+      <div class="fld"><label data-i18n="form.company">Company</label><input id="sCompany" type="text" data-i18n-ph="form.companyPh" placeholder="Company name"></div>
+      <div class="fld"><label data-i18n="form.product">Which product?</label><input id="sProduct" type="text" data-i18n-ph="form.productPh" placeholder="MASAGI-HV, MASAGI-CROM, or both"></div>
+      <div class="fld"><label data-i18n="form.fix">What would you like to fix?</label><textarea id="sMsg" rows="4" data-i18n-ph="form.fixPh" placeholder="Tell us how your operation runs today…"></textarea></div>
+      <button type="submit" data-i18n="form.submit">Book a scoping call</button>
+      <p class="note" data-i18n="form.note">No decks, no pressure — a working demo and a straight conversation.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-brand">
+      <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <polygon points="35,62 5,110 65,110" fill="#1E7A4C"/><polygon points="85,38 45,110 125,110" fill="#31A96A"/>
+        <polygon points="145,14 95,110 195,110" fill="#57D496"/><polygon points="145,14 132.5,38 157.5,38" fill="#0B3B24"/>
+      </svg>
+      <span>MASAGI</span>
+    </div>
+    <div class="foot-links">
+      <a href="/#services">MASAGI-HV</a><a href="/#services">MASAGI-CROM</a>
+      <a href="/pricing" data-i18n="nav.pricing">Pricing</a><a href="/#about" data-i18n="nav.about">About</a>
+    </div>
+    <span class="foot-copy">© 2026 MASAGI Digital</span>
+  </div>
+</footer>
+
+<script>
+var I18N = {
+  en: {
+    "nav.products":"Products","nav.pricing":"Pricing","nav.resources":"Resources","nav.about":"About","nav.signin":"Sign in","nav.start":"Start free",
+    "h.eyebrow":"Pricing","h.title":"Priced to your business, not a plan tier.",
+    "h.sub":"Every MASAGI system is tailored to your entities, workflow and reporting formats — so pricing is scoped to what you actually need. Tell us how your operation runs and we'll come back with a clear quote.",
+    "custom":"Custom","getquote":"Get a quote",
+    "hv.tagline":"Helicopter View ERP — consolidated finance.","hv.scope":"Scoped to your entities & reporting",
+    "hv.f1":"Tailored chart of accounts & entities","hv.f2":"Consolidation, bank import, budgets","hv.f3":"Board-ready Excel & PDF reporting","hv.f4":"Onboarding & bilingual support",
+    "crom.tagline":"Certification & Regulatory Operations.","crom.scope":"Scoped to your scheme & client volume",
+    "crom.f1":"Pipeline mapped to your scheme","crom.f2":"Client portal with live tracker","crom.f3":"Deadline, renewal & surveillance alerts","crom.f4":"Weekly reports & bilingual updates",
+    "inc.title":"What every engagement includes",
+    "inc.1t":"Discovery & mapping","inc.1b":"We sit with your team and learn how the month really runs before configuring anything.",
+    "inc.2t":"Tailored setup","inc.2b":"Your accounts, workflow and reporting formats — configured, not templated.",
+    "inc.3t":"Onboarding & support","inc.3b":"Go-live support and bilingual EN/ID help so your team is productive fast.",
+    "form.title":"Book a scoping call","form.sub":"Tell us a little about your operation and we'll come back with a tailored quote.",
+    "form.name":"Name","form.namePh":"Your name","form.email":"Email","form.emailPh":"you@company.co.id",
+    "form.company":"Company","form.companyPh":"Company name","form.product":"Which product?","form.productPh":"MASAGI-HV, MASAGI-CROM, or both",
+    "form.fix":"What would you like to fix?","form.fixPh":"Tell us how your operation runs today…","form.submit":"Book a scoping call",
+    "form.note":"No decks, no pressure — a working demo and a straight conversation."
+  },
+  id: {
+    "nav.products":"Produk","nav.pricing":"Harga","nav.resources":"Sumber Daya","nav.about":"Tentang","nav.signin":"Masuk","nav.start":"Mulai gratis",
+    "h.eyebrow":"Harga","h.title":"Disesuaikan dengan bisnis Anda, bukan paket tier.",
+    "h.sub":"Setiap sistem MASAGI disesuaikan dengan entitas, alur kerja, dan format laporan Anda — sehingga harga ditetapkan sesuai kebutuhan nyata Anda. Ceritakan bagaimana operasi Anda berjalan dan kami akan kembali dengan penawaran yang jelas.",
+    "custom":"Custom","getquote":"Minta penawaran",
+    "hv.tagline":"ERP Helicopter View — keuangan terkonsolidasi.","hv.scope":"Sesuai entitas & pelaporan Anda",
+    "hv.f1":"Bagan akun & entitas yang disesuaikan","hv.f2":"Konsolidasi, impor bank, anggaran","hv.f3":"Laporan Excel & PDF siap direksi","hv.f4":"Onboarding & dukungan dwibahasa",
+    "crom.tagline":"Operasi Sertifikasi & Regulasi.","crom.scope":"Sesuai skema & volume klien Anda",
+    "crom.f1":"Alur dipetakan ke skema Anda","crom.f2":"Portal klien dengan pelacak langsung","crom.f3":"Peringatan tenggat, perpanjangan & surveilans","crom.f4":"Laporan mingguan & pembaruan dwibahasa",
+    "inc.title":"Yang termasuk dalam setiap kerja sama",
+    "inc.1t":"Penemuan & pemetaan","inc.1b":"Kami duduk bersama tim Anda dan mempelajari bagaimana bulan berjalan sebelum mengonfigurasi apa pun.",
+    "inc.2t":"Penyiapan yang disesuaikan","inc.2b":"Akun, alur kerja, dan format laporan Anda — dikonfigurasi, bukan template.",
+    "inc.3t":"Onboarding & dukungan","inc.3b":"Dukungan go-live dan bantuan dwibahasa EN/ID agar tim Anda cepat produktif.",
+    "form.title":"Jadwalkan panggilan scoping","form.sub":"Ceritakan sedikit tentang operasi Anda dan kami akan kembali dengan penawaran yang disesuaikan.",
+    "form.name":"Nama","form.namePh":"Nama Anda","form.email":"Email","form.emailPh":"anda@perusahaan.co.id",
+    "form.company":"Perusahaan","form.companyPh":"Nama perusahaan","form.product":"Produk yang mana?","form.productPh":"MASAGI-HV, MASAGI-CROM, atau keduanya",
+    "form.fix":"Apa yang ingin Anda perbaiki?","form.fixPh":"Ceritakan bagaimana operasi Anda berjalan saat ini…","form.submit":"Jadwalkan panggilan scoping",
+    "form.note":"Tanpa deck, tanpa tekanan — demo nyata dan percakapan yang jujur."
+  }
+};
+function applyLang(lang){
+  if(!I18N[lang]) lang="en";
+  var d=I18N[lang]; document.documentElement.lang=lang;
+  document.querySelectorAll("[data-i18n]").forEach(function(el){var k=el.getAttribute("data-i18n"); if(d[k]!==undefined) el.textContent=d[k];});
+  document.querySelectorAll("[data-i18n-ph]").forEach(function(el){var k=el.getAttribute("data-i18n-ph"); if(d[k]!==undefined) el.setAttribute("placeholder",d[k]);});
+  document.querySelectorAll(".lang-btn").forEach(function(b){b.classList.toggle("on",b.getAttribute("data-lang")===lang);});
+  try{localStorage.setItem("masagi-lang",lang);}catch(e){}
+}
+function applyTheme(t){ document.documentElement.setAttribute("data-theme",t);
+  document.getElementById("themeBtn").textContent=t==="dark"?"☀":"☾"; try{localStorage.setItem("masagi-theme",t);}catch(e){} }
+document.querySelectorAll(".lang-btn").forEach(function(b){b.addEventListener("click",function(){applyLang(b.getAttribute("data-lang"));});});
+document.getElementById("themeBtn").addEventListener("click",function(){applyTheme(document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark");});
+var st=null,sl=null; try{st=localStorage.getItem("masagi-theme");sl=localStorage.getItem("masagi-lang");}catch(e){}
+applyTheme(st||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));
+applyLang(sl||((navigator.language||"").toLowerCase().indexOf("id")===0?"id":"en"));
+
+document.getElementById("scopeForm").addEventListener("submit",function(e){
+  e.preventDefault();
+  var name=document.getElementById("sName").value.trim(), email=document.getElementById("sEmail").value.trim();
+  var company=document.getElementById("sCompany").value.trim(), product=document.getElementById("sProduct").value.trim(), msg=document.getElementById("sMsg").value.trim();
+  if(!name||!email) return;
+  var subject="MASAGI scoping call — "+name+(company?" ("+company+")":"");
+  var body=(product?"Product: "+product+"\n":"")+(msg?msg+"\n":"")+"\n—\n"+name+(company?"\n"+company:"")+"\n"+email;
+  window.location.href="mailto:samudra@masagi.io?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
+});
+</script>
+</body>
+</html>
