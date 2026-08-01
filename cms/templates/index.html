@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}{% if active %}{{ type_label }} — MASAGI{% else %}News &amp; Insights — MASAGI{% endif %}{% endblock %}
+{% block description %}{{ settings.blog_lead_en }}{% endblock %}
+{% block canonical %}{{ blog_base }}/{% if active %}category/{{ type_slug[active] }}{% endif %}{% endblock %}
+{% block ogtitle %}{% if active %}{{ type_label }} — MASAGI{% else %}News &amp; Insights — MASAGI{% endif %}{% endblock %}
+{% block ogdesc %}{{ settings.blog_lead_en }}{% endblock %}
+
+{% block head %}
+<style>
+.hero-h { padding:56px 0 34px; border-bottom:1px solid var(--border); }
+.hero-h h1 { font-size:clamp(28px,4.4vw,44px); font-weight:800; letter-spacing:-1px; line-height:1.1; margin-top:12px; }
+.hero-h p { color:var(--text-2); font-size:clamp(15px,1.7vw,17.5px); max-width:62ch; margin-top:14px; }
+.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; padding:40px 0 10px; }
+@media (max-width:900px){ .grid { grid-template-columns:repeat(2,1fr); } }
+@media (max-width:620px){ .grid { grid-template-columns:1fr; } }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden;
+  box-shadow:var(--shadow); display:flex; flex-direction:column; transition:transform .16s, border-color .16s; }
+.card:hover { transform:translateY(-3px); border-color:var(--accent); }
+.cover { height:172px; background-size:cover; background-position:center; }
+.cover.g0 { background-image:linear-gradient(130deg,#101d38,#23406e); }
+.cover.g1 { background-image:linear-gradient(130deg,#0d1a30,#1E7A4C); }
+.cover.g2 { background-image:linear-gradient(130deg,#14213c,#2563EB); }
+.cover.g3 { background-image:linear-gradient(130deg,#1B2A4A,#31A96A); }
+.card-b { padding:20px; display:flex; flex-direction:column; gap:10px; flex:1; }
+.meta { display:flex; align-items:center; gap:10px; font-size:12px; color:var(--text-2); }
+.card-b h2 { font-size:17.5px; font-weight:700; line-height:1.34; letter-spacing:-.2px; }
+.card-b p { font-size:14px; color:var(--text-2); flex:1; }
+.read { font-size:13.5px; font-weight:700; color:var(--accent); }
+.empty { padding:70px 0; text-align:center; color:var(--text-2); }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="hero-h">
+  <div class="wrap">
+    <span class="eyebrow" data-en="Media" data-id="Media">Media</span>
+    <h1 data-en="{{ settings.blog_title_en }}" data-id="{{ settings.blog_title_id }}">{{ settings.blog_title_en }}</h1>
+    <p data-en="{{ settings.blog_lead_en }}" data-id="{{ settings.blog_lead_id }}">{{ settings.blog_lead_en }}</p>
+  </div>
+</section>
+
+<div class="wrap">
+  {% if posts %}
+  <div class="grid">
+    {% for p in posts %}
+    <a class="card" href="/{{ p.slug }}">
+      <div class="cover g{{ loop.index0 % 4 }}"
+           {% if p.cover_image %}style="background-image:url('{{ p.cover_image }}')"{% endif %}></div>
+      <div class="card-b">
+        <div class="meta">
+          <span class="tag" data-en="{{ p.type_label_en }}" data-id="{{ p.type_label_id }}">{{ p.type_label_en }}</span>
+          <span>{{ p.published_at }}</span>
+        </div>
+        <h2 data-en="{{ p.title_en }}" data-id="{{ p.title_id or p.title_en }}">{{ p.title_en or p.title_id }}</h2>
+        <p data-en="{{ p.excerpt_en }}" data-id="{{ p.excerpt_id or p.excerpt_en }}">{{ p.excerpt_en }}</p>
+        <span class="read" data-en="Read more →" data-id="Baca selengkapnya →">Read more →</span>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty" data-en="Nothing published here yet." data-id="Belum ada yang diterbitkan di sini.">
+    Nothing published here yet.</div>
+  {% endif %}
+</div>
+{% endblock %}

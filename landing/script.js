@@ -52,14 +52,15 @@
     ((navigator.language || "").toLowerCase().indexOf("id") === 0 ? "id" : "en"));
 
   /* ---------- hero carousel (Swiper) ---------- */
-  new Swiper(".hero-swiper", {
+  var SWIPER_OPTS = {
     loop: true,
     speed: 700,
     autoplay: { delay: 5000, disableOnInteraction: false },
     pagination: { el: ".swiper-pagination", clickable: true },
     navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
     keyboard: { enabled: true },
-  });
+  };
+  var heroSwiper = new Swiper(".hero-swiper", SWIPER_OPTS);
 
   /* ---------- navbar: transparent over hero → solid on scroll ---------- */
   var navbar = document.getElementById("navbar");
@@ -130,6 +131,16 @@
         mergeLangField("hero.s" + n + ".eyebrow", slide, "eyebrow_en", "eyebrow_id");
         mergeLangField("hero.s" + n + ".title", slide, "title_en", "title_id");
         mergeLangField("hero.s" + n + ".sub", slide, "sub_en", "sub_id");
+        if (slide.image) {
+          // photo behind a navy overlay so the white slide text stays legible;
+          // covers the original slide and its Swiper loop-duplicate(s)
+          document.querySelectorAll(".hero-swiper .slide.s" + n).forEach(function (el) {
+            el.style.backgroundImage =
+              "linear-gradient(130deg, rgba(16,29,56,.82), rgba(27,42,74,.72)), url('" + slide.image + "')";
+            el.style.backgroundSize = "cover";
+            el.style.backgroundPosition = "center";
+          });
+        }
       });
       if (c.about) {
         mergeLangField("about.lead", c.about, "lead_en", "lead_id");
@@ -148,42 +159,147 @@
           if (link) { link.href = "mailto:" + c.contact.email; link.textContent = c.contact.email; }
         }
       }
+      if (c.case) {
+        mergeLangField("case.eyebrow", c.case, "eyebrow_en", "eyebrow_id");
+        mergeLangField("case.heading", c.case, "heading_en", "heading_id");
+        mergeLangField("case.sub", c.case, "sub_en", "sub_id");
+        mergeLangField("case.role", c.case, "role_en", "role_id");
+        mergeLangField("case.org", c.case, "org_en", "org_id");
+        mergeLangField("case.link", c.case, "link_en", "link_id");
+      }
+      if (c.media) {
+        mergeLangField("media.eyebrow", c.media, "eyebrow_en", "eyebrow_id");
+        mergeLangField("media.title", c.media, "title_en", "title_id");
+        mergeLangField("media.lead", c.media, "lead_en", "lead_id");
+      }
       applyLang(currentLang); // re-render with the freshly merged copy
     })
     .catch(function () { /* portal unreachable — keep the built-in defaults */ });
 
-  /* Media cards: pull real insight articles from MASAGI HV's own CMS, so the
-     landing page always shows (and links to) whatever is actually published
-     there, instead of maintaining a second copy of the same content. */
+  /* ---------- hero slides from the CMS (blog.masagi.io) ----------
+     Each slide may carry a picture or a video beside its copy. When the CMS is
+     unreachable the three built-in slides above stay exactly as they are. */
+  var CMS_BASE = "https://blog.masagi.io";
+  function esc(s) {
+    return (s == null ? "" : String(s)).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+  function ytId(u) { var m = u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{6,})/); return m && m[1]; }
+  function vimeoId(u) { var m = u.match(/vimeo\.com\/(?:video\/)?(\d+)/); return m && m[1]; }
+
+  function slideMediaHtml(s) {
+    var u = (s.media_url || "").trim();
+    if (!u || s.media_type === "none") return "";
+    if (s.media_type === "video") {
+      var yt = ytId(u), vi = vimeoId(u);
+      if (yt) return '<iframe src="https://www.youtube.com/embed/' + esc(yt) +
+        '?rel=0" title="MASAGI" allow="encrypted-media; fullscreen" allowfullscreen loading="lazy"></iframe>';
+      if (vi) return '<iframe src="https://player.vimeo.com/video/' + esc(vi) +
+        '" title="MASAGI" allow="fullscreen" allowfullscreen loading="lazy"></iframe>';
+      return '<video controls playsinline preload="metadata"' +
+        (s.poster ? ' poster="' + esc(s.poster) + '"' : "") + ' src="' + esc(u) + '"></video>';
+    }
+    return '<img src="' + esc(u) + '" alt="" loading="lazy">';
+  }
+
+  function buildHero(slides) {
+    var wrap = document.querySelector(".hero-swiper .swiper-wrapper");
+    if (!wrap || !slides.length) return;
+    if (heroSwiper && heroSwiper.destroy) heroSwiper.destroy(true, true);
+    wrap.innerHTML = slides.map(function (s, i) {
+      var k = "hero.cms" + i;
+      TRANSLATIONS.en[k + ".eyebrow"] = s.eyebrow_en || "";
+      TRANSLATIONS.id[k + ".eyebrow"] = s.eyebrow_id || s.eyebrow_en || "";
+      TRANSLATIONS.en[k + ".title"] = s.title_en || "";
+      TRANSLATIONS.id[k + ".title"] = s.title_id || s.title_en || "";
+      TRANSLATIONS.en[k + ".sub"] = s.sub_en || "";
+      TRANSLATIONS.id[k + ".sub"] = s.sub_id || s.sub_en || "";
+      TRANSLATIONS.en[k + ".cta"] = s.cta_label_en || "";
+      TRANSLATIONS.id[k + ".cta"] = s.cta_label_id || s.cta_label_en || "";
+      var media = slideMediaHtml(s);
+      var text = '<div class="slide-text">' +
+        ((s.eyebrow_en || s.eyebrow_id) ? '<span class="eyebrow" data-i18n="' + k + '.eyebrow"></span>' : "") +
+        '<h1 data-i18n="' + k + '.title"></h1>' +
+        ((s.sub_en || s.sub_id) ? '<p data-i18n="' + k + '.sub"></p>' : "") +
+        (((s.cta_label_en || s.cta_label_id) && s.cta_href)
+          ? '<div class="cta-row"><a class="btn btn-accent" href="' + esc(s.cta_href) +
+            '" data-i18n="' + k + '.cta"></a></div>' : "") + '</div>';
+      var inner = media
+        ? '<div class="slide-grid' + (s.media_side === "left" ? " media-left" : "") + '">' +
+          text + '<div class="slide-media">' + media + "</div></div>"
+        : text;
+      return '<div class="swiper-slide slide s' + ((i % 3) + 1) + '">' +
+        '<div class="slide-inner">' + inner + "</div></div>";
+    }).join("");
+    heroSwiper = new Swiper(".hero-swiper", SWIPER_OPTS);
+    applyLang(currentLang); // fill the data-i18n placeholders (incl. Swiper's loop clones)
+  }
+
+  fetchWithTimeout(CMS_BASE + "/api/public/carousel", 6000)
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (c) { if (c && c.slides && c.slides.length) buildHero(c.slides); })
+    .catch(function () { /* CMS unreachable — keep the built-in hero slides */ });
+
+  /* ---------- Media cards ----------
+     Articles come from the CMS (blog.masagi.io). Until that subdomain's DNS is
+     live we fall back to the older MASAGI HV feed, and to the three static
+     cards in the markup if neither answers — the page always renders. */
   var MEDIA_COVER_CLASSES = ["c1", "c2", "c3"];
-  fetchWithTimeout("https://hv.masagi.io/api/site-content", 6000)
+  function renderMediaCards(posts) {
+    var grid = document.querySelector(".media-grid");
+    if (!posts.length || !grid) return;
+    grid.innerHTML = posts.map(function (p, i) {
+      var base = "media.dyn" + i;
+      TRANSLATIONS.en[base + ".tag"] = p.tag_en || "Insight";
+      TRANSLATIONS.id[base + ".tag"] = p.tag_id || p.tag_en || "Wawasan";
+      TRANSLATIONS.en[base + ".title"] = p.title_en || "";
+      TRANSLATIONS.id[base + ".title"] = p.title_id || p.title_en || "";
+      TRANSLATIONS.en[base + ".excerpt"] = p.excerpt_en || "";
+      TRANSLATIONS.id[base + ".excerpt"] = p.excerpt_id || p.excerpt_en || "";
+      var cover = p.image ? ' style="background-image:url(\'' + esc(p.image) + '\')"' : "";
+      var coverClass = p.image ? "" : MEDIA_COVER_CLASSES[i % 3];
+      return '<a class="m-card reveal visible" href="' + esc(p.url) + '" target="_blank" rel="noopener">' +
+        '<div class="m-cover ' + coverClass + '"' + cover + "></div>" +
+        '<div class="m-body"><div class="m-meta"><span class="tag" data-i18n="' + base + '.tag"></span>' +
+        "<span>" + esc(p.date || "") + "</span></div>" +
+        '<h3 data-i18n="' + base + '.title"></h3>' +
+        '<p data-i18n="' + base + '.excerpt"></p>' +
+        '<span class="m-read" data-i18n="media.read"></span></div></a>';
+    }).join("");
+    applyLang(currentLang); // fill in the data-i18n placeholders just inserted
+  }
+
+  function loadMediaFromHv() {
+    fetchWithTimeout("https://hv.masagi.io/api/site-content", 6000)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (c) {
+        renderMediaCards(((c && c.insights) || []).slice(0, 3).map(function (p) {
+          return {
+            url: "https://hv.masagi.io/blog/" + encodeURIComponent(p.slug || ""),
+            tag_en: p.tag, tag_id: p.tag, title_en: p.title, title_id: p.title_id,
+            excerpt_en: p.excerpt, excerpt_id: p.excerpt_id, date: p.date, image: p.image,
+          };
+        }));
+      })
+      .catch(function () { /* neither feed answered — the static cards stay */ });
+  }
+
+  fetchWithTimeout(CMS_BASE + "/api/public/posts?limit=3", 6000)
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (c) {
-      var posts = ((c && c.insights) || []).slice(0, 3);
-      var grid = document.querySelector(".media-grid");
-      if (!posts.length || !grid) return;
-      grid.innerHTML = posts.map(function (p, i) {
-        var base = "media.dyn" + i;
-        TRANSLATIONS.en[base + ".tag"] = p.tag || "Insight";
-        TRANSLATIONS.id[base + ".tag"] = p.tag || "Wawasan";
-        TRANSLATIONS.en[base + ".title"] = p.title || "";
-        TRANSLATIONS.id[base + ".title"] = p.title_id || p.title || "";
-        TRANSLATIONS.en[base + ".excerpt"] = p.excerpt || "";
-        TRANSLATIONS.id[base + ".excerpt"] = p.excerpt_id || p.excerpt || "";
-        var cover = p.image ? ' style="background-image:url(\'' + p.image + '\')"' : "";
-        var coverClass = p.image ? "" : MEDIA_COVER_CLASSES[i % 3];
-        return '<a class="m-card reveal visible" href="https://hv.masagi.io/blog/' +
-          encodeURIComponent(p.slug || "") + '" target="_blank" rel="noopener">' +
-          '<div class="m-cover ' + coverClass + '"' + cover + '></div>' +
-          '<div class="m-body"><div class="m-meta"><span class="tag" data-i18n="' + base + '.tag"></span>' +
-          '<span>' + (p.date || "") + '</span></div>' +
-          '<h3 data-i18n="' + base + '.title"></h3>' +
-          '<p data-i18n="' + base + '.excerpt"></p>' +
-          '<span class="m-read" data-i18n="media.read"></span></div></a>';
-      }).join("");
-      applyLang(currentLang); // fill in the data-i18n placeholders just inserted
+      var posts = (c && c.posts) || [];
+      if (!posts.length) { loadMediaFromHv(); return; }
+      renderMediaCards(posts.map(function (p) {
+        return {
+          url: p.url, tag_en: p.type_label_en, tag_id: p.type_label_id,
+          title_en: p.title_en, title_id: p.title_id,
+          excerpt_en: p.excerpt_en, excerpt_id: p.excerpt_id,
+          date: p.published_at, image: p.cover_image,
+        };
+      }));
     })
-    .catch(function () { /* HV unreachable — keep the 3 static demo cards */ });
+    .catch(loadMediaFromHv);
 
   /* ---------- contact form → pre-filled email ---------- */
   document.getElementById("contactForm").addEventListener("submit", function (e) {

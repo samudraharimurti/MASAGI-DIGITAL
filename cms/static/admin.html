@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>MASAGI CMS</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='22' fill='%231B2A4A'/%3E%3Cpolygon points='30,58 12,92 48,92' fill='%231E7A4C'/%3E%3Cpolygon points='58,42 34,92 82,92' fill='%2331A96A'/%3E%3Cpolygon points='78,26 48,92 106,92' fill='%2357D496'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#1B2A4A; --accent:#2563EB; --green:#1E7A4C; --danger:#b42323;
+  --bg:#F1F5F9; --surface:#FFFFFF; --text:#1B2A4A; --text-2:#64748B; --border:#E2E8F0;
+  --sidebar:#16233E; --sidebar-2:#22314f;
+}
+html[data-theme="dark"] {
+  --accent:#3B82F6; --green:#57D496; --danger:#ef9a9a;
+  --bg:#0F172A; --surface:#1E293B; --text:#F1F5F9; --text-2:#94A3B8; --border:#334155;
+  --sidebar:#0B1426; --sidebar-2:#1b2942;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Inter','Helvetica Neue',Arial,sans-serif; background:var(--bg); color:var(--text);
+  line-height:1.55; -webkit-font-smoothing:antialiased; }
+a { color:inherit; text-decoration:none; }
+.hidden { display:none !important; }
+button, input, select, textarea { font:inherit; }
+
+/* ---------- login ---------- */
+#login { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
+.login-card { width:min(400px,100%); background:var(--surface); border:1px solid var(--border);
+  border-radius:16px; padding:34px; box-shadow:0 20px 50px rgba(27,42,74,.12); }
+.login-card svg { height:34px; margin-bottom:18px; }
+.login-card h1 { font-size:20px; font-weight:800; }
+.login-card .sub { color:var(--text-2); font-size:13.5px; margin-bottom:20px; }
+
+/* ---------- shell ---------- */
+#shell { display:grid; grid-template-columns:236px 1fr; min-height:100vh; }
+aside { background:var(--sidebar); color:#cbd5e1; padding:18px 0; position:sticky; top:0; height:100vh; overflow-y:auto; }
+.logo { display:flex; align-items:center; gap:10px; padding:0 18px 18px; font-weight:800; color:#fff; font-size:15px; }
+.logo svg { height:22px; }
+.logo .sub { font-size:9.5px; letter-spacing:.24em; color:#7f8ea8; font-weight:700; }
+.nav-sec { font-size:10px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+  color:#64748b; padding:16px 18px 7px; }
+.nav a { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:9px 18px;
+  font-size:13.5px; font-weight:600; color:#cbd5e1; cursor:pointer; border-left:3px solid transparent; }
+.nav a:hover { background:var(--sidebar-2); color:#fff; }
+.nav a.on { background:var(--sidebar-2); color:#fff; border-left-color:var(--accent); }
+.nav .count { font-size:11px; font-weight:700; color:#7f8ea8; background:rgba(255,255,255,.07);
+  padding:1px 7px; border-radius:99px; }
+main { min-width:0; }
+.topbar { background:var(--surface); border-bottom:1px solid var(--border); padding:0 26px; height:60px;
+  display:flex; align-items:center; justify-content:space-between; gap:14px; position:sticky; top:0; z-index:20; }
+.topbar .who { font-size:13px; color:var(--text-2); }
+.content { padding:26px; max-width:1080px; }
+h1.page { font-size:23px; font-weight:800; letter-spacing:-.4px; }
+.page-sub { color:var(--text-2); font-size:13.5px; margin-top:3px; }
+.page-head { display:flex; align-items:flex-end; justify-content:space-between; gap:14px; margin-bottom:20px; flex-wrap:wrap; }
+
+/* ---------- controls ---------- */
+.btn { display:inline-flex; align-items:center; gap:7px; font-weight:700; font-size:13.5px; cursor:pointer;
+  padding:9px 16px; border-radius:8px; border:1px solid var(--border); background:var(--surface);
+  color:var(--text); transition:filter .15s; }
+.btn:hover { filter:brightness(.97); }
+.btn.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+.btn.danger { color:var(--danger); border-color:var(--danger); background:transparent; }
+.btn.ghost { border-color:transparent; background:transparent; color:var(--text-2); }
+.btn.sm { padding:6px 11px; font-size:12.5px; }
+label { display:block; font-size:11px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--text-2); margin:14px 0 6px; }
+input[type=text], input[type=password], input[type=date], input[type=url], select, textarea {
+  width:100%; font-size:14px; color:var(--text); background:var(--bg); border:1px solid var(--border);
+  border-radius:8px; padding:10px 12px; outline:none; }
+input:focus, select:focus, textarea:focus { border-color:var(--accent); }
+textarea { resize:vertical; min-height:66px; }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
+.grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:0 16px; }
+@media (max-width:820px){ .grid2,.grid3 { grid-template-columns:1fr; } #shell { grid-template-columns:1fr; }
+  aside { position:static; height:auto; } }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:18px; }
+.card > h2 { font-size:14px; font-weight:800; margin-bottom:12px; display:flex; justify-content:space-between;
+  align-items:center; gap:10px; flex-wrap:wrap; }
+.msg { font-size:13px; font-weight:700; padding:9px 13px; border-radius:8px; margin-top:12px; display:none; }
+.msg.show { display:block; }
+.msg.ok { background:rgba(30,122,76,.12); color:var(--green); }
+.msg.err { background:rgba(180,35,35,.1); color:var(--danger); }
+
+/* ---------- tables ---------- */
+table { width:100%; border-collapse:collapse; font-size:13.5px; }
+th { text-align:left; font-size:10.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--text-2);
+  padding:9px 10px; border-bottom:1px solid var(--border); }
+td { padding:11px 10px; border-bottom:1px solid var(--border); vertical-align:middle; }
+tr:last-child td { border-bottom:0; }
+tr.row:hover { background:var(--bg); }
+.t-title { font-weight:700; cursor:pointer; }
+.t-title:hover { color:var(--accent); }
+.pill { display:inline-block; font-size:10.5px; font-weight:800; letter-spacing:.04em; border-radius:99px;
+  padding:2px 9px; border:1px solid var(--border); color:var(--text-2); }
+.pill.pub { background:rgba(30,122,76,.12); color:var(--green); border-color:transparent; }
+.pill.draft { background:rgba(100,116,139,.14); color:var(--text-2); border-color:transparent; }
+.actions { display:flex; gap:6px; justify-content:flex-end; }
+
+/* ---------- stats ---------- */
+.stats { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px; }
+@media (max-width:820px){ .stats { grid-template-columns:repeat(2,1fr); } }
+.stat { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px; }
+.stat .n { font-size:27px; font-weight:800; color:var(--accent); }
+.stat .l { font-size:12px; color:var(--text-2); font-weight:600; }
+
+/* ---------- editor ---------- */
+.lang-tabs { display:flex; gap:6px; margin-bottom:10px; }
+.lang-tabs button { font-size:12px; font-weight:800; cursor:pointer; padding:5px 13px; border-radius:7px;
+  border:1px solid var(--border); background:transparent; color:var(--text-2); }
+.lang-tabs button.on { background:var(--accent); color:#fff; border-color:var(--accent); }
+.pane { display:none; } .pane.on { display:block; }
+.toolbar { display:flex; flex-wrap:wrap; gap:4px; padding:7px; border:1px solid var(--border);
+  border-bottom:0; border-radius:8px 8px 0 0; background:var(--bg); }
+.toolbar button { font-size:13px; font-weight:700; cursor:pointer; min-width:32px; height:30px; padding:0 8px;
+  border:1px solid transparent; border-radius:6px; background:transparent; color:var(--text-2); }
+.toolbar button:hover { background:var(--surface); color:var(--text); border-color:var(--border); }
+.rte { min-height:300px; border:1px solid var(--border); border-radius:0 0 8px 8px; padding:16px 18px;
+  background:var(--surface); font-size:15.5px; line-height:1.7; outline:none; overflow-y:auto; }
+.rte:focus { border-color:var(--accent); }
+.rte h2 { font-size:21px; margin:20px 0 8px; } .rte h3 { font-size:17.5px; margin:18px 0 6px; }
+.rte p { margin:12px 0; } .rte ul, .rte ol { margin:12px 0 12px 22px; }
+.rte blockquote { border-left:3px solid var(--accent); padding-left:14px; color:var(--text-2); margin:14px 0; }
+.rte img { max-width:100%; border-radius:8px; }
+.editor-grid { display:grid; grid-template-columns:1fr 290px; gap:18px; align-items:start; }
+@media (max-width:1000px){ .editor-grid { grid-template-columns:1fr; } }
+.side-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px;
+  position:sticky; top:76px; }
+
+/* ---------- media ---------- */
+.media-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:14px; }
+.m-item { border:1px solid var(--border); border-radius:10px; overflow:hidden; background:var(--surface); }
+.m-thumb { height:110px; background:var(--bg) center/cover no-repeat; display:flex; align-items:center;
+  justify-content:center; color:var(--text-2); font-size:11px; font-weight:700; cursor:pointer; }
+.m-meta { padding:8px 10px; font-size:11px; color:var(--text-2); display:flex; justify-content:space-between;
+  gap:6px; align-items:center; }
+.m-meta span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.drop { border:2px dashed var(--border); border-radius:12px; padding:26px; text-align:center; color:var(--text-2);
+  font-size:13.5px; cursor:pointer; }
+.drop.over { border-color:var(--accent); background:rgba(37,99,235,.05); }
+
+/* ---------- slides ---------- */
+.slide-card { border:1px solid var(--border); border-radius:12px; padding:18px; margin-bottom:14px; background:var(--surface); }
+.slide-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+.slide-head .n { font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--text-2); }
+.chk { display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; }
+.chk input { width:auto; }
+.prev { margin-top:10px; height:120px; border-radius:8px; border:1px solid var(--border);
+  background:var(--bg) center/cover no-repeat; display:flex; align-items:center; justify-content:center;
+  color:var(--text-2); font-size:12px; }
+
+/* ---------- modal ---------- */
+.overlay { position:fixed; inset:0; background:rgba(15,23,42,.6); display:none; align-items:flex-start;
+  justify-content:center; padding:5vh 20px; z-index:60; overflow-y:auto; }
+.overlay.show { display:flex; }
+.modal { width:min(760px,100%); background:var(--surface); border-radius:14px; padding:24px;
+  box-shadow:0 30px 70px rgba(0,0,0,.3); }
+.modal-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+.modal-head h3 { font-size:17px; font-weight:800; }
+.modal-head button { background:none; border:0; font-size:22px; cursor:pointer; color:var(--text-2); }
+</style>
+</head>
+<body>
+
+<!-- ══════════ LOGIN ══════════ -->
+<div id="login">
+  <div class="login-card">
+    <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <polygon points="35,62 5,110 65,110" fill="#1E7A4C"/><polygon points="85,38 45,110 125,110" fill="#31A96A"/>
+      <polygon points="145,14 95,110 195,110" fill="#57D496"/><polygon points="145,14 132.5,38 157.5,38" fill="#0B3B24"/>
+    </svg>
+    <h1>MASAGI CMS</h1>
+    <div class="sub">Sign in to manage masagi.io content.</div>
+    <label for="lUser">Username</label><input type="text" id="lUser" autocomplete="username">
+    <label for="lPass">Password</label><input type="password" id="lPass" autocomplete="current-password">
+    <div style="margin-top:18px"><button class="btn primary" id="loginBtn" style="width:100%;justify-content:center">Sign in</button></div>
+    <div id="loginMsg" class="msg"></div>
+  </div>
+</div>
+
+<!-- ══════════ SHELL ══════════ -->
+<div id="shell" class="hidden">
+  <aside>
+    <div class="logo">
+      <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <polygon points="35,62 5,110 65,110" fill="#1E7A4C"/><polygon points="85,38 45,110 125,110" fill="#31A96A"/>
+        <polygon points="145,14 95,110 195,110" fill="#57D496"/><polygon points="145,14 132.5,38 157.5,38" fill="#0B3B24"/>
+      </svg>
+      <span>MASAGI<br><span class="sub">CMS</span></span>
+    </div>
+    <div class="nav" id="nav">
+      <div class="nav-sec">Overview</div>
+      <a data-view="dashboard" class="on">Dashboard</a>
+      <div class="nav-sec">Content</div>
+      <a data-view="type:news">News <span class="count" id="c-news">0</span></a>
+      <a data-view="type:insight">Insights <span class="count" id="c-insight">0</span></a>
+      <a data-view="type:use_case">Use Cases <span class="count" id="c-use_case">0</span></a>
+      <a data-view="type:field_note">Field Notes <span class="count" id="c-field_note">0</span></a>
+      <div class="nav-sec">Site</div>
+      <a data-view="carousel">Hero Carousel</a>
+      <a data-view="media">Media Library</a>
+      <a data-view="settings">Settings</a>
+    </div>
+  </aside>
+
+  <main>
+    <div class="topbar">
+      <div class="who">Signed in as <b id="meName">—</b></div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <a class="btn sm" id="viewSite" target="_blank" rel="noopener">View blog ↗</a>
+        <button class="btn sm ghost" id="themeBtn" title="Light / dark">☾</button>
+        <button class="btn sm" id="logoutBtn">Sign out</button>
+      </div>
+    </div>
+    <div class="content" id="view"></div>
+  </main>
+</div>
+
+<!-- ══════════ MEDIA PICKER MODAL ══════════ -->
+<div class="overlay" id="pickOverlay">
+  <div class="modal">
+    <div class="modal-head"><h3>Media library</h3><button id="pickClose" type="button">&times;</button></div>
+    <div class="drop" id="pickDrop">Click to upload, or drop an image / video here</div>
+    <input type="file" id="pickFile" class="hidden" accept="image/*,video/mp4,video/webm">
+    <div id="pickMsg" class="msg"></div>
+    <div class="media-grid" id="pickGrid" style="margin-top:16px"></div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════ helpers ═══════════════ */
+function $(id){ return document.getElementById(id); }
+function esc(s){ return (s==null?"":String(s)).replace(/[&<>"]/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+function flash(el,msg,ok){ el.textContent=msg; el.className="msg show "+(ok?"ok":"err");
+  if(ok) setTimeout(function(){ el.className="msg"; },3500); }
+function api(url,opts){
+  opts = opts || {};
+  if (opts.body && !(opts.body instanceof FormData)) {
+    opts.headers = Object.assign({"Content-Type":"application/json"}, opts.headers||{});
+    opts.body = JSON.stringify(opts.body);
+  }
+  return fetch(url,opts).then(function(r){
+    return r.json().catch(function(){ return {}; }).then(function(d){
+      return { ok:r.ok, status:r.status, d:d };
+    });
+  });
+}
+function applyTheme(t){ document.documentElement.setAttribute("data-theme",t);
+  $("themeBtn").textContent = t==="dark" ? "☀" : "☾";
+  try{ localStorage.setItem("masagi-theme",t); }catch(e){} }
+var TYPES = [["news","News"],["insight","Insights"],["use_case","Use Cases"],["field_note","Field Notes"]];
+var TYPE_LABEL = {}; TYPES.forEach(function(t){ TYPE_LABEL[t[0]]=t[1]; });
+var ME = null, BLOG = "";
+
+/* ═══════════════ auth ═══════════════ */
+function doLogin(){
+  api("/api/admin/login",{ method:"POST", body:{ username:$("lUser").value.trim(), password:$("lPass").value }})
+    .then(function(r){
+      if(!r.ok){ flash($("loginMsg"), r.d.error || "Sign in failed.", false); return; }
+      boot();
+    });
+}
+$("loginBtn").addEventListener("click", doLogin);
+["lUser","lPass"].forEach(function(id){
+  $(id).addEventListener("keydown", function(e){ if(e.key==="Enter") doLogin(); });
+});
+$("logoutBtn").addEventListener("click", function(){
+  api("/api/admin/logout",{method:"POST"}).then(function(){ location.reload(); });
+});
+$("themeBtn").addEventListener("click", function(){
+  applyTheme(document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark"); });
+
+/* ═══════════════ routing ═══════════════ */
+var VIEW = "dashboard";
+$("nav").addEventListener("click", function(e){
+  var a = e.target.closest("a[data-view]"); if(!a) return;
+  setView(a.getAttribute("data-view"));
+});
+function setView(v){
+  VIEW = v;
+  document.querySelectorAll("#nav a").forEach(function(a){
+    a.classList.toggle("on", a.getAttribute("data-view")===v); });
+  if(v==="dashboard") renderDashboard();
+  else if(v.indexOf("type:")===0) renderPostList(v.slice(5));
+  else if(v==="carousel") renderCarousel();
+  else if(v==="media") renderMedia();
+  else if(v==="settings") renderSettings();
+}
+
+/* ═══════════════ dashboard ═══════════════ */
+function renderDashboard(){
+  api("/api/admin/stats").then(function(r){
+    var s = r.d;
+    TYPES.forEach(function(t){ var el=$("c-"+t[0]); if(el) el.textContent = (s.counts||{})[t[0]]||0; });
+    $("view").innerHTML =
+      '<div class="page-head"><div><h1 class="page">Dashboard</h1>'+
+      '<div class="page-sub">Everything published on masagi.io and blog.masagi.io.</div></div></div>'+
+      '<div class="stats">'+
+        '<div class="stat"><div class="n">'+(s.published||0)+'</div><div class="l">Published</div></div>'+
+        '<div class="stat"><div class="n">'+(s.drafts||0)+'</div><div class="l">Drafts</div></div>'+
+        '<div class="stat"><div class="n">'+(s.slides||0)+'</div><div class="l">Carousel slides</div></div>'+
+        '<div class="stat"><div class="n">'+(s.media||0)+'</div><div class="l">Media files</div></div>'+
+      '</div>'+
+      '<div class="card"><h2>Write something</h2><div style="display:flex;gap:8px;flex-wrap:wrap">'+
+        TYPES.map(function(t){ return '<button class="btn" data-new="'+t[0]+'">+ New '+esc(t[1].replace(/s$/,""))+'</button>'; }).join("")+
+      '</div></div>'+
+      '<div class="card"><h2>Quick links</h2><div style="display:flex;gap:8px;flex-wrap:wrap">'+
+        '<a class="btn" href="'+esc(BLOG)+'" target="_blank" rel="noopener">Open the blog ↗</a>'+
+        '<a class="btn" href="https://masagi.io" target="_blank" rel="noopener">Open masagi.io ↗</a>'+
+        '<button class="btn" data-goto="carousel">Edit hero carousel</button></div></div>';
+    $("view").querySelectorAll("[data-new]").forEach(function(b){
+      b.onclick = function(){ openEditor(null, b.getAttribute("data-new")); }; });
+    var g = $("view").querySelector("[data-goto]"); if(g) g.onclick = function(){ setView("carousel"); };
+  });
+}
+
+/* ═══════════════ post list ═══════════════ */
+function renderPostList(type){
+  api("/api/admin/posts?type="+encodeURIComponent(type)).then(function(r){
+    var posts = r.d.posts || [];
+    $("view").innerHTML =
+      '<div class="page-head"><div><h1 class="page">'+esc(TYPE_LABEL[type]||type)+'</h1>'+
+      '<div class="page-sub">'+posts.length+' item'+(posts.length===1?"":"s")+'</div></div>'+
+      '<button class="btn primary" id="newBtn">+ Add new</button></div>'+
+      '<div class="card">'+(posts.length ?
+        '<table><thead><tr><th>Title</th><th>Status</th><th>Date</th><th></th></tr></thead><tbody>'+
+        posts.map(function(p){
+          return '<tr class="row"><td><span class="t-title" data-edit="'+p.id+'">'+
+            esc(p.title_en || p.title_id || "(untitled)")+'</span>'+
+            '<div class="page-sub" style="font-size:12px">/'+esc(p.slug)+'</div></td>'+
+            '<td><span class="pill '+(p.status==="published"?"pub":"draft")+'">'+p.status+'</span></td>'+
+            '<td>'+esc(p.published_at||"—")+'</td>'+
+            '<td class="actions"><button class="btn sm" data-edit="'+p.id+'">Edit</button>'+
+            (p.status==="published" ? '<a class="btn sm" href="'+esc(BLOG)+'/'+encodeURIComponent(p.slug)+'" target="_blank" rel="noopener">View</a>' : '')+
+            '<button class="btn sm danger" data-del="'+p.id+'">Delete</button></td></tr>';
+        }).join("")+'</tbody></table>'
+        : '<div class="page-sub" style="padding:22px 0;text-align:center">Nothing here yet — add the first one.</div>')+
+      '</div>';
+    $("newBtn").onclick = function(){ openEditor(null, type); };
+    $("view").querySelectorAll("[data-edit]").forEach(function(b){
+      b.onclick = function(){ openEditor(b.getAttribute("data-edit"), type); }; });
+    $("view").querySelectorAll("[data-del]").forEach(function(b){
+      b.onclick = function(){
+        if(!confirm("Delete this post? This can't be undone.")) return;
+        api("/api/admin/posts/"+b.getAttribute("data-del"),{method:"DELETE"})
+          .then(function(){ renderPostList(type); refreshCounts(); });
+      }; });
+  });
+}
+
+/* ═══════════════ editor ═══════════════ */
+function rteToolbar(target){
+  return '<div class="toolbar" data-for="'+target+'">'+
+    '<button type="button" data-cmd="bold" title="Bold"><b>B</b></button>'+
+    '<button type="button" data-cmd="italic" title="Italic"><i>I</i></button>'+
+    '<button type="button" data-block="h2" title="Heading">H2</button>'+
+    '<button type="button" data-block="h3" title="Sub-heading">H3</button>'+
+    '<button type="button" data-block="p" title="Paragraph">¶</button>'+
+    '<button type="button" data-cmd="insertUnorderedList" title="Bullet list">• List</button>'+
+    '<button type="button" data-cmd="insertOrderedList" title="Numbered list">1. List</button>'+
+    '<button type="button" data-block="blockquote" title="Quote">&ldquo;</button>'+
+    '<button type="button" data-link title="Link">🔗</button>'+
+    '<button type="button" data-img title="Insert image">🖼</button>'+
+    '<button type="button" data-cmd="removeFormat" title="Clear formatting">✕</button></div>';
+}
+function wireToolbars(scope){
+  scope.querySelectorAll(".toolbar").forEach(function(tb){
+    var rte = scope.querySelector("#"+tb.getAttribute("data-for"));
+    tb.querySelectorAll("button").forEach(function(b){
+      b.addEventListener("mousedown", function(e){ e.preventDefault(); }); // keep the selection
+      b.addEventListener("click", function(){
+        rte.focus();
+        if(b.dataset.cmd) document.execCommand(b.dataset.cmd,false,null);
+        else if(b.dataset.block) document.execCommand("formatBlock",false,"<"+b.dataset.block+">");
+        else if(b.hasAttribute("data-link")){
+          var u = prompt("Link URL (https://… , /path or #anchor)"); if(u) document.execCommand("createLink",false,u);
+        } else if(b.hasAttribute("data-img")){
+          openPicker(function(url){ rte.focus(); document.execCommand("insertImage",false,url); });
+        }
+      });
+    });
+    // paste as plain text so Word/Docs formatting never leaks in
+    rte.addEventListener("paste", function(e){
+      e.preventDefault();
+      var t=(e.clipboardData||window.clipboardData).getData("text/plain");
+      document.execCommand("insertText",false,t);
+    });
+  });
+}
+
+function openEditor(id, type){
+  var p = { type:type, status:"draft", author:"MASAGI Team" };
+  function draw(){
+    $("view").innerHTML =
+      '<div class="page-head"><div><h1 class="page">'+(id?"Edit":"New")+' — '+esc(TYPE_LABEL[p.type]||p.type)+'</h1>'+
+      '<div class="page-sub">Both languages live on one page; readers switch with the EN/ID toggle.</div></div>'+
+      '<button class="btn ghost" id="backBtn">← Back</button></div>'+
+      '<div class="editor-grid"><div>'+
+        '<div class="card">'+
+          '<div class="lang-tabs" id="langTabs"><button class="on" data-l="en" type="button">English</button>'+
+          '<button data-l="id" type="button">Indonesia</button></div>'+
+          '<div class="pane on" data-l="en">'+
+            '<label>Title</label><input type="text" id="title_en">'+
+            '<label>Excerpt</label><textarea id="excerpt_en" placeholder="One or two sentences shown on cards"></textarea>'+
+            '<label>Body</label>'+rteToolbar("body_en")+'<div class="rte" id="body_en" contenteditable="true"></div>'+
+          '</div>'+
+          '<div class="pane" data-l="id">'+
+            '<label>Judul</label><input type="text" id="title_id">'+
+            '<label>Ringkasan</label><textarea id="excerpt_id" placeholder="Satu atau dua kalimat di kartu"></textarea>'+
+            '<label>Isi</label>'+rteToolbar("body_id")+'<div class="rte" id="body_id" contenteditable="true"></div>'+
+          '</div>'+
+        '</div></div>'+
+        '<div><div class="side-card">'+
+          '<label>Status</label><select id="status"><option value="draft">Draft</option><option value="published">Published</option></select>'+
+          '<label>Type</label><select id="type">'+TYPES.map(function(t){ return '<option value="'+t[0]+'">'+t[1]+'</option>'; }).join("")+'</select>'+
+          '<label>Publish date</label><input type="date" id="published_at">'+
+          '<label>Author</label><input type="text" id="author">'+
+          '<label>Slug</label><input type="text" id="slug" placeholder="auto from title">'+
+          '<label>Cover image</label><input type="text" id="cover_image" placeholder="/uploads/… or https://…">'+
+          '<button class="btn sm" id="pickCover" style="margin-top:8px">Choose from library</button>'+
+          '<div class="prev" id="coverPrev" style="margin-top:10px">no cover</div>'+
+          '<div style="display:flex;gap:8px;margin-top:16px"><button class="btn primary" id="saveBtn" style="flex:1;justify-content:center">Save</button></div>'+
+          '<div id="edMsg" class="msg"></div>'+
+        '</div></div>'+
+      '</div>';
+    $("backBtn").onclick = function(){ setView("type:"+p.type); };
+    $("langTabs").querySelectorAll("button").forEach(function(b){
+      b.onclick = function(){
+        $("langTabs").querySelectorAll("button").forEach(function(x){ x.classList.toggle("on",x===b); });
+        $("view").querySelectorAll(".pane").forEach(function(pn){
+          pn.classList.toggle("on", pn.getAttribute("data-l")===b.getAttribute("data-l")); });
+      };
+    });
+    ["title_en","title_id","excerpt_en","excerpt_id","author","slug","cover_image","published_at"].forEach(function(k){
+      if($(k)) $(k).value = p[k] || ""; });
+    $("body_en").innerHTML = p.body_en || "";
+    $("body_id").innerHTML = p.body_id || "";
+    $("status").value = p.status || "draft";
+    $("type").value = p.type;
+    wireToolbars($("view"));
+    function updCover(){
+      var u = $("cover_image").value.trim();
+      $("coverPrev").style.backgroundImage = u ? "url('"+u+"')" : "";
+      $("coverPrev").textContent = u ? "" : "no cover";
+    }
+    $("cover_image").addEventListener("input", updCover); updCover();
+    $("pickCover").onclick = function(){ openPicker(function(url){ $("cover_image").value=url; updCover(); }); };
+    $("saveBtn").onclick = function(){ save(); };
+  }
+  function save(){
+    var body = {
+      type: $("type").value, status: $("status").value,
+      title_en: $("title_en").value, title_id: $("title_id").value,
+      excerpt_en: $("excerpt_en").value, excerpt_id: $("excerpt_id").value,
+      body_en: $("body_en").innerHTML, body_id: $("body_id").innerHTML,
+      cover_image: $("cover_image").value, author: $("author").value,
+      published_at: $("published_at").value, slug: $("slug").value
+    };
+    var url = id ? "/api/admin/posts/"+id : "/api/admin/posts";
+    api(url,{ method: id?"PUT":"POST", body:body }).then(function(r){
+      if(!r.ok){ flash($("edMsg"), r.d.error || "Save failed.", false); return; }
+      if(!id){ id = r.d.id; }
+      $("slug").value = r.d.slug || $("slug").value;
+      flash($("edMsg"), "Saved.", true);
+      refreshCounts();
+    });
+  }
+  if(id){
+    api("/api/admin/posts/"+id).then(function(r){ if(r.ok){ p = r.d; } draw(); });
+  } else { draw(); }
+}
+
+/* ═══════════════ carousel ═══════════════ */
+var SLIDES = [];
+function slideCard(s,i){
+  return '<div class="slide-card" data-i="'+i+'">'+
+    '<div class="slide-head"><span class="n">Slide '+(i+1)+'</span>'+
+    '<div style="display:flex;gap:6px;align-items:center">'+
+      '<label class="chk" style="margin:0"><input type="checkbox" data-f="is_active" '+(s.is_active?"checked":"")+'> Visible</label>'+
+      '<button class="btn sm" data-move="-1">↑</button><button class="btn sm" data-move="1">↓</button>'+
+      '<button class="btn sm danger" data-del>Remove</button></div></div>'+
+    '<div class="grid3">'+
+      '<div><label>Media type</label><select data-f="media_type">'+
+        ['none','image','video'].map(function(t){ return '<option value="'+t+'"'+(s.media_type===t?" selected":"")+'>'+
+          (t==="none"?"No media (text only)":t==="image"?"Picture":"Video")+'</option>'; }).join("")+'</select></div>'+
+      '<div><label>Media side</label><select data-f="media_side">'+
+        ['right','left'].map(function(t){ return '<option value="'+t+'"'+(s.media_side===t?" selected":"")+'>'+t+'</option>'; }).join("")+'</select></div>'+
+      '<div><label>Link (CTA URL)</label><input type="text" data-f="cta_href" value="'+esc(s.cta_href)+'" placeholder="#services"></div>'+
+    '</div>'+
+    '<label>Media URL <span style="text-transform:none;letter-spacing:0;font-weight:500">(upload, or paste a YouTube / Vimeo / .mp4 link)</span></label>'+
+    '<div style="display:flex;gap:8px"><input type="text" data-f="media_url" value="'+esc(s.media_url)+'" placeholder="/uploads/… or https://youtu.be/…">'+
+      '<button class="btn sm" data-pick>Library</button></div>'+
+    '<label>Video poster <span style="text-transform:none;letter-spacing:0;font-weight:500">(optional still image)</span></label>'+
+    '<input type="text" data-f="poster" value="'+esc(s.poster)+'" placeholder="/uploads/…">'+
+    '<div class="lang-tabs" style="margin-top:14px"><button class="on" data-sl="en" type="button">English</button>'+
+      '<button data-sl="id" type="button">Indonesia</button></div>'+
+    '<div class="pane on" data-sl="en">'+
+      '<label>Eyebrow</label><input type="text" data-f="eyebrow_en" value="'+esc(s.eyebrow_en)+'">'+
+      '<label>Title</label><input type="text" data-f="title_en" value="'+esc(s.title_en)+'">'+
+      '<label>Subtext</label><textarea data-f="sub_en">'+esc(s.sub_en)+'</textarea>'+
+      '<label>CTA label</label><input type="text" data-f="cta_label_en" value="'+esc(s.cta_label_en)+'"></div>'+
+    '<div class="pane" data-sl="id">'+
+      '<label>Eyebrow</label><input type="text" data-f="eyebrow_id" value="'+esc(s.eyebrow_id)+'">'+
+      '<label>Judul</label><input type="text" data-f="title_id" value="'+esc(s.title_id)+'">'+
+      '<label>Subteks</label><textarea data-f="sub_id">'+esc(s.sub_id)+'</textarea>'+
+      '<label>Teks CTA</label><input type="text" data-f="cta_label_id" value="'+esc(s.cta_label_id)+'"></div>'+
+    '<div class="prev" data-prev></div></div>';
+}
+function collectSlides(){
+  return [].map.call($("view").querySelectorAll(".slide-card"), function(card){
+    var o = {};
+    card.querySelectorAll("[data-f]").forEach(function(el){
+      o[el.getAttribute("data-f")] = el.type==="checkbox" ? (el.checked?1:0) : el.value.trim(); });
+    return o;
+  });
+}
+function drawSlides(){
+  $("slideList").innerHTML = SLIDES.map(slideCard).join("");
+  var host = $("slideList");
+  host.querySelectorAll(".slide-card").forEach(function(card){
+    var i = +card.getAttribute("data-i");
+    card.querySelectorAll("[data-sl]").forEach(function(b){
+      b.onclick = function(){
+        card.querySelectorAll("[data-sl]").forEach(function(x){ x.classList.toggle("on",x===b); });
+        card.querySelectorAll(".pane").forEach(function(pn){
+          pn.classList.toggle("on", pn.getAttribute("data-sl")===b.getAttribute("data-sl")); });
+      };
+    });
+    card.querySelector("[data-del]").onclick = function(){ SLIDES = collectSlides(); SLIDES.splice(i,1); drawSlides(); };
+    card.querySelectorAll("[data-move]").forEach(function(b){
+      b.onclick = function(){
+        var d = +b.getAttribute("data-move"), j = i+d;
+        SLIDES = collectSlides();
+        if(j<0 || j>=SLIDES.length) return;
+        var t = SLIDES[i]; SLIDES[i]=SLIDES[j]; SLIDES[j]=t; drawSlides();
+      };
+    });
+    card.querySelector("[data-pick]").onclick = function(){
+      openPicker(function(url,kind){
+        card.querySelector('[data-f="media_url"]').value = url;
+        card.querySelector('[data-f="media_type"]').value = kind==="video"?"video":"image";
+        updPrev();
+      });
+    };
+    function updPrev(){
+      var u = card.querySelector('[data-f="media_url"]').value.trim();
+      var t = card.querySelector('[data-f="media_type"]').value;
+      var box = card.querySelector("[data-prev]");
+      if(!u || t==="none"){ box.style.backgroundImage=""; box.textContent = "text-only slide"; return; }
+      if(t==="video"){ box.style.backgroundImage=""; box.textContent = "video: "+u.slice(0,60); return; }
+      box.textContent=""; box.style.backgroundImage = "url('"+u+"')";
+    }
+    card.querySelector('[data-f="media_url"]').addEventListener("input", updPrev);
+    card.querySelector('[data-f="media_type"]').addEventListener("change", updPrev);
+    updPrev();
+  });
+}
+function renderCarousel(){
+  api("/api/admin/carousel").then(function(r){
+    SLIDES = (r.d.slides||[]).map(function(s){ return s; });
+    $("view").innerHTML =
+      '<div class="page-head"><div><h1 class="page">Hero Carousel</h1>'+
+      '<div class="page-sub">The slider at the top of masagi.io. Each slide can show a picture or a video beside the text.</div></div>'+
+      '<div style="display:flex;gap:8px"><button class="btn" id="addSlide">+ Add slide</button>'+
+      '<button class="btn primary" id="saveSlides">Save carousel</button></div></div>'+
+      '<div id="slideList"></div><div id="slMsg" class="msg"></div>';
+    drawSlides();
+    $("addSlide").onclick = function(){
+      SLIDES = collectSlides();
+      SLIDES.push({ is_active:1, media_type:"none", media_url:"", media_side:"right", poster:"",
+        eyebrow_en:"", eyebrow_id:"", title_en:"", title_id:"", sub_en:"", sub_id:"",
+        cta_label_en:"", cta_label_id:"", cta_href:"" });
+      drawSlides();
+    };
+    $("saveSlides").onclick = function(){
+      api("/api/admin/carousel",{ method:"PUT", body:{ slides: collectSlides() }}).then(function(r){
+        if(!r.ok){ flash($("slMsg"), r.d.error||"Save failed.", false); return; }
+        SLIDES = r.d.slides || []; drawSlides();
+        flash($("slMsg"), "Saved — live on masagi.io now.", true);
+      });
+    };
+  });
+}
+
+/* ═══════════════ media ═══════════════ */
+function mediaItem(m, pick){
+  var url = "/uploads/"+m.filename;
+  var thumb = m.kind==="video"
+    ? '<div class="m-thumb" data-url="'+esc(url)+'" data-kind="video">▶ VIDEO</div>'
+    : '<div class="m-thumb" data-url="'+esc(url)+'" data-kind="image" style="background-image:url(\''+esc(url)+'\')"></div>';
+  return '<div class="m-item">'+thumb+'<div class="m-meta"><span title="'+esc(m.original_name)+'">'+
+    esc(m.original_name||m.filename)+'</span>'+
+    (pick?"":'<button class="btn sm danger" data-delm="'+m.id+'">×</button>')+'</div></div>';
+}
+function renderMedia(){
+  api("/api/admin/media").then(function(r){
+    var media = r.d.media||[];
+    $("view").innerHTML =
+      '<div class="page-head"><div><h1 class="page">Media Library</h1>'+
+      '<div class="page-sub">Pictures and videos you can drop into posts and carousel slides.</div></div></div>'+
+      '<div class="card"><div class="drop" id="mDrop">Click to upload, or drop an image / video here</div>'+
+      '<input type="file" id="mFile" class="hidden" accept="image/*,video/mp4,video/webm">'+
+      '<div id="mMsg" class="msg"></div></div>'+
+      '<div class="card"><h2>'+media.length+' file'+(media.length===1?"":"s")+'</h2>'+
+      '<div class="media-grid" id="mGrid">'+(media.map(function(m){ return mediaItem(m,false); }).join("") ||
+        '<div class="page-sub">Nothing uploaded yet.</div>')+'</div></div>';
+    wireUpload($("mDrop"), $("mFile"), $("mMsg"), renderMedia);
+    $("view").querySelectorAll("[data-delm]").forEach(function(b){
+      b.onclick = function(){
+        if(!confirm("Delete this file? Posts using it will show a broken image.")) return;
+        api("/api/admin/media/"+b.getAttribute("data-delm"),{method:"DELETE"}).then(renderMedia);
+      };
+    });
+    $("view").querySelectorAll(".m-thumb").forEach(function(t){
+      t.onclick = function(){
+        navigator.clipboard && navigator.clipboard.writeText(t.getAttribute("data-url"));
+        flash($("mMsg"), "URL copied: "+t.getAttribute("data-url"), true);
+      };
+    });
+  });
+}
+function wireUpload(drop, input, msg, done){
+  function upload(file){
+    if(!file) return;
+    var fd = new FormData(); fd.append("file", file);
+    flash(msg, "Uploading…", true);
+    api("/api/admin/media",{ method:"POST", body:fd }).then(function(r){
+      if(!r.ok){ flash(msg, r.d.error||"Upload failed.", false); return; }
+      flash(msg, "Uploaded.", true);
+      if(done) done(r.d);
+    });
+  }
+  drop.onclick = function(){ input.click(); };
+  input.onchange = function(){ upload(input.files[0]); input.value=""; };
+  drop.addEventListener("dragover", function(e){ e.preventDefault(); drop.classList.add("over"); });
+  drop.addEventListener("dragleave", function(){ drop.classList.remove("over"); });
+  drop.addEventListener("drop", function(e){
+    e.preventDefault(); drop.classList.remove("over"); upload(e.dataTransfer.files[0]); });
+}
+
+/* ═══════════════ media picker modal ═══════════════ */
+var pickCb = null;
+function openPicker(cb){
+  pickCb = cb; $("pickOverlay").classList.add("show"); loadPicker();
+}
+function loadPicker(){
+  api("/api/admin/media").then(function(r){
+    var media = r.d.media||[];
+    $("pickGrid").innerHTML = media.map(function(m){ return mediaItem(m,true); }).join("") ||
+      '<div class="page-sub">Nothing uploaded yet — add a file above.</div>';
+    $("pickGrid").querySelectorAll(".m-thumb").forEach(function(t){
+      t.onclick = function(){
+        if(pickCb) pickCb(t.getAttribute("data-url"), t.getAttribute("data-kind"));
+        $("pickOverlay").classList.remove("show");
+      };
+    });
+  });
+}
+$("pickClose").onclick = function(){ $("pickOverlay").classList.remove("show"); };
+$("pickOverlay").addEventListener("mousedown", function(e){
+  if(e.target===$("pickOverlay")) $("pickOverlay").classList.remove("show"); });
+wireUpload($("pickDrop"), $("pickFile"), $("pickMsg"), function(){ loadPicker(); });
+
+/* ═══════════════ settings ═══════════════ */
+function renderSettings(){
+  api("/api/admin/settings").then(function(r){
+    var s = r.d;
+    $("view").innerHTML =
+      '<div class="page-head"><div><h1 class="page">Settings</h1>'+
+      '<div class="page-sub">Blog heading copy and your account password.</div></div></div>'+
+      '<div class="card"><h2>Blog heading</h2>'+
+        '<div class="grid2"><div><label>Title (EN)</label><input type="text" id="blog_title_en" value="'+esc(s.blog_title_en)+'">'+
+        '<label>Lead (EN)</label><textarea id="blog_lead_en">'+esc(s.blog_lead_en)+'</textarea></div>'+
+        '<div><label>Judul (ID)</label><input type="text" id="blog_title_id" value="'+esc(s.blog_title_id)+'">'+
+        '<label>Lead (ID)</label><textarea id="blog_lead_id">'+esc(s.blog_lead_id)+'</textarea></div></div>'+
+        '<div style="margin-top:14px"><button class="btn primary" id="setSave">Save settings</button></div>'+
+        '<div id="setMsg" class="msg"></div></div>'+
+      '<div class="card"><h2>Change password</h2>'+
+        '<div class="grid2"><div><label>Current password</label><input type="password" id="pwCur"></div>'+
+        '<div><label>New password (min 8 characters)</label><input type="password" id="pwNew"></div></div>'+
+        '<div style="margin-top:14px"><button class="btn" id="pwSave">Update password</button></div>'+
+        '<div id="pwMsg" class="msg"></div></div>';
+    $("setSave").onclick = function(){
+      api("/api/admin/settings",{ method:"POST", body:{
+        blog_title_en:$("blog_title_en").value, blog_title_id:$("blog_title_id").value,
+        blog_lead_en:$("blog_lead_en").value, blog_lead_id:$("blog_lead_id").value }})
+        .then(function(r){ flash($("setMsg"), r.ok?"Saved.":(r.d.error||"Save failed."), r.ok); });
+    };
+    $("pwSave").onclick = function(){
+      api("/api/admin/password",{ method:"POST", body:{
+        current_password:$("pwCur").value, new_password:$("pwNew").value }})
+        .then(function(r){
+          flash($("pwMsg"), r.ok?"Password updated.":(r.d.error||"Update failed."), r.ok);
+          if(r.ok){ $("pwCur").value=""; $("pwNew").value=""; }
+        });
+    };
+  });
+}
+
+/* ═══════════════ boot ═══════════════ */
+function refreshCounts(){
+  api("/api/admin/stats").then(function(r){
+    TYPES.forEach(function(t){ var el=$("c-"+t[0]); if(el) el.textContent=(r.d.counts||{})[t[0]]||0; });
+  });
+}
+function boot(){
+  api("/api/admin/me").then(function(r){
+    if(!r.ok){ $("login").classList.remove("hidden"); $("shell").classList.add("hidden"); return; }
+    ME = r.d; BLOG = r.d.blog_base || "";
+    $("login").classList.add("hidden"); $("shell").classList.remove("hidden");
+    $("meName").textContent = ME.name || ME.username;
+    $("viewSite").href = BLOG;
+    refreshCounts(); setView("dashboard");
+  });
+}
+var st=null; try{ st=localStorage.getItem("masagi-theme"); }catch(e){}
+applyTheme(st || (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));
+boot();
+</script>
+</body>
+</html>

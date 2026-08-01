@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}MASAGI — News &amp; Insights{% endblock %}</title>
+<meta name="description" content="{% block description %}News, insights, use cases and field notes from MASAGI Digital — operational software for growing companies in Indonesia.{% endblock %}">
+<link rel="canonical" href="{% block canonical %}{{ blog_base }}/{% endblock %}">
+<meta property="og:site_name" content="MASAGI Digital">
+<meta property="og:type" content="{% block ogtype %}website{% endblock %}">
+<meta property="og:title" content="{% block ogtitle %}MASAGI — News &amp; Insights{% endblock %}">
+<meta property="og:description" content="{% block ogdesc %}News, insights, use cases and field notes from MASAGI Digital.{% endblock %}">
+{% block oghead %}{% endblock %}
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='22' fill='%231B2A4A'/%3E%3Cpolygon points='30,58 12,92 48,92' fill='%231E7A4C'/%3E%3Cpolygon points='58,42 34,92 82,92' fill='%2331A96A'/%3E%3Cpolygon points='78,26 48,92 106,92' fill='%2357D496'/%3E%3Cpolygon points='78,26 70.5,42 85.5,42' fill='%230B3B24'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#1B2A4A; --accent:#2563EB; --green:#1E7A4C;
+  --bg:#FFFFFF; --bg-2:#F8FAFC; --surface:#FFFFFF;
+  --text:#1B2A4A; --text-2:#64748B; --border:#E2E8F0;
+  --shadow:0 10px 30px rgba(27,42,74,.07);
+}
+html[data-theme="dark"] {
+  --accent:#3B82F6; --green:#57D496;
+  --bg:#0F172A; --bg-2:#131F38; --surface:#1E293B;
+  --text:#F1F5F9; --text-2:#94A3B8; --border:#334155;
+  --shadow:0 10px 30px rgba(0,0,0,.4);
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Inter','Helvetica Neue',Arial,sans-serif; background:var(--bg); color:var(--text);
+  line-height:1.65; -webkit-font-smoothing:antialiased; }
+a { color:inherit; text-decoration:none; }
+img { max-width:100%; display:block; }
+.wrap { max-width:1120px; margin:0 auto; padding:0 22px; }
+
+/* header */
+header.top { position:sticky; top:0; z-index:30; background:color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter:blur(10px); border-bottom:1px solid var(--border); }
+.top-in { max-width:1120px; margin:0 auto; padding:0 22px; height:64px; display:flex;
+  align-items:center; justify-content:space-between; gap:14px; }
+.brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:16px; }
+.brand svg { height:24px; }
+.brand .sub { font-size:10px; letter-spacing:.26em; color:var(--text-2); font-weight:700; }
+.cats { display:flex; gap:4px; flex-wrap:wrap; }
+.cats a { font-size:13px; font-weight:600; color:var(--text-2); padding:7px 12px; border-radius:7px; }
+.cats a:hover { color:var(--text); background:var(--bg-2); }
+.cats a.on { background:var(--accent); color:#fff; }
+.tools { display:flex; align-items:center; gap:8px; }
+.icon-btn { font:inherit; font-size:13px; font-weight:700; cursor:pointer; padding:6px 10px;
+  border:1px solid var(--border); border-radius:6px; background:transparent; color:var(--text-2); }
+.icon-btn:hover { color:var(--text); }
+.lang-btn.on { background:var(--accent); color:#fff; border-color:var(--accent); }
+@media (max-width:860px){ .cats { display:none; } }
+
+/* footer */
+footer.foot { border-top:1px solid var(--border); margin-top:70px; background:var(--bg-2); }
+.foot-in { max-width:1120px; margin:0 auto; padding:30px 22px; display:flex; justify-content:space-between;
+  gap:16px; flex-wrap:wrap; color:var(--text-2); font-size:13px; }
+.foot-in a { color:var(--accent); font-weight:600; }
+
+/* shared bits */
+.eyebrow { font-size:11.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); }
+.tag { display:inline-block; font-size:10.5px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--accent); background:color-mix(in srgb, var(--accent) 12%, transparent);
+  padding:4px 10px; border-radius:99px; }
+.muted { color:var(--text-2); }
+</style>
+{% block head %}{% endblock %}
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="https://masagi.io">
+      <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <polygon points="35,62 5,110 65,110" fill="#1E7A4C"/>
+        <polygon points="85,38 45,110 125,110" fill="#31A96A"/>
+        <polygon points="145,14 95,110 195,110" fill="#57D496"/>
+        <polygon points="145,14 132.5,38 157.5,38" fill="#0B3B24"/>
+      </svg>
+      <span>MASAGI<br><span class="sub">MEDIA</span></span>
+    </a>
+    <nav class="cats">
+      <a href="/" class="{{ 'on' if active is not defined or active is none else '' }}"
+         data-en="All" data-id="Semua">All</a>
+      {% for key, label_en, label_id in types %}
+        <a href="/category/{{ type_slug[key] }}" class="{{ 'on' if active is defined and active == key else '' }}"
+           data-en="{{ label_en }}" data-id="{{ label_id }}">{{ label_en }}</a>
+      {% endfor %}
+    </nav>
+    <div class="tools">
+      <button class="icon-btn lang-btn on" data-lang="en" type="button">EN</button>
+      <button class="icon-btn lang-btn" data-lang="id" type="button">ID</button>
+      <button class="icon-btn" id="themeBtn" type="button" title="Light / dark">☾</button>
+    </div>
+  </div>
+</header>
+
+{% block content %}{% endblock %}
+
+<footer class="foot">
+  <div class="foot-in">
+    <span>© <span id="yr"></span> MASAGI Digital · Jakarta, Indonesia</span>
+    <span><a href="https://masagi.io">masagi.io</a> · <a href="https://masagi.io/#contact"
+      data-en="Contact us" data-id="Hubungi kami">Contact us</a></span>
+  </div>
+</footer>
+
+<script>
+document.getElementById("yr").textContent = new Date().getFullYear();
+
+/* theme — shares the landing page's stored preference */
+function applyTheme(t){
+  document.documentElement.setAttribute("data-theme", t);
+  document.getElementById("themeBtn").textContent = t === "dark" ? "☀" : "☾";
+  try { localStorage.setItem("masagi-theme", t); } catch(e) {}
+}
+document.getElementById("themeBtn").addEventListener("click", function(){
+  applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
+});
+var savedTheme = null; try { savedTheme = localStorage.getItem("masagi-theme"); } catch(e) {}
+applyTheme(savedTheme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+
+/* language — swaps [data-en]/[data-id] text and .lang-block visibility */
+function applyLang(lang){
+  if (lang !== "id") lang = "en";
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-en]").forEach(function(el){
+    var v = el.getAttribute("data-" + lang);
+    if (v) el.textContent = v;
+  });
+  document.querySelectorAll(".lang-block").forEach(function(el){
+    el.hidden = el.getAttribute("data-lang") !== lang;
+  });
+  document.querySelectorAll(".lang-btn").forEach(function(b){
+    b.classList.toggle("on", b.getAttribute("data-lang") === lang);
+  });
+  try { localStorage.setItem("masagi-lang", lang); } catch(e) {}
+}
+document.querySelectorAll(".lang-btn").forEach(function(b){
+  b.addEventListener("click", function(){ applyLang(b.getAttribute("data-lang")); });
+});
+var savedLang = null; try { savedLang = localStorage.getItem("masagi-lang"); } catch(e) {}
+applyLang(savedLang || ((navigator.language || "").toLowerCase().indexOf("id") === 0 ? "id" : "en"));
+</script>
+</body>
+</html>

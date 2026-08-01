@@ -239,6 +239,52 @@ textarea { resize:vertical; min-height:64px; }
       </div>
 
       <div class="card">
+        <h2>Use case / client story</h2>
+        <div class="lang-tabs" data-group="case">
+          <button class="on" data-lang="en" type="button">English</button>
+          <button data-lang="id" type="button">Indonesia</button>
+        </div>
+        <div class="lang-pane on" data-group="case" data-lang="en">
+          <label>Eyebrow</label><input id="case_eyebrow_en">
+          <label>Heading</label><input id="case_heading_en">
+          <label>Sub</label><textarea id="case_sub_en"></textarea>
+          <div class="grid3">
+            <div><label>Role</label><input id="case_role_en"></div>
+            <div><label>Organisation</label><input id="case_org_en"></div>
+            <div><label>Link label</label><input id="case_link_en"></div>
+          </div>
+        </div>
+        <div class="lang-pane" data-group="case" data-lang="id">
+          <label>Eyebrow</label><input id="case_eyebrow_id">
+          <label>Judul</label><input id="case_heading_id">
+          <label>Sub</label><textarea id="case_sub_id"></textarea>
+          <div class="grid3">
+            <div><label>Peran</label><input id="case_role_id"></div>
+            <div><label>Organisasi</label><input id="case_org_id"></div>
+            <div><label>Teks tautan</label><input id="case_link_id"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Media / newsblog heading <span class="pill">article cards come from HV</span></h2>
+        <div class="lang-tabs" data-group="media">
+          <button class="on" data-lang="en" type="button">English</button>
+          <button data-lang="id" type="button">Indonesia</button>
+        </div>
+        <div class="lang-pane on" data-group="media" data-lang="en">
+          <label>Eyebrow</label><input id="media_eyebrow_en">
+          <label>Title</label><input id="media_title_en">
+          <label>Lead</label><textarea id="media_lead_en"></textarea>
+        </div>
+        <div class="lang-pane" data-group="media" data-lang="id">
+          <label>Eyebrow</label><input id="media_eyebrow_id">
+          <label>Judul</label><input id="media_title_id">
+          <label>Lead</label><textarea id="media_lead_id"></textarea>
+        </div>
+      </div>
+
+      <div class="card">
         <h2>Contact info</h2>
         <div class="grid2">
           <div>
@@ -449,6 +495,8 @@ document.querySelectorAll(".lang-tabs").forEach(function(tabs){
 
 function heroSlideHtml(i){
   return '<div class="hero-slide"><h4>Slide '+(i+1)+'</h4>' +
+    '<label>Background image URL <span style="text-transform:none;font-weight:500;letter-spacing:0">(optional — a gradient shows if blank)</span></label>' +
+    '<input id="hero'+i+'_image" placeholder="https://…/slide.jpg">' +
     '<div class="lang-tabs" data-group="hero'+i+'"><button class="on" data-lang="en" type="button">English</button>' +
     '<button data-lang="id" type="button">Indonesia</button></div>' +
     '<div class="lang-pane on" data-group="hero'+i+'" data-lang="en">' +
@@ -484,12 +532,15 @@ function loadContent(){
     Object.keys(c.about||{}).forEach(function(k){ var el=document.getElementById("about_"+k); if(el) el.value=c.about[k]; });
     Object.keys(c.services||{}).forEach(function(k){ var el=document.getElementById("services_"+k); if(el) el.value=c.services[k]; });
     Object.keys(c.contact||{}).forEach(function(k){ var el=document.getElementById("contact_"+k); if(el) el.value=c.contact[k]; });
+    Object.keys(c.case||{}).forEach(function(k){ var el=document.getElementById("case_"+k); if(el) el.value=c.case[k]; });
+    Object.keys(c.media||{}).forEach(function(k){ var el=document.getElementById("media_"+k); if(el) el.value=c.media[k]; });
   });
 }
 
 document.getElementById("saveContentBtn").addEventListener("click", function(){
   var hero = [0,1,2].map(function(i){
     return {
+      image: document.getElementById("hero"+i+"_image").value,
       eyebrow_en: document.getElementById("hero"+i+"_eyebrow_en").value,
       eyebrow_id: document.getElementById("hero"+i+"_eyebrow_id").value,
       title_en: document.getElementById("hero"+i+"_title_en").value,
@@ -513,6 +564,19 @@ document.getElementById("saveContentBtn").addEventListener("click", function(){
       hq_en: document.getElementById("contact_hq_en").value, hq_id: document.getElementById("contact_hq_id").value,
       email: document.getElementById("contact_email").value,
       hours_en: document.getElementById("contact_hours_en").value, hours_id: document.getElementById("contact_hours_id").value,
+    },
+    case: {
+      eyebrow_en: document.getElementById("case_eyebrow_en").value, eyebrow_id: document.getElementById("case_eyebrow_id").value,
+      heading_en: document.getElementById("case_heading_en").value, heading_id: document.getElementById("case_heading_id").value,
+      sub_en: document.getElementById("case_sub_en").value, sub_id: document.getElementById("case_sub_id").value,
+      role_en: document.getElementById("case_role_en").value, role_id: document.getElementById("case_role_id").value,
+      org_en: document.getElementById("case_org_en").value, org_id: document.getElementById("case_org_id").value,
+      link_en: document.getElementById("case_link_en").value, link_id: document.getElementById("case_link_id").value,
+    },
+    media: {
+      eyebrow_en: document.getElementById("media_eyebrow_en").value, eyebrow_id: document.getElementById("media_eyebrow_id").value,
+      title_en: document.getElementById("media_title_en").value, title_id: document.getElementById("media_title_id").value,
+      lead_en: document.getElementById("media_lead_en").value, lead_id: document.getElementById("media_lead_id").value,
     },
   };
   var msg = document.getElementById("contentMsg");

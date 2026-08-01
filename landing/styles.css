@@ -176,6 +176,24 @@ h3 { font-size: 19px; font-weight: 700; }
 .slide .eyebrow::before { background: var(--accent); }
 .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
 
+/* Split hero slides (CMS-driven): copy on one side, a picture or video on the
+   other. Slides with no media keep the original full-width text layout. */
+.slide-grid { display: grid; grid-template-columns: 1.02fr .98fr; gap: 46px; align-items: center; }
+.slide-grid .slide-text h1 { max-width: 15ch; }
+.slide-grid .slide-text p { max-width: 46ch; }
+.slide-grid.media-left .slide-text { order: 2; }
+.slide-grid.media-left .slide-media { order: 1; }
+.slide-media { border-radius: 16px; overflow: hidden; background: #0d1115; aspect-ratio: 16 / 9;
+  box-shadow: 0 30px 70px rgba(0,0,0,.45); border: 1px solid rgba(255,255,255,.12); }
+.slide-media img, .slide-media video, .slide-media iframe {
+  width: 100%; height: 100%; object-fit: cover; display: block; border: 0; }
+@media (max-width: 900px) {
+  .slide-grid { grid-template-columns: 1fr; gap: 22px; }
+  .slide-grid.media-left .slide-text, .slide-grid.media-left .slide-media { order: initial; }
+  /* keep the headline the hero's focus on small screens */
+  .slide-media { display: none; }
+}
+
 /* Swiper overrides — pagination bottom-left, minimal arrows */
 .hero-swiper .swiper-pagination {
   left: 22px; right: auto; bottom: 34px; width: auto; text-align: left;

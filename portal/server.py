@@ -500,7 +500,8 @@ def admin_delete_user(uid):
 
 DEFAULT_LANDING_CONTENT = {
     "hero": [
-        {"eyebrow_en": "MASAGI Digital", "eyebrow_id": "MASAGI Digital",
+        {"image": "",
+         "eyebrow_en": "MASAGI Digital", "eyebrow_id": "MASAGI Digital",
          "title_en": "Systems that let you see your business clearly.",
          "title_id": "Sistem yang membuat bisnismu terlihat jernih.",
          "sub_en": "We build precise operational software for growing companies in Indonesia "
@@ -508,14 +509,16 @@ DEFAULT_LANDING_CONTENT = {
          "sub_id": "Kami membangun perangkat lunak operasional yang presisi untuk perusahaan "
                    "yang sedang tumbuh di Indonesia dan Asia Tenggara — supaya setiap keputusan "
                    "berangkat dari yang benar-benar terjadi hari ini."},
-        {"eyebrow_en": "MASAGI-HV · Helicopter View ERP", "eyebrow_id": "MASAGI-HV · ERP Helicopter View",
+        {"image": "",
+         "eyebrow_en": "MASAGI-HV · Helicopter View ERP", "eyebrow_id": "MASAGI-HV · ERP Helicopter View",
          "title_en": "Every entity, account and rupiah — one live view.",
          "title_id": "Setiap entitas, akun, dan rupiah — satu tampilan hidup.",
          "sub_en": "Consolidated finance for multi-entity groups: double-entry at the core, "
                    "smart bank import, budgets and board-ready reports.",
          "sub_id": "Keuangan terkonsolidasi untuk grup multi-entitas: double-entry di intinya, "
                    "impor bank pintar, anggaran, dan laporan siap rapat direksi."},
-        {"eyebrow_en": "MASAGI-CROM · Certification Ops", "eyebrow_id": "MASAGI-CROM · Operasional Sertifikasi",
+        {"image": "",
+         "eyebrow_en": "MASAGI-CROM · Certification Ops", "eyebrow_id": "MASAGI-CROM · Operasional Sertifikasi",
          "title_en": "Regulatory work, run like clockwork.",
          "title_id": "Urusan regulasi, berjalan seperti jarum jam.",
          "sub_en": "Run every client's certification as a staged pipeline — from submission "
@@ -558,6 +561,30 @@ DEFAULT_LANDING_CONTENT = {
         "hours_en": "Monday – Friday · 09.00 – 18.00 WIB",
         "hours_id": "Senin – Jumat · 09.00 – 18.00 WIB",
     },
+    # Use-case / client-story band on the landing (was hardcoded in the page).
+    "case": {
+        "eyebrow_en": "Client Story", "eyebrow_id": "Cerita Klien",
+        "heading_en": "Closing the books went from seven days to two.",
+        "heading_id": "Tutup buku turun dari tujuh hari menjadi dua.",
+        "sub_en": "A multi-entity group cut its monthly close by 70% after switching to "
+                  "MASAGI-HV — same team, far less manual work.",
+        "sub_id": "Sebuah grup multi-entitas memangkas waktu tutup buku bulanan hingga 70% "
+                  "setelah beralih ke MASAGI-HV — tim yang sama, jauh lebih sedikit pekerjaan manual.",
+        "role_en": "Finance Director", "role_id": "Direktur Keuangan",
+        "org_en": "Multi-entity group · Jakarta", "org_id": "Grup multi-entitas · Jakarta",
+        "link_en": "Read the case study →", "link_id": "Baca studi kasus →",
+    },
+    # Newsblog / Media section heading (the article cards themselves come live
+    # from MASAGI HV's own CMS — this only controls the section's title copy).
+    "media": {
+        "eyebrow_en": "Media", "eyebrow_id": "Media",
+        "title_en": "News, insights and field notes.",
+        "title_id": "Berita, wawasan, dan catatan lapangan.",
+        "lead_en": "Thinking out loud from our client work — what growing companies in "
+                   "Indonesia are fixing, and how.",
+        "lead_id": "Berpikir bersama dari pekerjaan klien kami — apa yang sedang dibenahi "
+                   "perusahaan-perusahaan yang tumbuh di Indonesia, dan bagaimana caranya.",
+    },
 }
 
 
@@ -572,7 +599,7 @@ def _read_landing_content():
         for i, slide in enumerate(saved["hero"][:3]):
             if i < len(merged["hero"]) and isinstance(slide, dict):
                 merged["hero"][i].update(slide)
-    for key in ("about", "services", "contact"):
+    for key in ("about", "services", "contact", "case", "media"):
         if isinstance(saved.get(key), dict):
             merged[key].update(saved[key])
     return merged
@@ -595,7 +622,7 @@ def admin_save_landing_content():
         for i, slide in enumerate(d["hero"][:3]):
             if i < len(current["hero"]) and isinstance(slide, dict):
                 current["hero"][i].update({k: str(v) for k, v in slide.items()})
-    for key in ("about", "services", "contact"):
+    for key in ("about", "services", "contact", "case", "media"):
         if isinstance(d.get(key), dict):
             current[key].update({k: str(v) for k, v in d[key].items()})
     with open(LANDING_CONTENT_FILE, "w", encoding="utf-8") as f:
