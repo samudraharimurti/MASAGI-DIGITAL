@@ -1,0 +1,322 @@
+/* ============================================================
+   MASAGI Digital — dark product theme
+   A re-skin layer loaded AFTER styles.css. It redefines the design
+   tokens and the surface treatments; all layout stays in styles.css,
+   so this file can be added or removed with a single <link>.
+
+   Direction: near-black canvas, layered surfaces, hairline borders,
+   generous radii, Inter at 600 with tight tracking, mint accent that
+   picks up the greens already in the MASAGI mark.
+   ============================================================ */
+
+/* ---------- tokens ---------- */
+:root,
+html[data-theme="dark"] {
+  --bg:          #0A0A0A;
+  --surface:     #101012;   /* cards, panels */
+  --surface2:    #18181B;   /* hover / nested */
+  --surface3:    #1E1E21;   /* raised chips, inputs */
+  --border:      #2C2C30;
+  --border-soft: rgba(255, 255, 255, .07);
+
+  --text:        #F2F2F2;
+  --text-2:      #8F8F94;
+  --text-3:      #646469;
+
+  --accent:      #4ADE80;   /* mint — sits beside the logo greens */
+  --accent-2:    #31A96A;
+  --accent-ink:  #05140B;   /* label colour on a mint fill */
+  --accent-soft: rgba(74, 222, 128, .10);
+  --accent-line: rgba(74, 222, 128, .28);
+
+  --navy:        #0A0A0A;
+  --card-bg:     var(--surface);
+  --nav-bg:      rgba(12, 12, 14, .72);
+  --glass:       rgba(255, 255, 255, .04);
+  --glass-line:  rgba(255, 255, 255, .08);
+  --shadow:      0 24px 60px rgba(0, 0, 0, .55);
+
+  --r-lg: 32px;   /* big feature blocks */
+  --r-md: 20px;   /* standard cards */
+  --r-sm: 12px;
+  --pill: 999px;
+}
+
+html[data-theme="light"] {
+  --bg:          #FFFFFF;
+  --surface:     #F7F8F8;
+  --surface2:    #F0F2F2;
+  --surface3:    #E9ECEC;
+  --border:      #E3E6E6;
+  --border-soft: rgba(10, 10, 10, .08);
+
+  --text:        #0A0A0A;
+  --text-2:      #5F6165;
+  --text-3:      #8A8D91;
+
+  /* Deep green rather than the dark theme's mint: #4ADE80 on white is only
+     1.7:1, and even #12A150 reaches just 3.37:1. #0E7A3D gives 5.43:1, so the
+     same token works for accent text on white and for white on an accent fill. */
+  --accent:      #0E7A3D;
+  --accent-2:    #1E7A4C;
+  --accent-ink:  #FFFFFF;
+  --accent-soft: rgba(14, 122, 61, .09);
+  --accent-line: rgba(14, 122, 61, .26);
+
+  --card-bg:     #FFFFFF;
+  --nav-bg:      rgba(255, 255, 255, .78);
+  --glass:       rgba(10, 10, 10, .03);
+  --glass-line:  rgba(10, 10, 10, .08);
+  --shadow:      0 18px 44px rgba(10, 10, 10, .08);
+}
+
+/* ---------- base ---------- */
+body { background: var(--bg); color: var(--text); }
+
+/* Typography: 600 weight with tight tracking, per the reference. */
+h1, h2, h3, h4 { font-weight: 600; letter-spacing: -.022em; color: var(--text); }
+h1 { line-height: 1.05; }
+h2 { line-height: 1.1; }
+.hero h1, .slide h1 { font-weight: 600; letter-spacing: -.024em; }
+.sec-head h2 { font-weight: 600; }
+.lead, .slide p, .sec-head .lead { color: var(--text-2); }
+
+.eyebrow, .eyebrow-green {
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-size: 11.5px;
+}
+.eyebrow::before { background: var(--accent) !important; }
+
+/* ---------- navbar ---------- */
+.navbar { background: transparent; border-bottom: 1px solid transparent; }
+.navbar.scrolled {
+  background: var(--nav-bg);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid var(--border-soft);
+  box-shadow: none;
+}
+.menu a { color: var(--text-2); font-weight: 500; }
+.menu a:hover { color: var(--text); border-bottom-color: var(--accent); }
+.navbar.scrolled .menu a { color: var(--text-2); }
+.navbar.scrolled .menu a:hover { color: var(--text); }
+.menu .menu-cta {
+  background: var(--accent); color: var(--accent-ink) !important;
+  border-radius: var(--pill); font-weight: 600; padding: 9px 18px;
+}
+.menu .menu-cta:hover { filter: brightness(1.06); opacity: 1; }
+.menu .menu-cta.ghost {
+  background: transparent; color: var(--text) !important;
+  border: 1px solid var(--border); border-radius: var(--pill);
+}
+.menu .menu-cta.ghost:hover { background: var(--glass); border-color: var(--accent-line); }
+.lang-group { border-color: var(--border); border-radius: var(--pill); overflow: hidden; }
+.lang-btn { color: var(--text-2); }
+.lang-btn.on { background: var(--accent); color: var(--accent-ink) !important; }
+.theme-btn { border-color: var(--border); color: var(--text-2); border-radius: var(--pill); }
+.theme-btn:hover { color: var(--text); border-color: var(--accent-line); }
+.hamburger { border-color: var(--border); border-radius: 10px; }
+.hamburger span { background: var(--text); }
+.menu.mobile-open { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); }
+.menu.mobile-open a { border-bottom-color: var(--border-soft); }
+
+/* ---------- buttons ---------- */
+.btn {
+  border-radius: var(--pill);
+  font-weight: 600;
+  font-size: 14.5px;
+  padding: 12px 24px;
+  letter-spacing: -.01em;
+  transition: filter .18s, background .18s, border-color .18s, transform .12s;
+}
+.btn:active { transform: translateY(1px); }
+.btn-accent {
+  background: var(--accent); color: var(--accent-ink); border: 1px solid var(--accent);
+  box-shadow: 0 10px 30px rgba(74, 222, 128, .16);
+}
+.btn-accent:hover { filter: brightness(1.07); }
+.btn-line {
+  background: transparent; color: var(--text); border: 1px solid var(--border);
+}
+.btn-line:hover { background: var(--glass); border-color: var(--accent-line); color: var(--text); }
+
+/* ---------- hero ---------- */
+.hero { background: var(--bg); }
+.slide { color: var(--text); }
+/* replace the three navy gradients with one calm near-black + mint glow */
+.s1, .s2, .s3 {
+  background:
+    radial-gradient(900px 520px at 78% 6%, rgba(74, 222, 128, .10), transparent 62%),
+    radial-gradient(700px 460px at 8% 92%, rgba(74, 222, 128, .05), transparent 58%),
+    var(--bg);
+}
+html[data-theme="light"] .s1,
+html[data-theme="light"] .s2,
+html[data-theme="light"] .s3 {
+  background:
+    radial-gradient(900px 520px at 78% 6%, rgba(18, 161, 80, .10), transparent 62%),
+    radial-gradient(700px 460px at 8% 92%, rgba(18, 161, 80, .05), transparent 58%),
+    var(--bg);
+}
+.slide::before { opacity: .05; }             /* soften the triangle motif */
+.slide p { color: var(--text-2); }
+.slide .eyebrow { color: var(--accent); }
+.slide-media {
+  border-radius: var(--r-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  background: var(--surface);
+}
+.hero-swiper .swiper-pagination-bullet { background: var(--text-3); opacity: 1; }
+.hero-swiper .swiper-pagination-bullet-active { background: var(--accent); }
+.hero-swiper .swiper-button-prev,
+.hero-swiper .swiper-button-next {
+  color: var(--text); background: var(--glass); border: 1px solid var(--border);
+  border-radius: var(--pill); backdrop-filter: blur(8px);
+}
+
+/* ---------- trust strip ---------- */
+.trust { background: var(--bg); border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft); }
+.trust-label { color: var(--text-3); letter-spacing: .16em; }
+.logo-tile {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-md); color: var(--text-2);
+}
+.logo-tile:hover { border-color: var(--accent-line); color: var(--text); }
+
+/* ---------- sections ---------- */
+.section { background: var(--bg); }
+.section.alt { background: var(--surface); }
+html[data-theme="dark"] .section.alt { background: #0D0D0F; }
+.sec-head h2 { color: var(--text); }
+.sec-head .lead { color: var(--text-2); }
+
+/* cards, products, steps, stats — one rounded, hairline family */
+.card, .product, .step-card, .stat, .m-card, .c-block, .case-inner {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  box-shadow: none;
+  transition: border-color .18s, background .18s, transform .18s;
+}
+.card:hover, .product:hover, .step-card:hover, .m-card:hover {
+  border-color: var(--accent-line);
+  background: var(--surface2);
+  transform: translateY(-2px);
+}
+.product { border-radius: var(--r-lg); }
+.p-tag {
+  background: var(--accent-soft); color: var(--accent);
+  border: 1px solid var(--accent-line); border-radius: var(--pill);
+  font-weight: 600;
+}
+.p-sub, .p-feats li { color: var(--text-2); }
+.p-feats li::before { color: var(--accent); }
+.step-n {
+  background: var(--accent-soft); color: var(--accent);
+  border: 1px solid var(--accent-line); border-radius: var(--pill);
+  font-weight: 600;
+}
+.stat .n { color: var(--accent); font-weight: 600; letter-spacing: -.03em; }
+.stat .t { color: var(--text-2); }
+.card .ic { color: var(--accent); }
+.tag {
+  background: var(--accent-soft); color: var(--accent);
+  border: 1px solid var(--accent-line); border-radius: var(--pill); font-weight: 600;
+}
+
+/* ---------- case band ---------- */
+.case {
+  background:
+    radial-gradient(700px 380px at 50% 0%, rgba(74, 222, 128, .07), transparent 60%),
+    var(--surface);
+}
+html[data-theme="light"] .case {
+  background:
+    radial-gradient(700px 380px at 50% 0%, rgba(18, 161, 80, .08), transparent 60%),
+    var(--surface);
+}
+.case-inner { border-radius: var(--r-lg); }
+.case-sub { color: var(--text-2); }
+.case-role { color: var(--text); font-weight: 600; }
+.case-org { color: var(--text-3); }
+.case-link { color: var(--accent); font-weight: 600; }
+.case-link:hover { color: var(--accent); text-decoration: underline; }
+
+/* ---------- media / blog cards ---------- */
+.m-card { border-radius: var(--r-md); overflow: hidden; }
+.m-cover { border-bottom: 1px solid var(--border); }
+.m-cover.c1 { background-image: linear-gradient(135deg, #0d1a14, #1E7A4C); }
+.m-cover.c2 { background-image: linear-gradient(135deg, #101012, #31A96A); }
+.m-cover.c3 { background-image: linear-gradient(135deg, #0b1410, #4ADE80); }
+.m-meta { color: var(--text-3); }
+.m-body h3 { color: var(--text); font-weight: 600; }
+.m-body p { color: var(--text-2); }
+.m-read { color: var(--accent); font-weight: 600; }
+
+/* ---------- contact ---------- */
+.c-block { border-radius: var(--r-md); }
+.c-info h3, .c-block h3 { color: var(--text); }
+.c-block p, .c-info p { color: var(--text-2); }
+.f-field label { color: var(--text-2); }
+.f-field input, .f-field textarea {
+  background: var(--surface3); border: 1px solid var(--border);
+  color: var(--text); border-radius: var(--r-sm);
+}
+.f-field input:focus, .f-field textarea:focus {
+  border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); outline: none;
+}
+.f-field input::placeholder, .f-field textarea::placeholder { color: var(--text-3); }
+.f-note { color: var(--text-3); }
+
+/* ---------- footer ---------- */
+.footer { background: var(--surface); border-top: 1px solid var(--border); }
+html[data-theme="dark"] .footer { background: #0D0D0F; }
+.footer a { color: var(--text-2); }
+.footer a:hover { color: var(--accent); }
+.foot-brand p, .foot-grid h4 { color: var(--text-2); }
+.foot-grid h4 { color: var(--text-3); letter-spacing: .12em; }
+.foot-base { border-top: 1px solid var(--border); color: var(--text-3); }
+
+/* ---------- specificity fixes ----------
+   The base sheet scopes a few rules by class, which outrank the element-level
+   rules above. Restated here at matching-or-higher specificity. */
+.product.glass {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: none;
+  backdrop-filter: none;
+}
+.product.glass::before {
+  background: radial-gradient(circle, var(--accent-soft), transparent 65%);
+}
+.product.glass:hover { transform: translateY(-3px); border-color: var(--accent-line); }
+.product h3, .step-card h3, .case h2, .m-body h3 { font-weight: 600; letter-spacing: -.022em; }
+.case h2 { color: var(--text); }
+.stat .n { font-weight: 600; }
+.logo-word { font-weight: 600; color: var(--text-2); }
+
+/* ---------- light-mode nav legibility ----------
+   The original hero was dark navy, so the un-scrolled navbar used white text.
+   This theme's light hero is near-white, so that text must flip to ink or it
+   disappears against the background. */
+html[data-theme="light"] .menu a { color: var(--text-2); }
+html[data-theme="light"] .menu a:hover { color: var(--text); }
+html[data-theme="light"] .brand .word { color: var(--text); }
+html[data-theme="light"] .hamburger span { background: var(--text); }
+html[data-theme="light"] .hamburger { border-color: var(--border); }
+html[data-theme="light"] .theme-btn,
+html[data-theme="light"] .lang-btn { color: var(--text-2); border-color: var(--border); }
+html[data-theme="light"] .lang-group { border-color: var(--border); }
+html[data-theme="light"] .lang-btn.on { color: var(--accent-ink) !important; }
+html[data-theme="light"] .menu .menu-cta.ghost { color: var(--text) !important; border-color: var(--border); }
+
+/* ---------- selection + focus ---------- */
+::selection { background: var(--accent); color: var(--accent-ink); }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
