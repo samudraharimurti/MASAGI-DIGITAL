@@ -14,20 +14,27 @@
 html[data-theme="dark"] {
   --bg:          #0A0A0A;
   --surface:     #101012;   /* cards, panels */
-  --surface2:    #18181B;   /* hover / nested */
-  --surface3:    #1E1E21;   /* raised chips, inputs */
+  /* hyphenated names are canonical (they match --text-2 / --accent-2); the
+     un-hyphenated pair is kept because styles.css:109 still calls var(--surface2) */
+  --surface-2:   #18181B;   /* hover / nested */
+  --surface-3:   #1E1E21;   /* raised chips, inputs */
+  --surface2:    var(--surface-2);
+  --surface3:    var(--surface-3);
   --border:      #2C2C30;
   --border-soft: rgba(255, 255, 255, .07);
+  /* form fields need a 3:1 boundary of their own (WCAG 1.4.11): the hairline
+     --border is only 1.42:1 on the canvas, so inputs get a stronger edge */
+  --field-border: #63636A;  /* 3.32:1 on #0A0A0A */
 
   --text:        #F2F2F2;
   --text-2:      #8F8F94;
-  --text-3:      #646469;
+  --text-3:      #828289;   /* 5.19:1 on canvas — was #646469 at 3.36 (failed AA) */
 
-  --accent:      #4ADE80;   /* mint — sits beside the logo greens */
+  --accent:      #57D496;   /* the MASAGI mark's own light green */
   --accent-2:    #31A96A;
   --accent-ink:  #05140B;   /* label colour on a mint fill */
-  --accent-soft: rgba(74, 222, 128, .10);
-  --accent-line: rgba(74, 222, 128, .28);
+  --accent-soft: rgba(87, 212, 150, .10);
+  --accent-line: rgba(87, 212, 150, .28);
 
   --navy:        #0A0A0A;
   --card-bg:     var(--surface);
@@ -45,23 +52,25 @@ html[data-theme="dark"] {
 html[data-theme="light"] {
   --bg:          #FFFFFF;
   --surface:     #F7F8F8;
-  --surface2:    #F0F2F2;
-  --surface3:    #E9ECEC;
+  --surface-2:   #F0F2F2;
+  --surface-3:   #E9ECEC;
+  --surface2:    var(--surface-2);
+  --surface3:    var(--surface-3);
   --border:      #E3E6E6;
   --border-soft: rgba(10, 10, 10, .08);
+  --field-border: #8E9294;  /* 3.14:1 on white — --border is only 1.26:1 */
 
   --text:        #0A0A0A;
   --text-2:      #5F6165;
-  --text-3:      #8A8D91;
+  --text-3:      #6E7276;   /* 4.85:1 on white — was #8A8D91 at 3.33 (failed AA) */
 
-  /* Deep green rather than the dark theme's mint: #4ADE80 on white is only
-     1.7:1, and even #12A150 reaches just 3.37:1. #0E7A3D gives 5.43:1, so the
-     same token works for accent text on white and for white on an accent fill. */
-  --accent:      #0E7A3D;
+  /* The mark's dark green. The light theme cannot use #57D496 (1.9:1 on white);
+     #1E7A4C gives 5.33:1, working both as accent text and as a fill under white. */
+  --accent:      #1E7A4C;
   --accent-2:    #1E7A4C;
   --accent-ink:  #FFFFFF;
-  --accent-soft: rgba(14, 122, 61, .09);
-  --accent-line: rgba(14, 122, 61, .26);
+  --accent-soft: rgba(30, 122, 76, .09);
+  --accent-line: rgba(30, 122, 76, .26);
 
   --card-bg:     #FFFFFF;
   --nav-bg:      rgba(255, 255, 255, .78);
@@ -135,7 +144,7 @@ h2 { line-height: 1.1; }
 .btn:active { transform: translateY(1px); }
 .btn-accent {
   background: var(--accent); color: var(--accent-ink); border: 1px solid var(--accent);
-  box-shadow: 0 10px 30px rgba(74, 222, 128, .16);
+  box-shadow: 0 10px 30px rgba(87, 212, 150, .16);
 }
 .btn-accent:hover { filter: brightness(1.07); }
 .btn-line {
@@ -149,16 +158,16 @@ h2 { line-height: 1.1; }
 /* replace the three navy gradients with one calm near-black + mint glow */
 .s1, .s2, .s3 {
   background:
-    radial-gradient(900px 520px at 78% 6%, rgba(74, 222, 128, .10), transparent 62%),
-    radial-gradient(700px 460px at 8% 92%, rgba(74, 222, 128, .05), transparent 58%),
+    radial-gradient(900px 520px at 78% 6%, rgba(87, 212, 150, .10), transparent 62%),
+    radial-gradient(700px 460px at 8% 92%, rgba(87, 212, 150, .05), transparent 58%),
     var(--bg);
 }
 html[data-theme="light"] .s1,
 html[data-theme="light"] .s2,
 html[data-theme="light"] .s3 {
   background:
-    radial-gradient(900px 520px at 78% 6%, rgba(18, 161, 80, .10), transparent 62%),
-    radial-gradient(700px 460px at 8% 92%, rgba(18, 161, 80, .05), transparent 58%),
+    radial-gradient(900px 520px at 78% 6%, rgba(30, 122, 76, .10), transparent 62%),
+    radial-gradient(700px 460px at 8% 92%, rgba(30, 122, 76, .05), transparent 58%),
     var(--bg);
 }
 .slide::before { opacity: .05; }             /* soften the triangle motif */
@@ -188,9 +197,12 @@ html[data-theme="light"] .s3 {
 .logo-tile:hover { border-color: var(--accent-line); color: var(--text); }
 
 /* ---------- sections ---------- */
+/* Near-black surfaces separate by only ~1.1:1, so the banding the old navy
+   theme got for free is gone. A hairline rule restores the section rhythm
+   without brightening the canvas. */
 .section { background: var(--bg); }
-.section.alt { background: var(--surface); }
-html[data-theme="dark"] .section.alt { background: #0D0D0F; }
+.section.alt { background: var(--surface); border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft); }
+html[data-theme="dark"] .section.alt { background: #141417; }
 .sec-head h2 { color: var(--text); }
 .sec-head .lead { color: var(--text-2); }
 
@@ -220,7 +232,7 @@ html[data-theme="dark"] .section.alt { background: #0D0D0F; }
   border: 1px solid var(--accent-line); border-radius: var(--pill);
   font-weight: 600;
 }
-.stat .n { color: var(--accent); font-weight: 600; letter-spacing: -.03em; }
+.stat .n { color: var(--accent); font-weight: 700; letter-spacing: -.03em; }
 .stat .t { color: var(--text-2); }
 .card .ic { color: var(--accent); }
 .tag {
@@ -231,12 +243,12 @@ html[data-theme="dark"] .section.alt { background: #0D0D0F; }
 /* ---------- case band ---------- */
 .case {
   background:
-    radial-gradient(700px 380px at 50% 0%, rgba(74, 222, 128, .07), transparent 60%),
+    radial-gradient(700px 380px at 50% 0%, rgba(87, 212, 150, .07), transparent 60%),
     var(--surface);
 }
 html[data-theme="light"] .case {
   background:
-    radial-gradient(700px 380px at 50% 0%, rgba(18, 161, 80, .08), transparent 60%),
+    radial-gradient(700px 380px at 50% 0%, rgba(30, 122, 76, .08), transparent 60%),
     var(--surface);
 }
 .case-inner { border-radius: var(--r-lg); }
@@ -251,7 +263,7 @@ html[data-theme="light"] .case {
 .m-cover { border-bottom: 1px solid var(--border); }
 .m-cover.c1 { background-image: linear-gradient(135deg, #0d1a14, #1E7A4C); }
 .m-cover.c2 { background-image: linear-gradient(135deg, #101012, #31A96A); }
-.m-cover.c3 { background-image: linear-gradient(135deg, #0b1410, #4ADE80); }
+.m-cover.c3 { background-image: linear-gradient(135deg, #0b1410, #57D496); }
 .m-meta { color: var(--text-3); }
 .m-body h3 { color: var(--text); font-weight: 600; }
 .m-body p { color: var(--text-2); }
@@ -262,8 +274,10 @@ html[data-theme="light"] .case {
 .c-info h3, .c-block h3 { color: var(--text); }
 .c-block p, .c-info p { color: var(--text-2); }
 .f-field label { color: var(--text-2); }
+/* The contact form is the only conversion surface on the page. Its fill sits
+   at 1.19:1 against the canvas, so the field must be delimited by its border. */
 .f-field input, .f-field textarea {
-  background: var(--surface3); border: 1px solid var(--border);
+  background: var(--surface-3); border: 1px solid var(--field-border);
   color: var(--text); border-radius: var(--r-sm);
 }
 .f-field input:focus, .f-field textarea:focus {
@@ -274,8 +288,10 @@ html[data-theme="light"] .case {
 
 /* ---------- footer ---------- */
 .footer { background: var(--surface); border-top: 1px solid var(--border); }
-html[data-theme="dark"] .footer { background: #0D0D0F; }
-.footer a { color: var(--text-2); }
+html[data-theme="dark"] .footer { background: #141417; }
+/* styles.css sets `.footer a, .footer span { color:#C7D2E4 }` — fine over the old
+   navy footer, but 1.43:1 on the light surface. Both selectors must be reclaimed. */
+.footer a, .footer span { color: var(--text-2); }
 .footer a:hover { color: var(--accent); }
 .foot-brand p, .foot-grid h4 { color: var(--text-2); }
 .foot-grid h4 { color: var(--text-3); letter-spacing: .12em; }
@@ -297,8 +313,10 @@ html[data-theme="dark"] .footer { background: #0D0D0F; }
 .product.glass:hover { transform: translateY(-3px); border-color: var(--accent-line); }
 .product h3, .step-card h3, .case h2, .m-body h3 { font-weight: 600; letter-spacing: -.022em; }
 .case h2 { color: var(--text); }
-.stat .n { font-weight: 600; }
-.logo-word { font-weight: 600; color: var(--text-2); }
+.stat .n { font-weight: 700; }
+/* styles.css dims these to opacity .72, which landed at ~3.6:1. They are now
+   deliberate wordmarks rather than a broken-image fallback, so they read fully. */
+.logo-word { font-weight: 600; color: var(--text-2); opacity: 1; }
 
 /* ---------- light-mode nav legibility ----------
    The original hero was dark navy, so the un-scrolled navbar used white text.

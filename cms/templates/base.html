@@ -22,20 +22,20 @@
 :root,
 html[data-theme="dark"] {
   --bg:#0A0A0A; --bg-2:#0D0D0F; --surface:#101012; --surface-2:#18181B;
-  --text:#F2F2F2; --text-2:#8F8F94; --text-3:#646469;
+  --text:#F2F2F2; --text-2:#8F8F94; --text-3:#828289;
   --border:#2C2C30;
-  --accent:#4ADE80; --accent-ink:#05140B; --green:#31A96A;
-  --accent-soft:rgba(74,222,128,.10); --accent-line:rgba(74,222,128,.28);
+  --accent:#57D496; --accent-ink:#05140B; --green:#31A96A;
+  --accent-soft:rgba(87,212,150,.10); --accent-line:rgba(87,212,150,.28);
   --shadow:0 24px 60px rgba(0,0,0,.55);
   --r-lg:32px; --r-md:20px; --r-sm:12px; --pill:999px;
 }
-/* Deep green in light mode: mint on white is only 1.7:1, #0E7A3D is 5.43:1. */
+/* The mark's dark green: #57D496 on white is 1.9:1; #1E7A4C gives 5.33:1. */
 html[data-theme="light"] {
-  --bg:#FFFFFF; --bg-2:#F7F8F8; --surface:#FFFFFF; --surface-2:#F0F2F2;
-  --text:#0A0A0A; --text-2:#5F6165; --text-3:#8A8D91;
+  --bg:#FFFFFF; --bg-2:#F7F8F8; --surface:#FCFCFC; --surface-2:#F0F2F2;
+  --text:#0A0A0A; --text-2:#5F6165; --text-3:#6E7276;
   --border:#E3E6E6;
-  --accent:#0E7A3D; --accent-ink:#FFFFFF; --green:#1E7A4C;
-  --accent-soft:rgba(14,122,61,.09); --accent-line:rgba(14,122,61,.26);
+  --accent:#1E7A4C; --accent-ink:#FFFFFF; --green:#1E7A4C;
+  --accent-soft:rgba(30,122,76,.09); --accent-line:rgba(30,122,76,.26);
   --shadow:0 18px 44px rgba(10,10,10,.08);
 }
 h1,h2,h3,h4 { font-weight:600; letter-spacing:-.022em; }
@@ -63,7 +63,15 @@ header.top { position:sticky; top:0; z-index:30; background:color-mix(in srgb, v
   border:1px solid var(--border); border-radius:var(--pill); background:transparent; color:var(--text-2); }
 .icon-btn:hover { color:var(--text); border-color:var(--accent-line); }
 .lang-btn.on { background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
-@media (max-width:860px){ .cats { display:none; } }
+/* Never hide the only navigation the blog has — below 860px the categories
+   become a horizontally scrollable strip instead of disappearing. */
+@media (max-width:860px){
+  .top-in { flex-wrap:wrap; height:auto; padding-top:10px; padding-bottom:10px; gap:10px; }
+  .cats { order:3; width:100%; flex-wrap:nowrap; overflow-x:auto; gap:6px;
+    scrollbar-width:none; -webkit-overflow-scrolling:touch; padding-bottom:2px; }
+  .cats::-webkit-scrollbar { display:none; }
+  .cats a { white-space:nowrap; flex:0 0 auto; }
+}
 
 /* footer */
 footer.foot { border-top:1px solid var(--border); margin-top:70px; background:var(--bg-2); }
