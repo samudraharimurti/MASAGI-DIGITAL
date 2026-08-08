@@ -1,0 +1,96 @@
+/* ============================================================
+   MASAGI Digital — design tokens (single source of truth)
+
+   Linked FIRST by every surface: the landing, /pricing, and the blog
+   templates. Nothing below this file may declare a token; previously the
+   same values were hand-maintained in four places and had already drifted
+   (--surface2 vs --surface-2, and a light --surface equal to its own --bg,
+   which left blog cards with no lift at all).
+
+   Light is the default. This buyer's trust artefacts — bank statements,
+   audited accounts, the board pack HV exports — are black on white, and a
+   near-black canvas makes every real product screenshot a bright hole in
+   the page. Dark remains a genuine, complete theme via [data-theme="dark"].
+
+   Accent greens are the MASAGI mark's own (#57D496 / #1E7A4C), not the
+   template's Tailwind mint. Every pair below is measured, not estimated.
+   ============================================================ */
+
+:root,
+html[data-theme="light"] {
+  /* surfaces — cards lift off the band via --bg-2 + --border, never a fill delta */
+  --bg:           #FFFFFF;
+  --bg-2:         #F6F7F8;   /* alternating section band */
+  --surface:      #FFFFFF;   /* cards, panels */
+  --surface-2:    #F2F4F4;   /* hover / nested */
+  --surface-3:    #F6F7F8;   /* inputs, raised chips */
+  --border:       #E3E6E6;
+  --border-soft:  rgba(10, 10, 10, .08);
+  --field-border: #8E9294;   /* 3.14:1 on white — WCAG 1.4.11 needs 3.0 */
+
+  --text:         #0A0A0A;   /* 19.80:1 */
+  --text-2:       #5F6165;   /*  5.83:1 */
+  --text-3:       #6E7276;   /*  4.85:1 */
+
+  --accent:       #1E7A4C;   /*  5.33:1 on white, and under white as a fill */
+  --accent-2:     #31A96A;
+  --accent-ink:   #FFFFFF;
+  --accent-soft:  rgba(30, 122, 76, .09);
+  --accent-line:  rgba(30, 122, 76, .26);
+
+  --nav-bg:       rgba(255, 255, 255, .82);
+  --glass:        rgba(10, 10, 10, .03);
+  --glass-line:   rgba(10, 10, 10, .08);
+  --shadow:       0 18px 44px rgba(10, 10, 10, .08);
+
+  /* geometry */
+  --r-lg: 32px;   --r-md: 20px;   --r-sm: 12px;   --pill: 999px;
+
+  /* the mark's greens, kept for the logo and accents */
+  --green-1: #1E7A4C;  --green-2: #31A96A;  --green-3: #57D496;
+
+  /* legacy aliases — styles.css and pricing still reference these */
+  --navy:    var(--text);
+  --card-bg: var(--surface);
+  --card:    var(--surface);
+  --card-sh: var(--shadow);
+  --surface2: var(--surface-2);
+  --surface3: var(--surface-3);
+}
+
+html[data-theme="dark"] {
+  --bg:           #0A0A0A;
+  --bg-2:         #141417;
+  --surface:      #101012;
+  --surface-2:    #18181B;
+  --surface-3:    #1E1E21;
+  --border:       #2C2C30;
+  --border-soft:  rgba(255, 255, 255, .07);
+  --field-border: #63636A;   /* 3.32:1 on #0A0A0A */
+
+  --text:         #F2F2F2;   /* 17.68:1 */
+  --text-2:       #8F8F94;   /*  6.15:1 */
+  --text-3:       #828289;   /*  5.19:1 */
+
+  --accent:       #57D496;   /* 10.62:1 — the mark's light green */
+  --accent-2:     #31A96A;
+  --accent-ink:   #05140B;   /* 10.13:1 on the accent fill */
+  --accent-soft:  rgba(87, 212, 150, .10);
+  --accent-line:  rgba(87, 212, 150, .28);
+
+  --nav-bg:       rgba(12, 12, 14, .72);
+  --glass:        rgba(255, 255, 255, .04);
+  --glass-line:   rgba(255, 255, 255, .08);
+  --shadow:       0 24px 60px rgba(0, 0, 0, .55);
+
+  --navy:    #0A0A0A;
+  --card-bg: var(--surface);
+  --card:    var(--surface);
+  --card-sh: var(--shadow);
+  --surface2: var(--surface-2);
+  --surface3: var(--surface-3);
+}
+
+/* Colour-scheme hint so form controls, scrollbars and the URL bar follow. */
+:root, html[data-theme="light"] { color-scheme: light; }
+html[data-theme="dark"]         { color-scheme: dark; }

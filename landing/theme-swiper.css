@@ -1,83 +1,14 @@
 /* ============================================================
-   MASAGI Digital — dark product theme
-   A re-skin layer loaded AFTER styles.css. It redefines the design
-   tokens and the surface treatments; all layout stays in styles.css,
-   so this file can be added or removed with a single <link>.
+   MASAGI Digital — surface treatments
+   A re-skin layer loaded AFTER tokens.css and styles.css. Tokens live in
+   tokens.css; this file only restyles surfaces, so it stays removable.
 
-   Direction: near-black canvas, layered surfaces, hairline borders,
-   generous radii, Inter at 600 with tight tracking, mint accent that
-   picks up the greens already in the MASAGI mark.
+   Light is the default theme; dark is complete and equal. Geometry is
+   generous (20/32/999px), type is Inter 600 with tight tracking, and the
+   accent greens come from the MASAGI mark itself.
    ============================================================ */
 
-/* ---------- tokens ---------- */
-:root,
-html[data-theme="dark"] {
-  --bg:          #0A0A0A;
-  --surface:     #101012;   /* cards, panels */
-  /* hyphenated names are canonical (they match --text-2 / --accent-2); the
-     un-hyphenated pair is kept because styles.css:109 still calls var(--surface2) */
-  --surface-2:   #18181B;   /* hover / nested */
-  --surface-3:   #1E1E21;   /* raised chips, inputs */
-  --surface2:    var(--surface-2);
-  --surface3:    var(--surface-3);
-  --border:      #2C2C30;
-  --border-soft: rgba(255, 255, 255, .07);
-  /* form fields need a 3:1 boundary of their own (WCAG 1.4.11): the hairline
-     --border is only 1.42:1 on the canvas, so inputs get a stronger edge */
-  --field-border: #63636A;  /* 3.32:1 on #0A0A0A */
-
-  --text:        #F2F2F2;
-  --text-2:      #8F8F94;
-  --text-3:      #828289;   /* 5.19:1 on canvas — was #646469 at 3.36 (failed AA) */
-
-  --accent:      #57D496;   /* the MASAGI mark's own light green */
-  --accent-2:    #31A96A;
-  --accent-ink:  #05140B;   /* label colour on a mint fill */
-  --accent-soft: rgba(87, 212, 150, .10);
-  --accent-line: rgba(87, 212, 150, .28);
-
-  --navy:        #0A0A0A;
-  --card-bg:     var(--surface);
-  --nav-bg:      rgba(12, 12, 14, .72);
-  --glass:       rgba(255, 255, 255, .04);
-  --glass-line:  rgba(255, 255, 255, .08);
-  --shadow:      0 24px 60px rgba(0, 0, 0, .55);
-
-  --r-lg: 32px;   /* big feature blocks */
-  --r-md: 20px;   /* standard cards */
-  --r-sm: 12px;
-  --pill: 999px;
-}
-
-html[data-theme="light"] {
-  --bg:          #FFFFFF;
-  --surface:     #F7F8F8;
-  --surface-2:   #F0F2F2;
-  --surface-3:   #E9ECEC;
-  --surface2:    var(--surface-2);
-  --surface3:    var(--surface-3);
-  --border:      #E3E6E6;
-  --border-soft: rgba(10, 10, 10, .08);
-  --field-border: #8E9294;  /* 3.14:1 on white — --border is only 1.26:1 */
-
-  --text:        #0A0A0A;
-  --text-2:      #5F6165;
-  --text-3:      #6E7276;   /* 4.85:1 on white — was #8A8D91 at 3.33 (failed AA) */
-
-  /* The mark's dark green. The light theme cannot use #57D496 (1.9:1 on white);
-     #1E7A4C gives 5.33:1, working both as accent text and as a fill under white. */
-  --accent:      #1E7A4C;
-  --accent-2:    #1E7A4C;
-  --accent-ink:  #FFFFFF;
-  --accent-soft: rgba(30, 122, 76, .09);
-  --accent-line: rgba(30, 122, 76, .26);
-
-  --card-bg:     #FFFFFF;
-  --nav-bg:      rgba(255, 255, 255, .78);
-  --glass:       rgba(10, 10, 10, .03);
-  --glass-line:  rgba(10, 10, 10, .08);
-  --shadow:      0 18px 44px rgba(10, 10, 10, .08);
-}
+/* Tokens now live in tokens.css, linked before this file. */
 
 /* ---------- base ---------- */
 body { background: var(--bg); color: var(--text); }
@@ -201,8 +132,7 @@ html[data-theme="light"] .s3 {
    theme got for free is gone. A hairline rule restores the section rhythm
    without brightening the canvas. */
 .section { background: var(--bg); }
-.section.alt { background: var(--surface); border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft); }
-html[data-theme="dark"] .section.alt { background: #141417; }
+.section.alt { background: var(--bg-2); border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft); }
 .sec-head h2 { color: var(--text); }
 .sec-head .lead { color: var(--text-2); }
 
@@ -338,3 +268,46 @@ html[data-theme="light"] .menu .menu-cta.ghost { color: var(--text) !important; 
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
   outline: 2px solid var(--accent); outline-offset: 2px;
 }
+
+/* ============================================================
+   Product console — the site's one depiction of the software.
+   Rendered in markup rather than as a screenshot so it stays sharp at any
+   size, follows the theme, costs no image weight and never goes stale.
+   Figures are illustrative and labelled as such; they are not a client's books.
+   ============================================================ */
+.console-band { padding: 74px 0; background: var(--bg-2);
+  border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft); }
+.console-grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: 46px; align-items: center; }
+@media (max-width: 940px) { .console-grid { grid-template-columns: 1fr; gap: 28px; } }
+.console-copy h2 { font-size: clamp(25px, 3.4vw, 34px); margin: 12px 0 0; }
+.console-copy p { color: var(--text-2); font-size: 16px; margin-top: 14px; max-width: 46ch; }
+.console-copy ul { list-style: none; margin: 20px 0 0; display: grid; gap: 10px; }
+.console-copy li { display: flex; gap: 10px; font-size: 14.5px; color: var(--text-2); }
+.console-copy li::before { content: "—"; color: var(--accent); flex: none; }
+
+.console { border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden;
+  background: var(--surface); box-shadow: var(--shadow); }
+.console-bar { display: flex; align-items: center; gap: 8px; padding: 12px 16px;
+  border-bottom: 1px solid var(--border); background: var(--surface-2); }
+.console-bar i { width: 8px; height: 8px; border-radius: 50%; background: var(--text-3); opacity: .5; }
+.console-bar span { margin-left: 8px; font-size: 12px; color: var(--text-3);
+  font-family: ui-monospace, "JetBrains Mono", Menlo, monospace; }
+.console-body { padding: 6px 0 4px; overflow-x: auto; }
+table.pl { width: 100%; border-collapse: collapse; font-size: 13.5px;
+  /* ledger figures line up column-wise */
+  font-variant-numeric: tabular-nums; }
+table.pl th, table.pl td { padding: 9px 16px; text-align: right; white-space: nowrap; }
+table.pl th:first-child, table.pl td:first-child { text-align: left; }
+table.pl thead th { font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--text-3); font-weight: 600; border-bottom: 1px solid var(--border); }
+table.pl tbody td { border-bottom: 1px solid var(--border-soft); color: var(--text-2); }
+table.pl tbody tr:hover td { background: var(--surface-2); }
+table.pl td.ent { color: var(--text); font-weight: 500; }
+table.pl td.elim { color: var(--accent); }
+table.pl tfoot td { border-top: 1px solid var(--border); color: var(--text);
+  font-weight: 700; font-size: 14.5px; padding-top: 12px; padding-bottom: 14px; }
+.console-note { padding: 10px 16px 14px; font-size: 11.5px; color: var(--text-3);
+  border-top: 1px solid var(--border-soft); }
+.console-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600;
+  color: var(--accent); background: var(--accent-soft); border: 1px solid var(--accent-line);
+  border-radius: var(--pill); padding: 4px 10px; }

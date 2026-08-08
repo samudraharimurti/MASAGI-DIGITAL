@@ -15,8 +15,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<link rel="stylesheet" href="tokens.css?v=1">
 <link rel="stylesheet" href="styles.css?v=20260801">
 <link rel="stylesheet" href="theme-swiper.css?v=202608060447">
+<script id="masagi-theme-boot">(function(){try{var t=localStorage.getItem("masagi-theme");if(!t)t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","light");}})();</script>
 </head>
 <body>
 
@@ -125,6 +127,54 @@
 </section>
 
 <!-- ===================== 2 · ABOUT US ===================== -->
+<!-- ===================== PRODUCT CONSOLE ===================== -->
+<section class="console-band" id="product">
+  <div class="wrap console-grid">
+    <div class="console-copy reveal">
+      <span class="eyebrow" data-i18n="console.eyebrow">The helicopter view</span>
+      <h2 data-i18n="console.title">Five companies. One number you can defend.</h2>
+      <p data-i18n="console.lead">Each entity keeps its own clean book. MASAGI-HV consolidates them,
+        cancels the intercompany lines, and gives you the group figure without a late-night merge.</p>
+      <ul>
+        <li data-i18n="console.p1">Intercompany revenue and cost eliminate automatically</li>
+        <li data-i18n="console.p2">Every figure drills back to the journal line behind it</li>
+        <li data-i18n="console.p3">Bank statements import and pre-book themselves</li>
+      </ul>
+    </div>
+
+    <div class="console reveal" role="img"
+         aria-label="Illustration of the MASAGI-HV consolidated profit and loss: five entities, an intercompany elimination column, and a group total.">
+      <div class="console-bar"><i></i><i></i><i></i><span>MASAGI-HV — Consolidated P&amp;L · FY2026</span></div>
+      <div class="console-body">
+        <table class="pl">
+          <thead>
+            <tr><th data-i18n="console.th.entity">Entity</th>
+                <th data-i18n="console.th.rev">Revenue</th>
+                <th data-i18n="console.th.cogs">COGS</th>
+                <th data-i18n="console.th.profit">Gross profit</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="ent">PT Alpha Nusantara</td><td>18.4 M</td><td>11.2 M</td><td>7.2 M</td></tr>
+            <tr><td class="ent">PT Beta Logistik</td><td>12.1 M</td><td>8.6 M</td><td>3.5 M</td></tr>
+            <tr><td class="ent">PT Gamma Niaga</td><td>9.7 M</td><td>6.9 M</td><td>2.8 M</td></tr>
+            <tr><td class="ent">PT Delta Sarana</td><td>6.3 M</td><td>4.1 M</td><td>2.2 M</td></tr>
+            <tr><td class="ent">PT Epsilon Karya</td><td>4.8 M</td><td>3.3 M</td><td>1.5 M</td></tr>
+            <tr><td class="ent elim" data-i18n="console.elim">Intercompany elimination</td>
+                <td class="elim">(5.2 M)</td><td class="elim">(5.2 M)</td><td class="elim">—</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td data-i18n="console.group">Group</td><td>46.1 M</td><td>28.9 M</td><td>17.2 M</td></tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="console-note">
+        <span class="console-pill" data-i18n="console.badge">Illustration</span>
+        <span data-i18n="console.disclaimer"> &nbsp;Representative figures in IDR, shown to demonstrate the consolidated view — not a client's accounts.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="about">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -399,7 +449,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="translations.js"></script>
+<script src="translations.js?v=1"></script>
 <script src="script.js?v=20260801"></script>
 </body>
 </html>

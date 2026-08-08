@@ -7,6 +7,16 @@
 const TRANSLATIONS = {
 
   en: {
+    "console.eyebrow": "The helicopter view",
+    "console.title": "Five companies. One number you can defend.",
+    "console.lead": "Each entity keeps its own clean book. MASAGI-HV consolidates them, cancels the intercompany lines, and gives you the group figure without a late-night merge.",
+    "console.p1": "Intercompany revenue and cost eliminate automatically",
+    "console.p2": "Every figure drills back to the journal line behind it",
+    "console.p3": "Bank statements import and pre-book themselves",
+    "console.th.entity": "Entity", "console.th.rev": "Revenue", "console.th.cogs": "COGS", "console.th.profit": "Gross profit",
+    "console.elim": "Intercompany elimination", "console.group": "Group",
+    "console.badge": "Illustration",
+    "console.disclaimer": " &nbsp;Representative figures in IDR, shown to demonstrate the consolidated view — not a client's accounts.",
     "nav.home": "Home",
     "nav.about": "About Us",
     "nav.services": "Our Services",
@@ -48,7 +58,7 @@ const TRANSLATIONS = {
     "about.stat4": "industry experience behind the team",
 
     "nav.pricing": "Pricing",
-    "trust.label": "Trusted by lubricant & energy companies across Indonesia",
+    "trust.label": "Trusted by companies across Southeast Asia",
     "how.eyebrow": "How it works",
     "how.title": "From first call to live, step by step.",
     "how.s1t": "We map your operation",
@@ -129,6 +139,16 @@ const TRANSLATIONS = {
   },
 
   id: {
+    "console.eyebrow": "Helicopter view",
+    "console.title": "Lima perusahaan. Satu angka yang bisa kamu pertanggungjawabkan.",
+    "console.lead": "Setiap entitas tetap punya pembukuannya sendiri. MASAGI-HV mengonsolidasikannya, menghapus transaksi antar-perusahaan, dan memberi angka grup tanpa begadang menggabungkan file.",
+    "console.p1": "Pendapatan dan biaya antar-perusahaan tereliminasi otomatis",
+    "console.p2": "Setiap angka bisa ditelusuri sampai baris jurnalnya",
+    "console.p3": "Mutasi bank terimpor dan terbukukan sendiri",
+    "console.th.entity": "Entitas", "console.th.rev": "Pendapatan", "console.th.cogs": "HPP", "console.th.profit": "Laba kotor",
+    "console.elim": "Eliminasi antar-perusahaan", "console.group": "Grup",
+    "console.badge": "Ilustrasi",
+    "console.disclaimer": " &nbsp;Angka ilustratif dalam IDR untuk menunjukkan tampilan konsolidasi — bukan pembukuan klien.",
     "nav.home": "Beranda",
     "nav.about": "Tentang Kami",
     "nav.services": "Layanan Kami",
@@ -170,7 +190,7 @@ const TRANSLATIONS = {
     "about.stat4": "pengalaman industri di balik tim",
 
     "nav.pricing": "Harga",
-    "trust.label": "Dipercaya oleh perusahaan pelumas & energi di seluruh Indonesia",
+    "trust.label": "Dipercaya perusahaan di Asia Tenggara",
     "how.eyebrow": "Cara kerjanya",
     "how.title": "Dari panggilan pertama hingga tayang, langkah demi langkah.",
     "how.s1t": "Kami petakan operasi Anda",
