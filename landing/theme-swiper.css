@@ -311,3 +311,19 @@ table.pl tfoot td { border-top: 1px solid var(--border); color: var(--text);
 .console-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600;
   color: var(--accent); background: var(--accent-soft); border: 1px solid var(--accent-line);
   border-radius: var(--pill); padding: 4px 10px; }
+
+/* ---------- trust strip logos ----------
+   Six third-party marks in six different palettes. Rendering them raw makes
+   the strip louder than the headline, and the dark-inked ones (United Oil,
+   Evalube) vanish on a dark canvas. So: neutralised at rest, true colour on
+   hover — monochrome white in dark, greyscale in light. */
+/* An explicit height matters: with height:auto these have no intrinsic size
+   until they load, collapse to 0x0, and a 0x0 lazy image never loads at all. */
+.logo-tile img { height: 30px; width: auto; max-width: 128px; min-width: 40px;
+  object-fit: contain; display: block; transition: filter .2s, opacity .2s; }
+html[data-theme="light"] .logo-tile img { filter: grayscale(1); opacity: .68; }
+html[data-theme="light"] .logo-tile:hover img { filter: grayscale(0); opacity: 1; }
+html[data-theme="dark"]  .logo-tile img { filter: brightness(0) invert(1); opacity: .62; }
+html[data-theme="dark"]  .logo-tile:hover img { filter: none; opacity: 1; }
+.logo-tile { display: inline-flex; align-items: center; justify-content: center;
+  min-height: 62px; padding: 12px 18px; }
