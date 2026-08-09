@@ -66,7 +66,7 @@ html[data-theme="dark"] {
   --surface-3:    #1E1E21;
   --border:       #2C2C30;
   --border-soft:  rgba(255, 255, 255, .07);
-  --field-border: #63636A;   /* 3.32:1 on #0A0A0A */
+  --field-border: #83838A;   /* 5.28:1 on canvas, 4.02:1 on the #1E1E21 fill */
 
   --text:         #F2F2F2;   /* 17.68:1 */
   --text-2:       #8F8F94;   /*  6.15:1 */

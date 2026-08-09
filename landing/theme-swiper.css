@@ -327,3 +327,45 @@ html[data-theme="dark"]  .logo-tile img { filter: brightness(0) invert(1); opaci
 html[data-theme="dark"]  .logo-tile:hover img { filter: none; opacity: 1; }
 .logo-tile { display: inline-flex; align-items: center; justify-content: center;
   min-height: 62px; padding: 12px 18px; }
+
+/* ---------- late reclaims ----------
+   A few base rules are scoped tightly enough (two classes, or an element
+   inside a class) to outrank the theme's single-class overrides. They were
+   written for the old navy footer and are illegible on a light surface. */
+.foot-brand .tagline { color: var(--text-2); }
+.footer { color: var(--text-2); }
+.foot-copy, .foot-base { color: var(--text-3); }
+
+/* The client-story band computed identically to the sections around it in
+   light, so it read as no band at all. */
+.case { background:
+  radial-gradient(700px 380px at 50% 0%, var(--accent-soft), transparent 60%),
+  var(--bg-2); }
+html[data-theme="light"] .case { background:
+  radial-gradient(700px 380px at 50% 0%, var(--accent-soft), transparent 60%),
+  var(--bg-2); }
+
+/* ---------- console on small screens ----------
+   The table overflows ~115px at 390px, and the figure that goes off-screen is
+   the Group total — the one number the section headline promises. Shrink the
+   type, tighten the cells, and make the scroll affordance visible. */
+@media (max-width: 620px) {
+  .console-body { position: relative; }
+  table.pl { font-size: 12px; }
+  table.pl th, table.pl td { padding: 8px 10px; }
+  table.pl th:first-child, table.pl td:first-child { position: sticky; left: 0;
+    background: var(--surface); z-index: 1; }
+  table.pl tfoot td:first-child { background: var(--surface); }
+  .console-body::after { content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 26px;
+    pointer-events: none; background: linear-gradient(90deg, transparent, var(--surface)); }
+  .console-copy p, .console-copy li { font-size: 14px; }
+}
+
+/* Sticky first column and smaller type still left the Group total ~86px past
+   the edge at 375px. The section promises "one number you can defend", so that
+   number must be on screen: below 620px the COGS column drops out and the
+   remaining three (Entity / Revenue / Gross profit) fit without scrolling. */
+@media (max-width: 620px) {
+  table.pl th:nth-child(3), table.pl td:nth-child(3) { display: none; }
+  .console-body::after { display: none; }
+}

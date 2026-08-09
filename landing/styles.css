@@ -6,34 +6,10 @@
    Mobile-first; breakpoints at 768 / 1024 / 1280 px.
    ============================================================ */
 
-:root {
-  --navy:        #1B2A4A;
-  --accent:      #2563EB;
-  --bg:          #FFFFFF;
-  --surface:     #F8FAFC;
-  --text:        #1B2A4A;
-  --text-2:      #64748B;
-  --border:      #E2E8F0;
-  --nav-bg:      rgba(255, 255, 255, .95);
-  --card-bg:     #FFFFFF;
-  --glass:       rgba(255, 255, 255, .72);
-  --glass-line:  rgba(27, 42, 74, .10);
-  --shadow:      0 18px 44px rgba(27, 42, 74, .10);
-  --green-1: #1E7A4C; --green-2: #31A96A; --green-3: #57D496;
-}
-html[data-theme="dark"] {
-  --accent:      #3B82F6;
-  --bg:          #0F172A;
-  --surface:     #1E293B;
-  --text:        #F1F5F9;
-  --text-2:      #94A3B8;
-  --border:      #334155;
-  --nav-bg:      rgba(15, 23, 42, .92);
-  --card-bg:     #1E293B;
-  --glass:       rgba(30, 41, 59, .66);
-  --glass-line:  rgba(148, 163, 184, .16);
-  --shadow:      0 18px 44px rgba(0, 0, 0, .40);
-}
+/* Tokens live in tokens.css (linked before this file). They were declared
+   here too, and because both files scope dark as html[data-theme="dark"]
+   at equal specificity, whichever loaded last won — which put the old
+   navy/blue palette back on the dark theme. Removed. */
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
