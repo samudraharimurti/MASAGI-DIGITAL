@@ -369,3 +369,57 @@ html[data-theme="light"] .case { background:
   table.pl th:nth-child(3), table.pl td:nth-child(3) { display: none; }
   .console-body::after { display: none; }
 }
+
+/* ---------- product-first hero ----------
+   The carousel put three <h1>s and a generic headline in the first viewport
+   and pushed the product below the fold. The hero is now static: the pitch on
+   one side, the consolidated P&L on the other, visible without scrolling. */
+.hero { height: auto; min-height: 0; padding: 56px 0 64px; background: var(--bg); }
+.hero-grid { display: grid; grid-template-columns: .92fr 1.08fr; gap: 48px; align-items: center; }
+.hero-copy .eyebrow { display: inline-block; margin-bottom: 14px; }
+.hero-copy h1 { font-size: clamp(30px, 4.4vw, 50px); font-weight: 600;
+  letter-spacing: -.026em; line-height: 1.04; margin: 0; color: var(--text); }
+.hero-sub { color: var(--text-2); font-size: clamp(15.5px, 1.7vw, 18px); margin: 18px 0 28px; max-width: 46ch; }
+.hero .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero-note { color: var(--text-3); font-size: 13px; margin-top: 20px; }
+.hero-console .console { box-shadow: var(--shadow); }
+@media (max-width: 940px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 30px; }
+  .hero { padding: 40px 0 48px; }
+}
+
+/* ---------- small-screen navbar ----------
+   brand + language pair + theme button + hamburger overflow ~36px at 375px,
+   which widens the whole layout and drags the console's Group total off with
+   it. Tighten the controls and stop the page scrolling sideways regardless. */
+html, body { overflow-x: hidden; max-width: 100%; }
+@media (max-width: 560px) {
+  .nav-inner { gap: 8px; }
+  .nav-controls { gap: 6px; flex-shrink: 0; }
+  .lang-btn { padding: 5px 8px; font-size: 11px; }
+  .theme-btn { width: 30px; height: 30px; }
+  .hamburger { width: 34px; height: 34px; }
+  .brand img, nav.top img { max-width: 116px; }
+}
+
+/* Grid items default to min-width:auto, so the console's ~416px table forced
+   its column — and the whole hero — wider than the viewport. The overflow was
+   being masked by overflow-x:hidden rather than resolved. Letting the tracks
+   shrink below their content is the actual fix. */
+.hero-grid > *, .console-grid > * { min-width: 0; }
+.hero-console, .console { max-width: 100%; }
+
+/* The entity column is held on one line by white-space:nowrap, and Indonesian
+   PT names are long — that alone pushed the table 36px past its box and took
+   the Group total with it. Let the names wrap; the figures stay on one line. */
+@media (max-width: 620px) {
+  table.pl th:first-child, table.pl td:first-child { white-space: normal; max-width: 46%; line-height: 1.3; }
+  table.pl th, table.pl td { padding: 8px 8px; }
+  table.pl { font-size: 11.5px; }
+}
+@media (max-width: 400px) {
+  .nav-controls { gap: 4px; }
+  .lang-btn { padding: 4px 6px; }
+  .theme-btn { width: 28px; height: 28px; }
+  .hamburger { width: 32px; height: 32px; }
+}

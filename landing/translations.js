@@ -7,6 +7,12 @@
 const TRANSLATIONS = {
 
   en: {
+    "hero.eyebrow": "Consolidated group finance",
+    "hero.title": "Five companies. One number you can defend.",
+    "hero.sub": "MASAGI-HV keeps every entity's book clean, cancels the intercompany lines, and gives you the group figure before the board asks for it — not a week after.",
+    "hero.cta1": "Book a scoping call",
+    "hero.cta2": "See both products",
+    "hero.note": "Bilingual EN / ID · built in Jakarta for Indonesian groups",
     "console.eyebrow": "The helicopter view",
     "console.title": "Five companies. One number you can defend.",
     "console.lead": "Each entity keeps its own clean book. MASAGI-HV consolidates them, cancels the intercompany lines, and gives you the group figure without a late-night merge.",
@@ -139,6 +145,12 @@ const TRANSLATIONS = {
   },
 
   id: {
+    "hero.eyebrow": "Keuangan grup terkonsolidasi",
+    "hero.title": "Lima perusahaan. Satu angka yang bisa kamu pertanggungjawabkan.",
+    "hero.sub": "MASAGI-HV menjaga pembukuan tiap entitas tetap rapi, menghapus transaksi antar-perusahaan, dan menyiapkan angka grup sebelum direksi memintanya — bukan seminggu setelahnya.",
+    "hero.cta1": "Jadwalkan sesi konsultasi",
+    "hero.cta2": "Lihat kedua produk",
+    "hero.note": "Dwibahasa EN / ID · dibangun di Jakarta untuk grup usaha Indonesia",
     "console.eyebrow": "Helicopter view",
     "console.title": "Lima perusahaan. Satu angka yang bisa kamu pertanggungjawabkan.",
     "console.lead": "Setiap entitas tetap punya pembukuannya sendiri. MASAGI-HV mengonsolidasikannya, menghapus transaksi antar-perusahaan, dan memberi angka grup tanpa begadang menggabungkan file.",

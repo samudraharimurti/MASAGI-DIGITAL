@@ -238,7 +238,21 @@
 
   fetchWithTimeout(CMS_BASE + "/api/public/carousel", 6000)
     .then(function (r) { return r.ok ? r.json() : null; })
-    .then(function (c) { if (c && c.slides && c.slides.length) buildHero(c.slides); })
+    .then(function (c) {
+      // The static product hero leads by default. The CMS carousel only takes
+      // over when at least one slide actually carries a picture or a video —
+      // text-only slides would just bury the console behind a generic headline.
+      var slides = (c && c.slides) || [];
+      var withMedia = slides.filter(function (s) {
+        return s.media_url && s.media_type && s.media_type !== "none";
+      });
+      if (!withMedia.length) return;
+      var stat = document.getElementById("heroStatic");
+      var car  = document.getElementById("heroCarousel");
+      if (stat) stat.hidden = true;
+      if (car)  car.hidden = false;
+      buildHero(slides);
+    })
     .catch(function () { /* CMS unreachable — keep the built-in hero slides */ });
 
   /* ---------- Media cards ----------

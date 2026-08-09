@@ -15,9 +15,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-<link rel="stylesheet" href="tokens.css?v=1">
-<link rel="stylesheet" href="styles.css?v=20260801">
-<link rel="stylesheet" href="theme-swiper.css?v=202608060447">
+<link rel="stylesheet" href="tokens.css?v=202608091212">
+<link rel="stylesheet" href="styles.css?v=202608091212">
+<link rel="stylesheet" href="theme-swiper.css?v=202608091212">
 <script id="masagi-theme-boot">(function(){try{var t=localStorage.getItem("masagi-theme");if(!t)t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","light");}})();</script>
 </head>
 <body>
@@ -62,49 +62,58 @@
 
 <!-- ===================== 1 · HOME — HERO CAROUSEL ===================== -->
 <section class="hero" id="home">
-  <div class="swiper hero-swiper">
-    <div class="swiper-wrapper">
-
-      <div class="swiper-slide slide s1">
-        <div class="slide-inner">
-          <span class="eyebrow" data-i18n="hero.s1.eyebrow">MASAGI Digital</span>
-          <h1 data-i18n="hero.s1.title">Systems that let you see your business clearly.</h1>
-          <p data-i18n="hero.s1.sub">We build precise operational software for growing companies in
-            Indonesia and Southeast Asia — so decisions start from what is actually true today.</p>
-          <div class="cta-row">
-            <a class="btn btn-accent" href="#services" data-i18n="hero.s1.cta1">Explore our services</a>
-            <a class="btn btn-line" href="#about" data-i18n="hero.s1.cta2">About MASAGI</a>
-          </div>
-        </div>
+  <!-- Static product hero. The CMS carousel below only takes over when a slide
+       actually carries a picture or a video; otherwise the product leads. -->
+  <div class="wrap hero-grid" id="heroStatic">
+    <div class="hero-copy">
+      <span class="eyebrow" data-i18n="hero.eyebrow">Consolidated group finance</span>
+      <h1 data-i18n="hero.title">Five companies. One number you can defend.</h1>
+      <p class="hero-sub" data-i18n="hero.sub">MASAGI-HV keeps every entity's book clean, cancels the
+        intercompany lines, and gives you the group figure before the board asks for it — not a week after.</p>
+      <div class="cta-row">
+        <a class="btn btn-accent" href="#contact" data-i18n="hero.cta1">Book a scoping call</a>
+        <a class="btn btn-line" href="#services" data-i18n="hero.cta2">See both products</a>
       </div>
-
-      <div class="swiper-slide slide s2">
-        <div class="slide-inner">
-          <span class="eyebrow" data-i18n="hero.s2.eyebrow">MASAGI-HV · Helicopter View ERP</span>
-          <h1 data-i18n="hero.s2.title">Every entity, account and rupiah — one live view.</h1>
-          <p data-i18n="hero.s2.sub">Consolidated finance for multi-entity groups: double-entry at the
-            core, smart bank import, budgets and board-ready reports.</p>
-          <div class="cta-row">
-            <a class="btn btn-accent" href="#services" data-i18n="hero.s2.cta1">See MASAGI-HV</a>
-            <a class="btn btn-line" href="#contact" data-i18n="hero.s2.cta2">Request a demo</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="swiper-slide slide s3">
-        <div class="slide-inner">
-          <span class="eyebrow" data-i18n="hero.s3.eyebrow">MASAGI-CROM · Certification Ops</span>
-          <h1 data-i18n="hero.s3.title">Regulatory work, run like clockwork.</h1>
-          <p data-i18n="hero.s3.sub">Run every client's certification as a staged pipeline — from
-            submission to audit to issued certificate, nothing slips.</p>
-          <div class="cta-row">
-            <a class="btn btn-accent" href="#services" data-i18n="hero.s3.cta1">See MASAGI-CROM</a>
-            <a class="btn btn-line" href="#contact" data-i18n="hero.s3.cta2">Talk to our team</a>
-          </div>
-        </div>
-      </div>
-
+      <p class="hero-note" data-i18n="hero.note">Bilingual EN / ID · built in Jakarta for Indonesian groups</p>
     </div>
+    <div class="hero-console">
+<div class="console reveal" role="img"
+         aria-label="Illustration of the MASAGI-HV consolidated profit and loss: five entities, an intercompany elimination column, and a group total.">
+      <div class="console-bar"><i></i><i></i><i></i><span>MASAGI-HV — Consolidated P&amp;L · FY2026</span></div>
+      <div class="console-body">
+        <table class="pl">
+          <thead>
+            <tr><th data-i18n="console.th.entity">Entity</th>
+                <th data-i18n="console.th.rev">Revenue</th>
+                <th data-i18n="console.th.cogs">COGS</th>
+                <th data-i18n="console.th.profit">Gross profit</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="ent">PT Sinar Kencana Niaga</td><td>18.4 M</td><td>11.2 M</td><td>7.2 M</td></tr>
+            <tr><td class="ent">PT Bahtera Logistik Nusantara</td><td>12.1 M</td><td>8.6 M</td><td>3.5 M</td></tr>
+            <tr><td class="ent">PT Anugerah Pelumas Indonesia</td><td>9.7 M</td><td>6.9 M</td><td>2.8 M</td></tr>
+            <tr><td class="ent">PT Cakrawala Energi Mandiri</td><td>6.3 M</td><td>4.1 M</td><td>2.2 M</td></tr>
+            <tr><td class="ent">PT Karya Teknik Sejahtera</td><td>4.8 M</td><td>3.3 M</td><td>1.5 M</td></tr>
+            <tr><td class="ent elim" data-i18n="console.elim">Intercompany elimination</td>
+                <td class="elim">(5.2 M)</td><td class="elim">(5.2 M)</td><td class="elim">—</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td data-i18n="console.group">Group</td><td>46.1 M</td><td>28.9 M</td><td>17.2 M</td></tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="console-note">
+        <span class="console-pill" data-i18n="console.badge">Illustration</span>
+        <span data-i18n="console.disclaimer"> &nbsp;Representative figures in IDR, shown to demonstrate the consolidated view — not a client's accounts.</span>
+      </div>
+    </div>
+  </div>
+</section
+    </div>
+  </div>
+
+  <div class="swiper hero-swiper" id="heroCarousel" hidden>
+    <div class="swiper-wrapper"></div>
     <div class="swiper-pagination"></div>
     <div class="swiper-button-prev" aria-label="Previous slide"></div>
     <div class="swiper-button-next" aria-label="Next slide"></div>
@@ -127,53 +136,7 @@
 </section>
 
 <!-- ===================== 2 · ABOUT US ===================== -->
-<!-- ===================== PRODUCT CONSOLE ===================== -->
-<section class="console-band" id="product">
-  <div class="wrap console-grid">
-    <div class="console-copy reveal">
-      <span class="eyebrow" data-i18n="console.eyebrow">The helicopter view</span>
-      <h2 data-i18n="console.title">Five companies. One number you can defend.</h2>
-      <p data-i18n="console.lead">Each entity keeps its own clean book. MASAGI-HV consolidates them,
-        cancels the intercompany lines, and gives you the group figure without a late-night merge.</p>
-      <ul>
-        <li data-i18n="console.p1">Intercompany revenue and cost eliminate automatically</li>
-        <li data-i18n="console.p2">Every figure drills back to the journal line behind it</li>
-        <li data-i18n="console.p3">Bank statements import and pre-book themselves</li>
-      </ul>
-    </div>
 
-    <div class="console reveal" role="img"
-         aria-label="Illustration of the MASAGI-HV consolidated profit and loss: five entities, an intercompany elimination column, and a group total.">
-      <div class="console-bar"><i></i><i></i><i></i><span>MASAGI-HV — Consolidated P&amp;L · FY2026</span></div>
-      <div class="console-body">
-        <table class="pl">
-          <thead>
-            <tr><th data-i18n="console.th.entity">Entity</th>
-                <th data-i18n="console.th.rev">Revenue</th>
-                <th data-i18n="console.th.cogs">COGS</th>
-                <th data-i18n="console.th.profit">Gross profit</th></tr>
-          </thead>
-          <tbody>
-            <tr><td class="ent">PT Alpha Nusantara</td><td>18.4 M</td><td>11.2 M</td><td>7.2 M</td></tr>
-            <tr><td class="ent">PT Beta Logistik</td><td>12.1 M</td><td>8.6 M</td><td>3.5 M</td></tr>
-            <tr><td class="ent">PT Gamma Niaga</td><td>9.7 M</td><td>6.9 M</td><td>2.8 M</td></tr>
-            <tr><td class="ent">PT Delta Sarana</td><td>6.3 M</td><td>4.1 M</td><td>2.2 M</td></tr>
-            <tr><td class="ent">PT Epsilon Karya</td><td>4.8 M</td><td>3.3 M</td><td>1.5 M</td></tr>
-            <tr><td class="ent elim" data-i18n="console.elim">Intercompany elimination</td>
-                <td class="elim">(5.2 M)</td><td class="elim">(5.2 M)</td><td class="elim">—</td></tr>
-          </tbody>
-          <tfoot>
-            <tr><td data-i18n="console.group">Group</td><td>46.1 M</td><td>28.9 M</td><td>17.2 M</td></tr>
-          </tfoot>
-        </table>
-      </div>
-      <div class="console-note">
-        <span class="console-pill" data-i18n="console.badge">Illustration</span>
-        <span data-i18n="console.disclaimer"> &nbsp;Representative figures in IDR, shown to demonstrate the consolidated view — not a client's accounts.</span>
-      </div>
-    </div>
-  </div>
-</section>
 
 <section class="section" id="about">
   <div class="wrap">
@@ -449,7 +412,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="translations.js?v=1"></script>
-<script src="script.js?v=20260801"></script>
+<script src="translations.js?v=202608091212"></script>
+<script src="script.js?v=202608091212"></script>
 </body>
 </html>
