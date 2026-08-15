@@ -423,3 +423,46 @@ html, body { overflow-x: hidden; max-width: 100%; }
   .theme-btn { width: 28px; height: 28px; }
   .hamburger { width: 32px; height: 32px; }
 }
+
+/* ============================================================
+   EDITORIAL LAYER — Accenture-model structure
+   Adopts the *pattern language* of accenture.com/id-en: oversized display
+   type at a light weight, large light sub-leads, square editorial geometry,
+   and a long statement-led scroll. Deliberately NOT their brand — Graphik is
+   licensed and the purple is theirs; this keeps Inter and the MASAGI greens.
+   ============================================================ */
+
+/* Display type — the signature move: very large, weight 500, tight tracking.
+   Accenture runs section headers at 100px/500 and h1 at 60px/500/-1.8px. */
+.statement { padding: 96px 0; border-top: 1px solid var(--border-soft); }
+.statement .kicker { font-size: clamp(44px, 8vw, 100px); font-weight: 500;
+  letter-spacing: -.03em; line-height: .98; color: var(--text); margin: 0; }
+.statement .kicker em { font-style: normal; color: var(--accent); }
+.statement .lead-xl { font-size: clamp(19px, 2.2vw, 28px); font-weight: 300;
+  line-height: 1.4; color: var(--text-2); max-width: 40ch; margin: 26px 0 0; }
+.statement .cta-row { margin-top: 34px; }
+
+/* Section headers move up a step and lighten, per the model */
+.sec-head h2 { font-size: clamp(30px, 4.6vw, 56px); font-weight: 500; letter-spacing: -.028em; }
+.sec-head .lead { font-size: clamp(17px, 1.9vw, 22px); font-weight: 300; line-height: 1.45; max-width: 44ch; }
+.hero-copy h1 { font-weight: 500; letter-spacing: -.03em; }
+.hero-sub { font-weight: 300; font-size: clamp(16px, 1.8vw, 21px); line-height: 1.45; }
+
+/* Editorial geometry: square, rule-separated. Buttons stay pill so the CTA
+   remains obviously a control rather than a block of colour. */
+.card, .product, .product.glass, .step-card, .stat, .m-card, .c-block, .case-inner,
+.console, .logo-tile { border-radius: 4px; }
+.slide-media, .cover-lg { border-radius: 4px; }
+
+/* Story cards — 24px/500 titles in rules-separated rows */
+.m-card { background: transparent; border: 0; border-top: 1px solid var(--border); border-radius: 0; }
+.m-card:hover { background: transparent; transform: none; border-top-color: var(--accent); }
+.m-body h3, .card h3, .step-card h3 { font-size: clamp(19px, 2vw, 24px); font-weight: 500; letter-spacing: -.02em; }
+.m-cover { border-radius: 4px; }
+
+/* Stats read as editorial figures, not dashboard chips */
+.stat { background: transparent; border: 0; border-top: 2px solid var(--accent); border-radius: 0; padding-top: 18px; }
+.stat .n { font-size: clamp(38px, 5vw, 64px); font-weight: 500; letter-spacing: -.035em; color: var(--text); }
+.stat .t { font-weight: 300; font-size: 15px; }
+
+.wrap { max-width: 1280px; }

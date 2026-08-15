@@ -47,7 +47,16 @@ Type ramp (a real ramp — every step is a decision, not a measurement):
 
 Spacing: 4px rhythm — `4 · 8 · 12 · 16 · 20 · 24 · 32 · 44 · 64 · 80`
 
-Geometry: `--r-sm 12px` · `--r-md 20px` (cards) · `--r-lg 32px` (feature blocks) · `--pill 999px` (buttons, chips)
+Geometry: editorial. Content surfaces are square — `4px` on cards, panels, the
+console and media — so the page reads as a document rather than an app. `--pill 999px`
+is reserved for controls (buttons, chips, the language pair) so a control never reads
+as a container. The `--r-sm/md/lg` tokens remain for product consoles (HV/CROM), which
+are software and should look it.
+
+Display type follows an editorial model: statements at `clamp(44px, 8vw, 100px)` weight
+**500**, section headers `clamp(30px, 4.6vw, 56px)` weight 500, large sub-leads at
+`clamp(19px, 2.2vw, 28px)` weight **300**. Weight 300 must be present in the Inter
+request (`wght@300;400;500;600;700;800`) or the browser synthesises it.
 
 Colour — light is the default theme; dark is a complete equal, never an afterthought:
 
