@@ -13,12 +13,11 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='22' fill='%231B2A4A'/%3E%3Cpolygon points='30,58 12,92 48,92' fill='%231E7A4C'/%3E%3Cpolygon points='58,42 34,92 82,92' fill='%2331A96A'/%3E%3Cpolygon points='78,26 48,92 106,92' fill='%2357D496'/%3E%3Cpolygon points='78,26 70.5,42 85.5,42' fill='%230B3B24'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-<link rel="stylesheet" href="tokens.css?v=202608151906">
-<link rel="stylesheet" href="styles.css?v=202608151906">
-<link rel="stylesheet" href="theme-swiper.css?v=202608151906">
-<script id="masagi-theme-boot">(function(){try{var t=localStorage.getItem("masagi-theme");if(!t)t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","light");}})();</script>
+<link rel="stylesheet" href="tokens.css?v=202608152040">
+<link rel="stylesheet" href="styles.css?v=202608152040">
+<link rel="stylesheet" href="ddam.css?v=202608152040">
 </head>
 <body>
 
@@ -27,10 +26,10 @@
   <div class="nav-inner">
     <a class="brand" href="#home" aria-label="MASAGI Digital home">
       <svg class="mark" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <polygon points="35,62 5,110 65,110" fill="#1E7A4C"/>
-        <polygon points="85,38 45,110 125,110" fill="#31A96A"/>
-        <polygon points="145,14 95,110 195,110" fill="#57D496"/>
-        <polygon points="145,14 132.5,38 157.5,38" fill="#0B3B24"/>
+        <polygon points="35,62 5,110 65,110" fill="#ffffff"/>
+        <polygon points="85,38 45,110 125,110" fill="#ffffff"/>
+        <polygon points="145,14 95,110 195,110" fill="#ffffff"/>
+        <polygon points="145,14 132.5,38 157.5,38" fill="#ffffff"/>
       </svg>
       <span class="word">MASAGI<span class="digital">DIGITAL</span></span>
     </a>
@@ -51,7 +50,6 @@
         <button class="lang-btn" data-lang="en" type="button">EN</button>
         <button class="lang-btn" data-lang="id" type="button">ID</button>
       </div>
-      <button class="theme-btn" id="themeBtn" type="button" title="Light / dark mode" aria-label="Toggle dark mode">☾</button>
       <a class="mobile-login" href="https://account.masagi.io" data-i18n="nav.login">Login</a>
       <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -62,90 +60,105 @@
 
 <!-- ===================== 1 · HOME — HERO CAROUSEL ===================== -->
 <section class="hero" id="home">
-  <!-- Static product hero. The CMS carousel below only takes over when a slide
-       actually carries a picture or a video; otherwise the product leads. -->
-  <div class="wrap hero-grid" id="heroStatic">
-    <div class="hero-copy">
-      <span class="eyebrow" data-i18n="hero.eyebrow">Consolidated group finance</span>
-      <h1 data-i18n="hero.title">Five companies. One number you can defend.</h1>
-      <p class="hero-sub" data-i18n="hero.sub">MASAGI-HV keeps every entity's book clean, cancels the
-        intercompany lines, and gives you the group figure before the board asks for it — not a week after.</p>
-      <div class="cta-row">
-        <a class="btn btn-accent" href="#contact" data-i18n="hero.cta1">Book a scoping call</a>
-        <a class="btn btn-line" href="#services" data-i18n="hero.cta2">See both products</a>
+  <div class="swiper hero-swiper" id="heroCarousel">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide slide s1">
+        <div class="slide-inner">
+          <span class="eyebrow" data-i18n="hero.s1.eyebrow">MASAGI-HV</span>
+          <h1 class="slide-h" data-i18n="hero.s1.title">Consolidated Finance</h1>
+          <p data-i18n="hero.s1.sub">Five entities, one book. Intercompany eliminated automatically, the group figure ready before the board asks.</p>
+          <div class="cta-row">
+            <a class="btn btn-line" href="#contact" data-i18n="hero.cta1">Get In Touch</a>
+          </div>
+        </div>
       </div>
-      <p class="hero-note" data-i18n="hero.note">Bilingual EN / ID · built in Jakarta for Indonesian groups</p>
-    </div>
-    <div class="hero-console">
-<div class="console reveal" role="img"
-         aria-label="Illustration of the MASAGI-HV consolidated profit and loss: five entities, an intercompany elimination column, and a group total.">
-      <div class="console-bar"><i></i><i></i><i></i><span>MASAGI-HV — Consolidated P&amp;L · FY2026</span></div>
-      <div class="console-body">
-        <table class="pl">
-          <thead>
-            <tr><th data-i18n="console.th.entity">Entity</th>
-                <th data-i18n="console.th.rev">Revenue</th>
-                <th data-i18n="console.th.cogs">COGS</th>
-                <th data-i18n="console.th.profit">Gross profit</th></tr>
-          </thead>
-          <tbody>
-            <tr><td class="ent">PT Sinar Kencana Niaga</td><td>18.4 M</td><td>11.2 M</td><td>7.2 M</td></tr>
-            <tr><td class="ent">PT Bahtera Logistik Nusantara</td><td>12.1 M</td><td>8.6 M</td><td>3.5 M</td></tr>
-            <tr><td class="ent">PT Anugerah Pelumas Indonesia</td><td>9.7 M</td><td>6.9 M</td><td>2.8 M</td></tr>
-            <tr><td class="ent">PT Cakrawala Energi Mandiri</td><td>6.3 M</td><td>4.1 M</td><td>2.2 M</td></tr>
-            <tr><td class="ent">PT Karya Teknik Sejahtera</td><td>4.8 M</td><td>3.3 M</td><td>1.5 M</td></tr>
-            <tr><td class="ent elim" data-i18n="console.elim">Intercompany elimination</td>
-                <td class="elim">(5.2 M)</td><td class="elim">(5.2 M)</td><td class="elim">—</td></tr>
-          </tbody>
-          <tfoot>
-            <tr><td data-i18n="console.group">Group</td><td>46.1 M</td><td>28.9 M</td><td>17.2 M</td></tr>
-          </tfoot>
-        </table>
+      <div class="swiper-slide slide s2">
+        <div class="slide-inner">
+          <span class="eyebrow" data-i18n="hero.s2.eyebrow">MASAGI-HV</span>
+          <h2 class="slide-h" data-i18n="hero.s2.title">Bank Reconciliation</h2>
+          <p data-i18n="hero.s2.sub">Drop in a BCA mutasi file. Statements are read, matched and pre-booked — the part of month-end that used to eat days.</p>
+          <div class="cta-row">
+            <a class="btn btn-line" href="#contact" data-i18n="hero.cta1">Get In Touch</a>
+          </div>
+        </div>
       </div>
-      <div class="console-note">
-        <span class="console-pill" data-i18n="console.badge">Illustration</span>
-        <span data-i18n="console.disclaimer"> &nbsp;Representative figures in IDR, shown to demonstrate the consolidated view — not a client's accounts.</span>
+      <div class="swiper-slide slide s3">
+        <div class="slide-inner">
+          <span class="eyebrow" data-i18n="hero.s3.eyebrow">MASAGI-CROM</span>
+          <h2 class="slide-h" data-i18n="hero.s3.title">Certification Ops</h2>
+          <p data-i18n="hero.s3.sub">Every client's certification as a staged pipeline, with renewal and deadline alerts before they become emergencies.</p>
+          <div class="cta-row">
+            <a class="btn btn-line" href="#contact" data-i18n="hero.cta1">Get In Touch</a>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-
-  </div>
-
-  <div class="swiper hero-swiper" id="heroCarousel" hidden>
-    <div class="swiper-wrapper"></div>
     <div class="swiper-pagination"></div>
     <div class="swiper-button-prev" aria-label="Previous slide"></div>
     <div class="swiper-button-next" aria-label="Next slide"></div>
   </div>
-</section>
+</section> html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MASAGI Digital — Systems that let you see your business clearly</title>
+<meta name="description" content="MASAGI Digital builds precise operational systems for growing companies in Indonesia and Southeast Asia — MASAGI-HV (Helicopter View ERP) and MASAGI-CROM (certification & regulatory operations).">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MASAGI Digital">
+<meta property="og:title" content="MASAGI Digital — Precise by default">
+<meta property="og:description" content="Operational systems for growing companies in Indonesia & Southeast Asia.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='22' fill='%231B2A4A'/%3E%3Cpolygon points='30,58 12,92 48,92' fill='%231E7A4C'/%3E%3Cpolygon points='58,42 34,92 82,92' fill='%2331A96A'/%3E%3Cpolygon points='78,26 48,92 106,92' fill='%2357D496'/%3E%3Cpolygon points='78,26 70.5,42 85.5,42' fill='%230B3B24'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<link rel="stylesheet" href="tokens.css?v=202608152040">
+<link rel="stylesheet" href="styles.css?v=202608152040">
+<link rel="stylesheet" href="ddam.css?v=202608152040">
+</head>
+<body>
 
-<!-- ===================== TRUST STRIP ===================== -->
-<section class="trust">
-  <div class="wrap">
-    <span class="trust-label" data-i18n="trust.label">Trusted by companies across Southeast Asia</span>
-    <div class="trust-logos">
-      <span class="logo-tile"><img src="assets/logo-maxima.png" alt="Maxima" decoding="async"></span>
-      <span class="logo-tile"><img src="assets/logo-shell.png" alt="Shell" decoding="async"></span>
-      <span class="logo-tile"><img src="assets/logo-repsol.png" alt="Repsol" decoding="async"></span>
-      <span class="logo-tile"><img src="assets/logo-united-oil.png" alt="United Oil" decoding="async"></span>
-      <span class="logo-tile"><img src="assets/logo-lemigas.png" alt="Lemigas" decoding="async"></span>
-      <span class="logo-tile"><img src="assets/logo-evalube.png" alt="Evalube" decoding="async"></span>
+<!-- ===================== NAVBAR ===================== -->
+<header class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a class="brand" href="#home" aria-label="MASAGI Digital home">
+      <svg class="mark" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <polygon points="35,62 5,110 65,110" fill="#ffffff"/>
+        <polygon points="85,38 45,110 125,110" fill="#ffffff"/>
+        <polygon points="145,14 95,110 195,110" fill="#ffffff"/>
+        <polygon points="145,14 132.5,38 157.5,38" fill="#ffffff"/>
+      </svg>
+      <span class="word">MASAGI<span class="digital">DIGITAL</span></span>
+    </a>
+
+    <nav class="menu" id="menu" aria-label="Main navigation">
+      <a href="#home" data-i18n="nav.home">Home</a>
+      <a href="#about" data-i18n="nav.about">About Us</a>
+      <a href="#services" data-i18n="nav.services">Our Services</a>
+      <a href="/pricing" data-i18n="nav.pricing">Pricing</a>
+      <a href="#media" data-i18n="nav.media">Media</a>
+      <a href="#contact" data-i18n="nav.contact">Location &amp; Contact</a>
+      <a class="menu-cta ghost" href="#contact" data-i18n="nav.cta">Talk to us</a>
+      <a class="menu-cta" href="https://account.masagi.io" data-i18n="nav.login">Login</a>
+    </nav>
+
+    <div class="nav-controls">
+      <div class="lang-group" role="group" aria-label="Language">
+        <button class="lang-btn" data-lang="en" type="button">EN</button>
+        <button class="lang-btn" data-lang="id" type="button">ID</button>
+      </div>
+      <a class="mobile-login" href="https://account.masagi.io" data-i18n="nav.login">Login</a>
+      <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
-</section>
+</header>
 
-<!-- ===================== STATEMENT ===================== -->
-<section class="statement">
-  <div class="wrap">
-    <h2 class="kicker" data-i18n="statement.kicker">One group.<br><em>One number.</em></h2>
-    <p class="lead-xl" data-i18n="statement.lead">Every entity keeps its own book. MASAGI-HV consolidates
-      them, eliminates the intercompany lines, and hands the board a figure that has already stopped being
-      argued about.</p>
-    <div class="cta-row">
-      <a class="btn btn-accent" href="#contact" data-i18n="statement.cta">Book a scoping call</a>
-    </div>
-  </div>
-</section>
+<!-- ===================== 1 · HOME — HERO CAROUSEL ===================== -->
+
 
 <!-- ===================== 2 · ABOUT US ===================== -->
 
@@ -390,10 +403,10 @@
     <div class="foot-brand">
       <a class="brand" href="#home">
         <svg class="mark" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <polygon points="35,62 5,110 65,110" fill="#1E7A4C"/>
-          <polygon points="85,38 45,110 125,110" fill="#31A96A"/>
-          <polygon points="145,14 95,110 195,110" fill="#57D496"/>
-          <polygon points="145,14 132.5,38 157.5,38" fill="#0B3B24"/>
+          <polygon points="35,62 5,110 65,110" fill="#ffffff"/>
+          <polygon points="85,38 45,110 125,110" fill="#ffffff"/>
+          <polygon points="145,14 95,110 195,110" fill="#ffffff"/>
+          <polygon points="145,14 132.5,38 157.5,38" fill="#ffffff"/>
         </svg>
         <span class="word">MASAGI<span class="digital">DIGITAL</span></span>
       </a>
@@ -424,7 +437,85 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="translations.js?v=202608151906"></script>
-<script src="script.js?v=202608151906"></script>
+<script src="translations.js?v=202608152040"></script>
+<script src="script.js?v=202608152047"></script>
 </body>
-</html>
+</html><!-- ===================== PRODUCT CONSOLE ===================== -->
+<section class="console-band" id="product">
+  <div class="wrap console-grid">
+    <div class="console-copy reveal">
+      <span class="eyebrow" data-i18n="console.eyebrow">The helicopter view</span>
+      <h2 data-i18n="console.title">Five companies. One number you can defend.</h2>
+      <p data-i18n="console.lead">Each entity keeps its own clean book. MASAGI-HV consolidates them,
+        cancels the intercompany lines, and gives you the group figure without a late-night merge.</p>
+    </div>
+    <div class="console reveal" role="img"
+         aria-label="Illustration of the MASAGI-HV consolidated profit and loss: five entities, an intercompany elimination column, and a group total.">
+      <div class="console-bar"><i></i><i></i><i></i><span>MASAGI-HV — Consolidated P&amp;L · FY2026</span></div>
+      <div class="console-body">
+        <table class="pl">
+          <thead>
+            <tr><th data-i18n="console.th.entity">Entity</th>
+                <th data-i18n="console.th.rev">Revenue</th>
+                <th data-i18n="console.th.cogs">COGS</th>
+                <th data-i18n="console.th.profit">Gross profit</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="ent">PT Sinar Kencana Niaga</td><td>18.4 M</td><td>11.2 M</td><td>7.2 M</td></tr>
+            <tr><td class="ent">PT Bahtera Logistik Nusantara</td><td>12.1 M</td><td>8.6 M</td><td>3.5 M</td></tr>
+            <tr><td class="ent">PT Anugerah Pelumas Indonesia</td><td>9.7 M</td><td>6.9 M</td><td>2.8 M</td></tr>
+            <tr><td class="ent">PT Cakrawala Energi Mandiri</td><td>6.3 M</td><td>4.1 M</td><td>2.2 M</td></tr>
+            <tr><td class="ent">PT Karya Teknik Sejahtera</td><td>4.8 M</td><td>3.3 M</td><td>1.5 M</td></tr>
+            <tr><td class="ent elim" data-i18n="console.elim">Intercompany elimination</td>
+                <td class="elim">(5.2 M)</td><td class="elim">(5.2 M)</td><td class="elim">—</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td data-i18n="console.group">Group</td><td>46.1 M</td><td>28.9 M</td><td>17.2 M</td></tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="console-note">
+        <span class="console-pill" data-i18n="console.badge">Illustration</span>
+        <span data-i18n="console.disclaimer"> &nbsp;Representative figures in IDR, shown to demonstrate the consolidated view — not a client's accounts.</span>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+  <div class="swiper hero-swiper" id="heroCarousel" hidden>
+    <div class="swiper-wrapper"></div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev" aria-label="Previous slide"></div>
+    <div class="swiper-button-next" aria-label="Next slide"></div>
+  </div>
+</section>
+
+<!-- ===================== TRUST STRIP ===================== -->
+<section class="trust">
+  <div class="wrap">
+    <span class="trust-label" data-i18n="trust.label">Trusted by companies across Southeast Asia</span>
+    <div class="trust-logos">
+      <span class="logo-tile"><img src="assets/logo-maxima.png" alt="Maxima" decoding="async"></span>
+      <span class="logo-tile"><img src="assets/logo-shell.png" alt="Shell" decoding="async"></span>
+      <span class="logo-tile"><img src="assets/logo-repsol.png" alt="Repsol" decoding="async"></span>
+      <span class="logo-tile"><img src="assets/logo-united-oil.png" alt="United Oil" decoding="async"></span>
+      <span class="logo-tile"><img src="assets/logo-lemigas.png" alt="Lemigas" decoding="async"></span>
+      <span class="logo-tile"><img src="assets/logo-evalube.png" alt="Evalube" decoding="async"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== STATEMENT ===================== -->
+<section class="statement">
+  <div class="wrap">
+    <h2 class="kicker" data-i18n="statement.kicker">One group.<br><em>One number.</em></h2>
+    <p class="lead-xl" data-i18n="statement.lead">Every entity keeps its own book. MASAGI-HV consolidates
+      them, eliminates the intercompany lines, and hands the board a figure that has already stopped being
+      argued about.</p>
+    <div class="cta-row">
+      <a class="btn btn-accent" href="#contact" data-i18n="statement.cta">Book a scoping call</a>
+  </div>
+</section>
+
+

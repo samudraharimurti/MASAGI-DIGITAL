@@ -1,0 +1,561 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* ============================================================
+   MASAGI Digital — surface layer  (replaces theme-swiper.css)
+
+   Loaded AFTER tokens.css and styles.css. Tokens live in tokens.css;
+   this file restyles surfaces only, so it stays removable.
+
+   The contract is transcribed from ddam.ai (SKILL (1).md): Poppins,
+   a single dark scheme, 120px section rhythm, #0c0f16 / #11141b band
+   alternation, 65/80/35/16px type, 2px-outline square buttons, and
+   NO hairline borders anywhere.
+
+   Three standing rules govern everything below:
+     1. #9333ea is a FILL. White text sits on it at 5.38:1; the colour
+        itself is 3.56:1 as ink and never carries small type.
+     2. Borders are deleted. Separation is 120px of air plus the band
+        alternation. Only buttons (2px white) and form fields keep an
+        edge, the latter because WCAG 1.4.11 requires >=3:1.
+     3. One theme. No [data-theme], no prefers-color-scheme, no toggle.
+   ============================================================ */
+
+/* ============================================================
+   1. BASE
+   ============================================================ */
+html, body { overflow-x: hidden; max-width: 100%; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--surface-raised);
+  color: var(--text);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-body);
+  font-weight: var(--fw-regular);
+  -webkit-font-smoothing: antialiased;
+  transition: none;
+}
+
+.wrap { max-width: 1280px; }
+
+/* ============================================================
+   2. BORDERS — deleted, per the owner's instruction
+   The exact set named in the contract, then the stragglers the base
+   sheets draw on nested elements (rules, dividers, covers, fields).
+   ============================================================ */
+.card, .product, .step-card, .stat, .m-card, .c-block, .case-inner, .console,
+.logo-tile, .section, .section.alt, .trust, .footer, .navbar { border: 0 !important; }
+
+.navbar.scrolled, .menu.mobile-open, .menu.mobile-open a, .menu a,
+.product.glass, .c-form, .stats, .m-cover, .foot-base, .statement,
+.console-bar, .console-note, .console-band, .case, .slide-media,
+.p-tag, .tag, .step-n, .console-pill, .inc-n,
+table.pl thead th, table.pl tbody td, table.pl tfoot td { border: 0; }
+
+/* ============================================================
+   3. TYPE
+   h1 65/700/ls4 · section head 80/700/ls4 · sub-head 35/600 ·
+   body 16/24/400. The scale is 12 · 13 · 15 · 16 · 35 · 65.
+   ============================================================ */
+h1, h2, h3, h4 { color: var(--text); font-family: var(--font-sans); }
+
+h1, .hero-copy h1, .slide h1 {
+  font-size: clamp(40px, 6.5vw, var(--fs-2xl));
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-display);
+  line-height: 1.08;
+  color: var(--text);
+  margin: 0;
+}
+
+.sec-head h2, .statement .kicker, .case h2 {
+  font-size: clamp(var(--fs-xl), 8vw, var(--fs-section));
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-display);
+  line-height: 1.06;
+  color: var(--text);
+}
+
+h2, .console-copy h2, .pcard h2, .scoping h2 {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+h3, .card h3, .step-card h3, .m-body h3, .m-card h3, .includes h3 {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-display-m);
+  line-height: var(--lh-body);
+  color: var(--text);
+}
+
+/* the product cards are the page's two-up feature slots — they carry the
+   35px sub-head rather than the 16px card title */
+.product h3 { font-size: var(--fs-xl); font-weight: var(--fw-semibold); letter-spacing: 0; line-height: 1.2; }
+
+h4, .c-block h4, .footer h4, .foot-grid h4, .inc-item h4 {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+p, li, .lead, .card p, .p-sub, .step-card p, .m-card p, .c-block p, .case-sub {
+  font-size: var(--fs-lg);
+  line-height: var(--lh-body);
+  font-weight: var(--fw-regular);
+  color: var(--text-2);
+}
+
+.lead, .sec-head .lead, .hero-sub, .statement .lead-xl, .case-sub {
+  color: var(--text-2);
+  max-width: 62ch;
+}
+
+/* The eyebrow used to be accent-coloured 12px type — 3.56:1, a fail.
+   The colour moves to the rule in front of it, which is a fill. */
+.eyebrow, .eyebrow-green, .trust-label, .m-meta, .case-org, .foot-copy, .f-note,
+.hero-note, .console-note, .price-sub, .note {
+  font-size: var(--fs-xs);
+  letter-spacing: 2px;
+  color: var(--text-3);
+}
+.eyebrow, .eyebrow-green {
+  display: inline-flex; align-items: center; gap: var(--sp-10);
+  font-weight: var(--fw-medium); text-transform: uppercase;
+  color: var(--text-2); margin-bottom: var(--sp-15);
+}
+.eyebrow::before, .eyebrow-green::before {
+  content: ""; width: var(--sp-30); height: var(--sp-3);
+  background: var(--accent) !important;
+}
+
+/* ============================================================
+   4. BUTTONS — the reference's signature
+   Transparent, 2px white, square, 12px 35px, 16px/400, white text.
+   The primary variant fills with the accent (white on it = 5.38:1).
+   ============================================================ */
+.btn, .btn-line, .btn-a, .menu .menu-cta, .btn-ghost, .btn-solid,
+.pcard .cta, .mobile-login, .scoping button {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-body);
+  letter-spacing: 0;
+  padding: 12px 35px;
+  border: 2px solid var(--text);
+  border-radius: 0;
+  background: transparent;
+  color: var(--text) !important;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: none;
+  transition: background var(--m-instant), color var(--m-instant), border-color var(--m-instant);
+}
+.btn:hover, .btn-line:hover, .btn-a:hover, .btn-ghost:hover {
+  background: var(--glass);
+  transform: none;
+  box-shadow: none;
+}
+
+/* primary: accent fill, white ink */
+.btn-accent, .menu .menu-cta, .btn-solid, .pcard .cta, .mobile-login, .scoping button {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink) !important;
+  box-shadow: none;
+}
+.btn-accent:hover, .menu .menu-cta:hover, .btn-solid:hover, .pcard .cta:hover,
+.mobile-login:hover, .scoping button:hover {
+  filter: brightness(1.12);
+  transform: none;
+  box-shadow: none;
+  opacity: 1;
+}
+.menu .menu-cta.ghost {
+  background: transparent;
+  border-color: var(--text);
+  color: var(--text) !important;
+}
+.menu .menu-cta.ghost:hover { background: var(--glass); }
+.menu .menu-cta, .mobile-login, .btn-ghost, .btn-solid { padding: 8px 15px; }
+.pcard .cta, .scoping button { display: block; width: 100%; padding: 12px 35px; }
+.btn:active, .btn-accent:active { transform: none; }
+.cta-row { display: flex; gap: var(--sp-15); flex-wrap: wrap; }
+
+/* ============================================================
+   5. NAVBAR
+   ============================================================ */
+.navbar { background: transparent; box-shadow: none; }
+.navbar.scrolled {
+  background: var(--nav-bg);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: none;
+}
+.menu { font-size: var(--fs-lg); font-weight: var(--fw-regular); gap: var(--sp-25); }
+.menu a, .navbar.scrolled .menu a { color: var(--text-2); border-bottom: 2px solid transparent; }
+.menu a:hover, .navbar.scrolled .menu a:hover { color: var(--text); border-bottom-color: var(--accent); }
+.menu a.on { color: var(--text); }
+.brand .word, .navbar.scrolled .brand .word, .foot-brand .word { color: var(--text); font-weight: var(--fw-semibold); }
+.brand .word .digital, .brand .word .sub { color: var(--text-3); opacity: 1; font-weight: var(--fw-regular); }
+
+.lang-group {
+  border: 2px solid var(--text); border-radius: var(--pill); overflow: hidden;
+}
+.lang-btn, .navbar.scrolled .lang-btn { color: var(--text-2); background: transparent; font-size: var(--fs-xs); font-weight: var(--fw-medium); }
+.lang-btn.on { background: var(--accent); color: var(--accent-ink) !important; }
+
+/* The theme toggle is retired with the light scheme. Hidden here so the
+   control disappears even where the markup still ships it. */
+.theme-btn { display: none !important; }
+
+.hamburger, .navbar.scrolled .hamburger { border: 2px solid var(--text); border-radius: 0; }
+.hamburger span, .navbar.scrolled .hamburger span { background: var(--text); }
+.menu.mobile-open {
+  background: var(--surface-muted); border-radius: var(--r-xs);
+  box-shadow: var(--shadow);
+}
+.menu.mobile-open a { color: var(--text) !important; }
+
+/* ============================================================
+   6. HERO — flat band, no radial glow
+   ============================================================ */
+.hero {
+  height: auto; min-height: 0;
+  padding: var(--sp-section) 0;
+  background: var(--surface-raised);
+}
+.hero-grid { display: grid; grid-template-columns: .92fr 1.08fr; gap: 48px; align-items: center; }
+.hero-grid > *, .console-grid > * { min-width: 0; }
+.hero-console, .console { max-width: 100%; }
+.hero-copy .eyebrow { display: inline-flex; margin-bottom: var(--sp-15); }
+.hero-sub { font-size: var(--fs-lg); line-height: var(--lh-body); margin: var(--sp-24) 0 var(--sp-30); max-width: 46ch; }
+.hero-note { margin-top: var(--sp-24); }
+
+.slide, .s1, .s2, .s3 { background: var(--surface-raised); color: var(--text); }
+.slide::before { opacity: .05; }
+.slide p { color: var(--text-2); }
+.slide .eyebrow { color: var(--text-2); }
+.slide-media { border-radius: var(--r-xs); background: var(--surface-muted); box-shadow: var(--shadow); }
+.hero-swiper .swiper-pagination-bullet { background: var(--text-3); opacity: 1; }
+.hero-swiper .swiper-pagination-bullet-active { background: var(--accent); }
+.hero-swiper .swiper-button-prev,
+.hero-swiper .swiper-button-next {
+  color: var(--text); background: var(--glass);
+  border: 2px solid var(--text); border-radius: 50%;
+}
+.hero-swiper .swiper-button-prev:hover,
+.hero-swiper .swiper-button-next:hover { background: var(--accent); border-color: var(--accent); }
+
+/* ============================================================
+   7. SECTION RHYTHM — 120px top and bottom, desktop and mobile.
+   Bands alternate #0c0f16 / #11141b; that alternation, not a rule,
+   is what separates one section from the next.
+   ============================================================ */
+.section, .statement, .console-band, .trust, .case, .cards, .includes, .scoping, .head {
+  padding: var(--sp-section) 0;
+}
+.section, .statement, .trust, .cards, .includes { background: var(--surface-raised); }
+.section.alt, .case, .console-band, .head, .scoping { background: var(--surface-muted); }
+.sec-head { margin-bottom: var(--sp-section); }
+.sec-head h2 { margin-bottom: var(--sp-24); }
+
+/* ============================================================
+   8. SURFACES — cards, products, steps, stats
+   5px radius, no border, muted fill, separated by air.
+   ============================================================ */
+.card, .product, .product.glass, .step-card, .m-card, .c-block, .c-form,
+.case-inner, .console, .logo-tile, .pcard, .slide-media, .m-cover, .cover-lg {
+  border-radius: var(--r-xs);
+}
+.card, .product, .product.glass, .step-card, .c-form, .pcard {
+  background: var(--surface-muted);
+  box-shadow: none;
+  backdrop-filter: none;
+  transition: background var(--m-instant), transform var(--m-instant);
+}
+.section.alt .card, .section.alt .product, .section.alt .product.glass,
+.section.alt .step-card, .section.alt .c-form { background: var(--surface-base); }
+.card:hover, .product:hover, .product.glass:hover, .step-card:hover, .m-card:hover {
+  transform: translateY(-2px);
+  box-shadow: none;
+}
+/* the glass card's radial bloom is a light-mode artefact — removed */
+.product.glass::before { display: none; content: none; }
+
+.card .ic {
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--accent); color: var(--accent-ink);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: var(--sp-15);
+}
+
+.p-tag, .tag, .m-meta .tag, .step-n, .console-pill, .inc-n {
+  display: inline-flex; align-items: center; gap: var(--sp-7);
+  background: var(--accent); color: var(--accent-ink);
+  border-radius: var(--pill);
+  padding: var(--sp-5) var(--sp-15);
+  font-size: var(--fs-xs); font-weight: var(--fw-medium);
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.inc-n { width: 26px; height: 26px; padding: 0; justify-content: center; border-radius: 50%; }
+.p-sub, .p-feats li, .step-card p, .card p { color: var(--text-2); }
+.p-feats li::before { color: var(--text); }
+
+.stats { margin-top: var(--sp-section); padding-top: 0; }
+.stat { background: transparent; border-radius: 0; padding-top: var(--sp-24); }
+.stat .n { color: var(--text); font-weight: var(--fw-bold); font-size: var(--fs-xl); letter-spacing: 0; }
+.stat .t { color: var(--text-2); font-size: var(--fs-sm); font-weight: var(--fw-regular); }
+
+/* ============================================================
+   9. CASE BAND — flat, no radial glow
+   ============================================================ */
+.case { background: var(--surface-muted); }
+.case-inner { background: transparent; }
+.case-sub { color: var(--text-2); }
+.case-role { color: var(--text); font-weight: var(--fw-semibold); font-size: var(--fs-lg); }
+.case-org { color: var(--text-3); }
+.case-link { color: var(--text); font-weight: var(--fw-medium); border-bottom: 2px solid var(--accent); }
+.case-link:hover { color: var(--text); text-decoration: none; }
+
+/* ============================================================
+   10. MEDIA / STORY CARDS
+   ============================================================ */
+.m-card { background: var(--surface-muted); overflow: hidden; }
+.m-card:hover { background: var(--surface-base); transform: translateY(-2px); }
+.m-cover { height: 150px; }
+.m-cover.c1, .m-cover.c2, .m-cover.c3 { background: var(--accent); }
+.m-cover.c2 { opacity: .82; }
+.m-cover.c3 { opacity: .64; }
+.m-meta { color: var(--text-3); }
+.m-body h3 { color: var(--text); }
+.m-body p { color: var(--text-2); }
+.m-read { color: var(--text); font-weight: var(--fw-medium); border-bottom: 2px solid var(--accent); }
+
+/* ============================================================
+   11. CONTACT / FORMS
+   The one place an edge survives: WCAG 1.4.11 needs a >=3:1 boundary
+   on a control. rgba(255,255,255,.35) measures 3.34:1 on the page and
+   3.21:1 on the muted band.
+   ============================================================ */
+.c-block, .c-form { background: transparent; }
+.c-info h3, .c-block h3 { color: var(--text); }
+.c-block p, .c-info p { color: var(--text-2); }
+.c-block a { color: var(--text); font-weight: var(--fw-medium); }
+.c-block a:hover { color: var(--text); border-bottom: 2px solid var(--accent); }
+.f-field label, label { color: var(--text-2); font-size: var(--fs-xs); letter-spacing: 2px; font-weight: var(--fw-medium); }
+.f-field input, .f-field textarea, input, textarea {
+  background: var(--surface-muted);
+  border: 1px solid var(--field-border);
+  border-radius: var(--r-xs);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--fs-lg);
+  padding: 12px var(--sp-15);
+}
+.section.alt .f-field input, .section.alt .f-field textarea { background: var(--surface-base); }
+.f-field input:focus, .f-field textarea:focus, input:focus, textarea:focus {
+  border-color: var(--text);
+  box-shadow: 0 0 0 3px var(--accent-line);
+  outline: none;
+}
+.f-field input::placeholder, .f-field textarea::placeholder,
+input::placeholder, textarea::placeholder { color: var(--text-3); }
+.f-note { color: var(--text-3); }
+
+/* ============================================================
+   12. TRUST STRIP
+   Six third-party marks in six palettes: neutralised to white at rest,
+   true colour on hover. The explicit height matters — with height:auto
+   these collapse to 0x0 before load and a 0x0 lazy image never loads.
+   ============================================================ */
+.trust { background: var(--surface-raised); }
+.trust-label { color: var(--text-3); text-transform: uppercase; }
+.trust-logos { margin-top: var(--sp-section); gap: var(--sp-24); }
+.logo-tile {
+  background: transparent;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 62px; padding: var(--sp-15) var(--sp-24);
+}
+.logo-tile img {
+  height: 30px; width: auto; max-width: 128px; min-width: 40px;
+  object-fit: contain; display: block;
+  filter: brightness(0) invert(1); opacity: .62;
+  transition: filter var(--m-instant), opacity var(--m-instant);
+}
+.logo-tile:hover img { filter: none; opacity: 1; }
+.logo-word { font-weight: var(--fw-semibold); color: var(--text-2); opacity: 1; }
+.logo-tile:hover .logo-word { color: var(--text); }
+
+/* ============================================================
+   13. STATEMENT BAND
+   ============================================================ */
+.statement .kicker { margin: 0; }
+.statement .kicker em { font-style: normal; color: var(--text); }
+.statement .lead-xl {
+  font-size: var(--fs-lg); line-height: var(--lh-body); font-weight: var(--fw-regular);
+  color: var(--text-2); max-width: 46ch; margin: var(--sp-30) 0 0;
+}
+.statement .cta-row { margin-top: var(--sp-30); }
+
+/* ============================================================
+   14. FOOTER
+   ============================================================ */
+.footer, footer { background: var(--surface-muted); color: var(--text-2); padding: var(--sp-section) 0 var(--sp-30); }
+.footer a, .footer span, .foot-links a { color: var(--text-2); }
+.footer a:hover, .foot-links a:hover { color: var(--text); }
+.foot-brand p, .foot-brand .tagline { color: var(--text-3); }
+.foot-brand .word, .foot-brand span { color: var(--text); }
+.foot-grid h4, .footer h4 { color: var(--text-3); }
+.foot-base, .foot-copy { color: var(--text-3); margin-top: var(--sp-section); padding-top: var(--sp-24); }
+
+/* ============================================================
+   15. PRODUCT CONSOLE — the consolidated P&L
+   The site's one depiction of the software, drawn in markup so it stays
+   sharp, weighs nothing and never goes stale. With hairlines deleted,
+   the ledger separates by fill: the console sits on #11141b, the chrome
+   bar and the Group total on #000000, and the rows on padding alone.
+   Figures are illustrative and labelled as such.
+   ============================================================ */
+.console-band { background: var(--surface-muted); }
+.console-grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: 46px; align-items: center; }
+.console-copy h2 { margin: var(--sp-15) 0 0; }
+.console-copy p { color: var(--text-2); font-size: var(--fs-lg); margin-top: var(--sp-15); max-width: 46ch; }
+.console-copy ul { list-style: none; margin: var(--sp-24) 0 0; display: grid; gap: var(--sp-10); }
+.console-copy li { display: flex; gap: var(--sp-10); font-size: var(--fs-md); color: var(--text-2); }
+.console-copy li::before { content: "—"; color: var(--text); flex: none; }
+
+.console {
+  border-radius: var(--r-xs); overflow: hidden;
+  background: var(--surface-muted); box-shadow: var(--shadow);
+}
+.console-band .console, .section.alt .console { background: var(--surface-base); }
+.console-bar {
+  display: flex; align-items: center; gap: var(--sp-10);
+  padding: var(--sp-15) var(--sp-24); background: var(--surface-base);
+}
+.console-band .console-bar, .section.alt .console-bar { background: var(--surface-muted); }
+.console-bar i { width: var(--sp-10); height: var(--sp-10); border-radius: 50%; background: var(--text-3); opacity: .5; }
+.console-bar span {
+  margin-left: var(--sp-10); font-size: var(--fs-xs); color: var(--text-3);
+  font-family: ui-monospace, "JetBrains Mono", Menlo, monospace;
+}
+.console-body { padding: var(--sp-10) 0 var(--sp-5); overflow-x: auto; }
+
+table.pl {
+  width: 100%; border-collapse: collapse;
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums;   /* ledger figures line up column-wise */
+}
+table.pl th, table.pl td { padding: var(--sp-10) var(--sp-24); text-align: right; white-space: nowrap; }
+table.pl th:first-child, table.pl td:first-child { text-align: left; }
+table.pl thead th {
+  font-size: var(--fs-xs); letter-spacing: 1px; text-transform: uppercase;
+  color: var(--text-3); font-weight: var(--fw-medium); padding-bottom: var(--sp-15);
+}
+table.pl tbody td { color: var(--text-2); }
+table.pl tbody tr:hover td { background: var(--glass); }
+table.pl td.ent { color: var(--text); font-weight: var(--fw-medium); }
+table.pl td.elim { color: var(--text-3); }
+table.pl tfoot td {
+  background: var(--surface-base);
+  color: var(--text); font-weight: var(--fw-bold); font-size: var(--fs-lg);
+  padding-top: var(--sp-15); padding-bottom: var(--sp-15);
+}
+.console-band table.pl tfoot td, .section.alt table.pl tfoot td { background: var(--surface-muted); }
+.console-note { padding: var(--sp-15) var(--sp-24) var(--sp-24); font-size: var(--fs-xs); color: var(--text-3); }
+.console-pill { text-transform: none; }
+
+/* ============================================================
+   16. PRICING PAGE SURFACES
+   ============================================================ */
+.head { text-align: center; }
+.pcard .mark { width: 46px; height: 46px; border-radius: 50%; background: var(--accent) !important; margin-bottom: var(--sp-15); }
+.pcard .tagline { color: var(--text-2); }
+.pcard .price { font-size: var(--fs-xl); font-weight: var(--fw-semibold); letter-spacing: 0; color: var(--text); }
+.pcard .price-sub { color: var(--text-3); margin-bottom: var(--sp-24); }
+.pcard li { color: var(--text-2); font-size: var(--fs-lg); }
+.pcard li::before { color: var(--text); font-weight: var(--fw-semibold); }
+.scoping form { background: var(--surface-base); border-radius: var(--r-xs); box-shadow: none; }
+.inc-item p { color: var(--text-2); }
+
+/* ============================================================
+   17. SELECTION, FOCUS, MOTION
+   ============================================================ */
+::selection { background: var(--accent); color: var(--accent-ink); }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--text); outline-offset: 2px;
+}
+.reveal { transition: opacity var(--m-normal) ease, transform var(--m-normal) ease; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ============================================================
+   18. RESPONSIVE
+   The 120px section rhythm is deliberately NOT reduced on mobile —
+   with no borders left, that air is the only thing separating bands.
+   ============================================================ */
+@media (max-width: 940px) {
+  .hero-grid, .console-grid { grid-template-columns: 1fr; gap: var(--sp-30); }
+}
+
+@media (max-width: 767px) {
+  h1, .hero-copy h1, .slide h1 {
+    font-size: 40px;
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-display-m);
+    line-height: var(--lh-display-m);
+  }
+  .sec-head h2, .statement .kicker, .case h2 {
+    font-size: var(--fs-xl);
+    letter-spacing: var(--ls-display-m);
+    line-height: 1.2;
+  }
+  h2, .console-copy h2, .pcard h2, .scoping h2, .product h3 { font-size: 25px; }
+  .btn, .btn-line, .btn-a, .btn-accent, .menu .menu-cta, .btn-ghost, .btn-solid,
+  .mobile-login, .scoping button { padding: 8px var(--sp-15); }
+  .pcard .cta, .scoping button { padding: 12px var(--sp-15); }
+  .sec-head { margin-bottom: var(--sp-30); }
+  .stats, .trust-logos, .foot-base { margin-top: var(--sp-30); }
+}
+
+/* The table overflows at small widths and the figure that leaves the
+   screen is the Group total — the one number the section promises.
+   Shrink the type, let the entity names wrap, drop the COGS column. */
+@media (max-width: 620px) {
+  table.pl { font-size: var(--fs-xs); }
+  table.pl th, table.pl td { padding: var(--sp-10); }
+  table.pl th:first-child, table.pl td:first-child {
+    white-space: normal; max-width: 46%; line-height: var(--lh-body);
+    position: sticky; left: 0; background: var(--surface-muted); z-index: 1;
+  }
+  .console-band table.pl th:first-child,
+  .console-band table.pl td:first-child { background: var(--surface-base); }
+  table.pl tfoot td:first-child { background: var(--surface-base); }
+  .console-band table.pl tfoot td:first-child { background: var(--surface-muted); }
+  table.pl th:nth-child(3), table.pl td:nth-child(3) { display: none; }
+  .console-copy p, .console-copy li { font-size: var(--fs-md); }
+}
+
+/* brand + language pair + hamburger overflow at 375px, which widens the
+   layout and drags the console's Group total off with it */
+@media (max-width: 560px) {
+  .nav-inner { gap: var(--sp-10); }
+  .nav-controls { gap: var(--sp-7); flex-shrink: 0; }
+  .lang-btn { padding: var(--sp-5) var(--sp-10); font-size: var(--fs-xs); }
+  .hamburger { width: 34px; height: 34px; }
+  .brand img, .brand svg, nav.top img { max-width: 116px; }
+}
+
+@media (max-width: 400px) {
+  .nav-controls { gap: var(--sp-5); }
+  .lang-btn { padding: var(--sp-3) var(--sp-7); }
+  .hamburger { width: 32px; height: 32px; }
+}

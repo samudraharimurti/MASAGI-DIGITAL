@@ -5,22 +5,7 @@
 (function () {
   "use strict";
 
-  /* ---------- dark / light mode (persisted) ---------- */
-  var themeBtn = document.getElementById("themeBtn");
 
-  function applyTheme(t) {
-    document.documentElement.setAttribute("data-theme", t);
-    themeBtn.textContent = t === "dark" ? "☀" : "☾";
-    try { localStorage.setItem("masagi-theme", t); } catch (e) {}
-  }
-  themeBtn.addEventListener("click", function () {
-    applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
-  });
-
-  var savedTheme = null;
-  try { savedTheme = localStorage.getItem("masagi-theme"); } catch (e) {}
-  applyTheme(savedTheme ||
-    (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
 
   /* ---------- EN / ID language (persisted) ---------- */
   var currentLang = "en";
@@ -220,7 +205,10 @@
       var media = slideMediaHtml(s);
       var text = '<div class="slide-text">' +
         ((s.eyebrow_en || s.eyebrow_id) ? '<span class="eyebrow" data-i18n="' + k + '.eyebrow"></span>' : "") +
-        '<h1 data-i18n="' + k + '.title"></h1>' +
+        // only the first slide carries the <h1>; the rest are h2 styled identically,
+        // so the page exposes exactly one level-1 heading to assistive tech
+        '<' + (i === 0 ? 'h1' : 'h2') + ' class="slide-h" data-i18n="' + k + '.title"></' +
+          (i === 0 ? 'h1' : 'h2') + '>' +
         ((s.sub_en || s.sub_id) ? '<p data-i18n="' + k + '.sub"></p>' : "") +
         (((s.cta_label_en || s.cta_label_id) && s.cta_href)
           ? '<div class="cta-row"><a class="btn btn-accent" href="' + esc(s.cta_href) +
@@ -239,19 +227,10 @@
   fetchWithTimeout(CMS_BASE + "/api/public/carousel", 6000)
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (c) {
-      // The static product hero leads by default. The CMS carousel only takes
-      // over when at least one slide actually carries a picture or a video —
-      // text-only slides would just bury the console behind a generic headline.
+      // The hero IS the carousel now, so whatever the CMS holds drives it
+      // directly — there is no static hero left to fall back to.
       var slides = (c && c.slides) || [];
-      var withMedia = slides.filter(function (s) {
-        return s.media_url && s.media_type && s.media_type !== "none";
-      });
-      if (!withMedia.length) return;
-      var stat = document.getElementById("heroStatic");
-      var car  = document.getElementById("heroCarousel");
-      if (stat) stat.hidden = true;
-      if (car)  car.hidden = false;
-      buildHero(slides);
+      if (slides.length) buildHero(slides);
     })
     .catch(function () { /* CMS unreachable — keep the built-in hero slides */ });
 

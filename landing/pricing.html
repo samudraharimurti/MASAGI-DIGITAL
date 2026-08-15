@@ -13,13 +13,14 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='22' fill='%231B2A4A'/%3E%3Cpolygon points='30,58 12,92 48,92' fill='%231E7A4C'/%3E%3Cpolygon points='58,42 34,92 82,92' fill='%2331A96A'/%3E%3Cpolygon points='78,26 48,92 106,92' fill='%2357D496'/%3E%3Cpolygon points='78,26 70.5,42 85.5,42' fill='%230B3B24'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="tokens.css?v=202608151906">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css?v=202608152040">
+<link rel="stylesheet" href="ddam.css?v=202608152040">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* Tokens come from tokens.css, linked above. */
 * { box-sizing:border-box; margin:0; padding:0; }
 html { scroll-behavior:smooth; }
-body { font-family:'Inter','Helvetica Neue',Arial,sans-serif; background:var(--bg); color:var(--text);
+body { font-family:'Poppins',sans-serif; background:var(--bg); color:var(--text);
   line-height:1.6; -webkit-font-smoothing:antialiased; transition:background .3s,color .3s; }
 a { color:var(--accent); text-decoration:none; }
 .wrap { max-width:1180px; margin:0 auto; padding:0 22px; }
@@ -46,8 +47,6 @@ header { position:sticky; top:0; z-index:100; background:var(--nav-bg); backdrop
 .lang-btn { font:inherit; font-size:11.5px; font-weight:700; letter-spacing:.05em; cursor:pointer;
   padding:6px 10px; border:0; background:transparent; color:var(--text-2); }
 .lang-btn.on { background:var(--accent); color:var(--accent-ink); }
-.theme-btn { font-size:14px; cursor:pointer; width:34px; height:32px; border:1px solid var(--border);
-  border-radius:var(--pill); background:transparent; color:var(--text-2); }
 .btn-solid { background:var(--accent); color:var(--accent-ink) !important; padding:10px 18px; border-radius:var(--pill);
   font-size:14px; font-weight:600; box-shadow:0 10px 26px rgba(37,99,235,.30); }
 .btn-ghost { padding:10px 16px; border-radius:var(--pill); font-size:14px; font-weight:600; color:var(--text) !important;
@@ -105,7 +104,6 @@ header { position:sticky; top:0; z-index:100; background:var(--nav-bg); backdrop
 
 /* footer */
 footer { background:var(--navy); color:var(--text-2); padding:48px 0 30px; }
-html[data-theme="dark"] footer { background:var(--bg-2); }
 .foot-inner { display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; align-items:center; }
 .foot-brand { display:flex; align-items:center; gap:10px; }
 .foot-brand svg { height:26px; width:auto; }
@@ -121,7 +119,6 @@ html[data-theme="dark"] footer { background:var(--bg-2); }
 }
 @media (min-width:1024px) { .menu { display:flex; } }
 </style>
-<script id="masagi-theme-boot">(function(){try{var t=localStorage.getItem("masagi-theme");if(!t)t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","light");}})();</script>
 </head>
 <body>
 
@@ -129,8 +126,8 @@ html[data-theme="dark"] footer { background:var(--bg-2); }
   <div class="wrap nav-inner">
     <a class="brand" href="/">
       <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <polygon points="35,62 5,110 65,110" fill="#1E7A4C"/><polygon points="85,38 45,110 125,110" fill="var(--accent)"/>
-        <polygon points="145,14 95,110 195,110" fill="#57D496"/><polygon points="145,14 132.5,38 157.5,38" fill="#0B3B24"/>
+        <polygon points="35,62 5,110 65,110" fill="#ffffff"/><polygon points="85,38 45,110 125,110" fill="var(--accent)"/>
+        <polygon points="145,14 95,110 195,110" fill="#ffffff"/><polygon points="145,14 132.5,38 157.5,38" fill="#ffffff"/>
       </svg>
       <span class="word">MASAGI<span class="sub">DIGITAL</span></span>
     </a>
@@ -145,7 +142,6 @@ html[data-theme="dark"] footer { background:var(--bg-2); }
         <button class="lang-btn" data-lang="en" type="button">EN</button>
         <button class="lang-btn" data-lang="id" type="button">ID</button>
       </div>
-      <button class="theme-btn" id="themeBtn" type="button" title="Light / dark">☾</button>
       <a class="btn-ghost" href="https://account.masagi.io" data-i18n="nav.signin">Login</a>
       <a class="btn-solid" href="#scoping" data-i18n="nav.start">Book a scoping call</a>
     </div>
@@ -232,8 +228,8 @@ html[data-theme="dark"] footer { background:var(--bg-2); }
   <div class="wrap foot-inner">
     <div class="foot-brand">
       <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <polygon points="35,62 5,110 65,110" fill="#1E7A4C"/><polygon points="85,38 45,110 125,110" fill="var(--accent)"/>
-        <polygon points="145,14 95,110 195,110" fill="#57D496"/><polygon points="145,14 132.5,38 157.5,38" fill="#0B3B24"/>
+        <polygon points="35,62 5,110 65,110" fill="#ffffff"/><polygon points="85,38 45,110 125,110" fill="var(--accent)"/>
+        <polygon points="145,14 95,110 195,110" fill="#ffffff"/><polygon points="145,14 132.5,38 157.5,38" fill="#ffffff"/>
       </svg>
       <span>MASAGI</span>
     </div>
@@ -294,12 +290,8 @@ function applyLang(lang){
   document.querySelectorAll(".lang-btn").forEach(function(b){b.classList.toggle("on",b.getAttribute("data-lang")===lang);});
   try{localStorage.setItem("masagi-lang",lang);}catch(e){}
 }
-function applyTheme(t){ document.documentElement.setAttribute("data-theme",t);
-  document.getElementById("themeBtn").textContent=t==="dark"?"☀":"☾"; try{localStorage.setItem("masagi-theme",t);}catch(e){} }
 document.querySelectorAll(".lang-btn").forEach(function(b){b.addEventListener("click",function(){applyLang(b.getAttribute("data-lang"));});});
-document.getElementById("themeBtn").addEventListener("click",function(){applyTheme(document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark");});
 var st=null,sl=null; try{st=localStorage.getItem("masagi-theme");sl=localStorage.getItem("masagi-lang");}catch(e){}
-applyTheme(st||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));
 applyLang(sl||((navigator.language||"").toLowerCase().indexOf("id")===0?"id":"en"));
 
 document.getElementById("scopeForm").addEventListener("submit",function(e){
