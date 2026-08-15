@@ -72,7 +72,7 @@ h3 { font-size: 19px; font-weight: 700; }
 .navbar.scrolled .menu a { color: var(--text-2); }
 .navbar.scrolled .menu a:hover { color: var(--text); }
 .menu .menu-cta {
-  background: var(--accent); color: #fff !important; padding: 9px 18px;
+  background: var(--accent); color: var(--accent-ink) !important; padding: 9px 18px;
   border-radius: 6px; border-bottom: none !important;
 }
 .menu .menu-cta:hover { opacity: .9; }
@@ -88,7 +88,7 @@ h3 { font-size: 19px; font-weight: 700; }
    full menu (containing the real Login button) is hidden until opened */
 .mobile-login {
   display: none; font-size: 13.5px; font-weight: 700; padding: 8px 14px;
-  border-radius: 6px; background: var(--accent); color: #fff !important;
+  border-radius: 6px; background: var(--accent); color: var(--accent-ink) !important;
 }
 
 .nav-controls { display: flex; align-items: center; gap: 9px; }
@@ -99,7 +99,7 @@ h3 { font-size: 19px; font-weight: 700; }
   padding: 6px 10px; border: 0; background: transparent; color: rgba(255, 255, 255, .85); transition: background .2s, color .2s;
 }
 .navbar.scrolled .lang-btn { color: var(--text-2); }
-.lang-btn.on { background: var(--accent); color: #fff !important; }
+.lang-btn.on { background: var(--accent); color: var(--accent-ink) !important; }
 .theme-btn {
   font-size: 15px; line-height: 1; cursor: pointer; width: 34px; height: 31px;
   border: 1px solid rgba(255, 255, 255, .45); border-radius: 5px; background: transparent;

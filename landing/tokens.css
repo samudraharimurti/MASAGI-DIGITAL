@@ -26,11 +26,11 @@ html[data-theme="light"] {
   --surface-3:    #F6F7F8;   /* inputs, raised chips */
   --border:       #E3E6E6;
   --border-soft:  rgba(10, 10, 10, .08);
-  --field-border: #8E9294;   /* 3.14:1 on white — WCAG 1.4.11 needs 3.0 */
+  --field-border: #86898C;   /* 3.52:1 on white, 3.28:1 on the --surface-3 fill */
 
   --text:         #0A0A0A;   /* 19.80:1 */
-  --text-2:       #5F6165;   /*  5.83:1 */
-  --text-3:       #6E7276;   /*  4.85:1 */
+  --text-2:       #5F6165;   /*  6.21:1 on --bg, 5.83 on a #F7F8F8 band */
+  --text-3:       #66696D;   /*  5.43:1 on --bg, 4.93 on --surface-2 */
 
   --accent:       #1E7A4C;   /*  5.33:1 on white, and under white as a fill */
   --accent-2:     #31A96A;
@@ -66,11 +66,11 @@ html[data-theme="dark"] {
   --surface-3:    #1E1E21;
   --border:       #2C2C30;
   --border-soft:  rgba(255, 255, 255, .07);
-  --field-border: #83838A;   /* 5.28:1 on canvas, 4.02:1 on the #1E1E21 fill */
+  --field-border: #83838A;   /* 5.28:1 on canvas, 4.42:1 on the --surface-3 fill */
 
   --text:         #F2F2F2;   /* 17.68:1 */
   --text-2:       #8F8F94;   /*  6.15:1 */
-  --text-3:       #828289;   /*  5.19:1 */
+  --text-3:       #8C8C93;   /*  6.03:1 on canvas, 4.90 on --surface-3 */
 
   --accent:       #57D496;   /* 10.62:1 — the mark's light green */
   --accent-2:     #31A96A;
