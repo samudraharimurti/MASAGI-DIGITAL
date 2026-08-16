@@ -7,9 +7,6 @@
 const TRANSLATIONS = {
 
   en: {
-    "statement.kicker": "One group.<br><em>One number.</em>",
-    "statement.lead": "Every entity keeps its own book. MASAGI-HV consolidates them, eliminates the intercompany lines, and hands the board a figure that has already stopped being argued about.",
-    "statement.cta": "Book a scoping call",
     "hero.eyebrow": "Consolidated group finance",
     "hero.title": "Five companies. One number you can defend.",
     "hero.sub": "MASAGI-HV keeps every entity's book clean, cancels the intercompany lines, and gives you the group figure before the board asks for it — not a week after.",
@@ -67,7 +64,6 @@ const TRANSLATIONS = {
     "about.stat4": "industry experience behind the team",
 
     "nav.pricing": "Pricing",
-    "trust.label": "Trusted by companies across Southeast Asia",
     "how.eyebrow": "How it works",
     "how.title": "From first call to live, step by step.",
     "how.s1t": "We map your operation",
@@ -148,9 +144,6 @@ const TRANSLATIONS = {
   },
 
   id: {
-    "statement.kicker": "Satu grup.<br><em>Satu angka.</em>",
-    "statement.lead": "Setiap entitas tetap punya pembukuannya sendiri. MASAGI-HV mengonsolidasikannya, menghapus transaksi antar-perusahaan, dan menyerahkan ke direksi angka yang sudah berhenti diperdebatkan.",
-    "statement.cta": "Jadwalkan sesi konsultasi",
     "hero.eyebrow": "Keuangan grup terkonsolidasi",
     "hero.title": "Lima perusahaan. Satu angka yang bisa kamu pertanggungjawabkan.",
     "hero.sub": "MASAGI-HV menjaga pembukuan tiap entitas tetap rapi, menghapus transaksi antar-perusahaan, dan menyiapkan angka grup sebelum direksi memintanya — bukan seminggu setelahnya.",
@@ -208,7 +201,6 @@ const TRANSLATIONS = {
     "about.stat4": "pengalaman industri di balik tim",
 
     "nav.pricing": "Harga",
-    "trust.label": "Dipercaya perusahaan di Asia Tenggara",
     "how.eyebrow": "Cara kerjanya",
     "how.title": "Dari panggilan pertama hingga tayang, langkah demi langkah.",
     "how.s1t": "Kami petakan operasi Anda",
