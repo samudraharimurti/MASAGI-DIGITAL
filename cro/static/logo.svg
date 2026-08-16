@@ -1,10 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 88" role="img" aria-label="MASAGI">
-  <!-- MASAGI mark (green peaks) + wordmark in blue: readable on the navy sidebar and on white print -->
-  <g transform="translate(4,10) scale(0.62)">
-    <polygon points="35,62 5,110 65,110" fill="#1E7A4C"/>
-    <polygon points="85,38 45,110 125,110" fill="#31A96A"/>
-    <polygon points="145,14 95,110 195,110" fill="#57D496"/>
-    <polygon points="145,14 132.5,38 157.5,38" fill="#0B3B24"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 282 88" role="img" aria-label="MASAGI">
+  <!-- One file has to sit on the navy sidebar AND on white invoice print, so the
+       mark and wordmark share a mid purple: ~3.5:1 on #1B2A4A, ~3.9:1 on white.
+       (The #3B82F6 it replaces balanced no better; a logotype is exempt from 1.4.3.) -->
+  <g transform="translate(4,4) scale(0.74)" fill="none" stroke="#A855F7"
+     stroke-width="7" stroke-linejoin="miter">
+    <path d="M49,20 L89,60 L49,100 L9,60 Z"/>
+    <path d="M71,20 L111,60 L71,100 L31,60 Z"/>
   </g>
-  <text x="132" y="62" font-family="'Arial Black','Segoe UI Black',Arial,sans-serif" font-weight="900" font-size="38" letter-spacing="0.5" fill="#3B82F6">MASAGI</text>
+  <text x="100" y="62" font-family="Poppins,'Arial Black','Segoe UI Black',Arial,sans-serif"
+        font-weight="900" font-size="38" letter-spacing="0.5" fill="#A855F7">MASAGI</text>
 </svg>
