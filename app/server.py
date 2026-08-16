@@ -342,18 +342,29 @@ def content_admin_page():
 @app.get("/robots.txt")
 def robots_txt():
     base = request.url_root.rstrip("/")
-    body = "User-agent: *\nAllow: /\nDisallow: /app\nDisallow: /access\nDisallow: /admin/\n" \
-           "Sitemap: %s/sitemap.xml\n" % base
+    body = ("User-agent: *\nAllow: /\nDisallow: /app\nDisallow: /access\nDisallow: /admin/\n"
+            "Sitemap: %s/sitemap.xml\n"
+            # the blog is a separate host with its own sitemap; name it here so
+            # crawlers find the posts without this sitemap claiming them
+            "Sitemap: https://blog.masagi.io/sitemap.xml\n" % base)
     return app.response_class(body, mimetype="text/plain")
 
 
 @app.get("/sitemap.xml")
 def sitemap_xml():
+    """Only final, 200-status URLs on THIS host.
+
+    This used to list /product, which 404s, and /blog/<slug>, which 301s to
+    blog.masagi.io — dead and redirecting entries erode crawl trust. The blog
+    lives on its own host and publishes its own sitemap at
+    blog.masagi.io/sitemap.xml, which robots.txt points at; a sitemap should
+    only ever claim URLs on the host that serves it.
+    """
     base = request.url_root.rstrip("/")
-    urls = ["%s/" % base, "%s/product" % base]
-    for post in read_site_content().get("insights", []):
-        urls.append("%s/blog/%s" % (base, post.get("slug", "")))
-    items = "".join("<url><loc>%s</loc></url>" % u for u in urls)
+    lastmod = datetime.now().date().isoformat()
+    urls = ["%s/" % base, "%s/pricing" % base]
+    items = "".join('<url><loc>%s</loc><lastmod>%s</lastmod></url>' % (u, lastmod)
+                    for u in urls)
     xml = ('<?xml version="1.0" encoding="UTF-8"?>'
            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">%s</urlset>' % items)
     return app.response_class(xml, mimetype="application/xml")
