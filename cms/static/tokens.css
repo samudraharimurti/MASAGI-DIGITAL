@@ -50,6 +50,13 @@
 
   --accent:         #9333ea;   /* FILL ONLY — see the note above */
 
+  /* The contract mandates an `error` state on every component but names no
+     colour for one, and the accent cannot carry it (error and primary would
+     be the same swatch). This is the single documented addition to the
+     measured palette. 4.71:1 on the page background, so it is safe as text.
+     It is the ONLY red in the system — do not introduce a second. */
+  --danger:         #ef4444;
+
   /* ---------- typeface ---------- */
   --font-sans:  'Poppins', sans-serif;
 

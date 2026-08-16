@@ -184,6 +184,13 @@ p, li, .lead, .card p, .p-sub, .step-card p, .m-card p, .c-block p, .case-sub {
 }
 .menu .menu-cta.ghost:hover { background: var(--glass); }
 .menu .menu-cta, .mobile-login, .btn-ghost, .btn-solid { padding: 8px 15px; }
+
+/* The reset above sets display:inline-block on everything button-shaped, and
+   .mobile-login is in that list — which overrode its display:none in
+   styles.css and put a SECOND Login in the desktop bar beside the real one.
+   Visibility is handed back to the 1024px breakpoint that owns it. */
+.mobile-login { display: none; }
+@media (max-width: 1023.5px) { .mobile-login { display: inline-block; } }
 .pcard .cta, .scoping button { display: block; width: 100%; padding: 12px 35px; }
 .btn:active, .btn-accent:active { transform: none; }
 .cta-row { display: flex; gap: var(--sp-15); flex-wrap: wrap; }
@@ -198,7 +205,12 @@ p, li, .lead, .card p, .p-sub, .step-card p, .m-card p, .c-block p, .case-sub {
   -webkit-backdrop-filter: blur(16px) saturate(140%);
   box-shadow: none;
 }
-.menu { font-size: var(--fs-lg); font-weight: var(--fw-regular); gap: var(--sp-25); }
+/* Nav sits at --fs-md, not --fs-lg. 16px is the BODY size in this scale, and
+   eight items at body size ran the bar to within 4px of the viewport edge at
+   1024px. 15px is the next step down in the contract's own ramp — no new
+   value is introduced. */
+.menu { font-size: var(--fs-md); font-weight: var(--fw-regular); gap: var(--sp-24); }
+.menu .menu-cta { font-size: var(--fs-md); }
 .menu a, .navbar.scrolled .menu a { color: var(--text-2); border-bottom: 2px solid transparent; }
 .menu a:hover, .navbar.scrolled .menu a:hover { color: var(--text); border-bottom-color: var(--accent); }
 .menu a.on { color: var(--text); }

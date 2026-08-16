@@ -14,7 +14,7 @@
   color-scheme: dark;
   /* DDAM contract — single dark scheme, measured. #9333ea is a FILL only:
      white on it is 5.38:1, but as text on the page it is 3.56:1 and fails AA. */
-  --accent:#9333ea; --danger:#ef4444; --green:#9333ea;
+  --accent:#9333ea; /* --danger now comes from tokens.css */ --green:#9333ea;
   --bg:#0c0f16;            /* page */
   --surface:#11141b;       /* panels, cards, fields */
   --text:#ffffff;          /* 19.17:1 */
@@ -42,17 +42,17 @@ button, input, select, textarea { font:inherit; }
 
 /* ---------- shell ---------- */
 #shell { display:grid; grid-template-columns:236px 1fr; min-height:100vh; }
-aside { background:var(--sidebar); color:#cbd5e1; padding:18px 0; position:sticky; top:0; height:100vh; overflow-y:auto; }
+aside { background:var(--sidebar); color:var(--text-2); padding:18px 0; position:sticky; top:0; height:100vh; overflow-y:auto; }
 .logo { display:flex; align-items:center; gap:10px; padding:0 18px 18px; font-weight:800; color:#ffffff; font-size:15px; }
 .logo svg { height:22px; }
-.logo .sub { font-size:9.5px; letter-spacing:.24em; color:#7f8ea8; font-weight:700; }
+.logo .sub { font-size:9.5px; letter-spacing:.24em; color:var(--text-3); font-weight:700; }
 .nav-sec { font-size:10px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
-  color:#64748b; padding:16px 18px 7px; }
+  color:var(--text-3); padding:16px 18px 7px; }
 .nav a { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:9px 18px;
-  font-size:13.5px; font-weight:600; color:#cbd5e1; cursor:pointer; border-left:3px solid transparent; }
+  font-size:13.5px; font-weight:600; color:var(--text-2); cursor:pointer; border-left:3px solid transparent; }
 .nav a:hover { background:var(--sidebar-2); color:#ffffff; }
 .nav a.on { background:var(--sidebar-2); color:#ffffff; border-left-color:var(--accent); }
-.nav .count { font-size:11px; font-weight:700; color:#7f8ea8; background:rgba(255,255,255,.07);
+.nav .count { font-size:11px; font-weight:700; color:var(--text-3); background:rgba(255,255,255,.07);
   padding:1px 7px; border-radius:var(--pill); }
 main { min-width:0; }
 .topbar { background:var(--surface); border:0; padding:0 26px; height:60px;

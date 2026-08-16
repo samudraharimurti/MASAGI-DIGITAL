@@ -5,5 +5,5 @@
     <path d="M71,20 L111,60 L71,100 L31,60 Z"/>
   </g>
   <text x="160" y="108" font-family="Poppins,'Arial Black','Segoe UI Black',Arial,sans-serif"
-        font-weight="900" font-size="84" letter-spacing="1" fill="#131313">MASAGI</text>
+        font-weight="900" font-size="84" letter-spacing="1" fill="#000000">MASAGI</text>
 </svg>

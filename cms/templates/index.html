@@ -20,10 +20,12 @@
   transition:transform .18s, border-color .18s, background .18s; }
 .card:hover { transform:translateY(-2px); border-color:var(--accent-line); background:var(--surface-2); }
 .cover { height:172px; background-size:cover; background-position:center; border-bottom:1px solid var(--border); }
+/* One accent, three surfaces. The palette defines exactly one accent, so the
+   covers vary by which surface token they start from -- never by inventing a
+   second purple. Cycle is %3 to match. */
 .cover.g0 { background-image:linear-gradient(130deg,#0c0f16,#9333ea); }
-.cover.g1 { background-image:linear-gradient(130deg,#11141b,#7e22ce); }
-.cover.g2 { background-image:linear-gradient(130deg,#0c0f16,#a855f7); }
-.cover.g3 { background-image:linear-gradient(130deg,#11141b,#6d28d9); }
+.cover.g1 { background-image:linear-gradient(130deg,#11141b,#9333ea); }
+.cover.g2 { background-image:linear-gradient(130deg,#000000,#9333ea); }
 .card-b { padding:20px; display:flex; flex-direction:column; gap:10px; flex:1; }
 .meta { display:flex; align-items:center; gap:10px; font-size:12px; color:var(--text-2); }
 .card-b h2 { font-size:17.5px; font-weight:600; line-height:1.34; letter-spacing:-.022em; }
@@ -47,7 +49,7 @@
   <div class="grid">
     {% for p in posts %}
     <a class="card" href="/{{ p.slug }}">
-      <div class="cover g{{ loop.index0 % 4 }}"
+      <div class="cover g{{ loop.index0 % 3 }}"
            {% if p.cover_image %}style="background-image:url('{{ p.cover_image }}')"{% endif %}></div>
       <div class="card-b">
         <div class="meta">

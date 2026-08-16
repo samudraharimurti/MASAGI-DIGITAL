@@ -8,40 +8,31 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='16' fill='%239333ea'/%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='11' stroke-linejoin='miter'%3E%3Cpath d='M49,26 L83,60 L49,94 L15,60 Z'/%3E%3Cpath d='M71,26 L105,60 L71,94 L37,60 Z'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/tokens.css?v=1">
 <style>
-/* MASAGI Account — synchronized with the masagi.io landing design system */
-:root {
-  --navy:#1B2A4A; --accent:#2563EB; --bg:#F8FAFC; --surface:#FFFFFF;
-  --text:#1B2A4A; --text-2:#64748B; --border:#E2E8F0;
-  --shadow:0 18px 44px rgba(27,42,74,.10);
-}
-html[data-theme="dark"] {
-  --accent:#3B82F6; --bg:#0F172A; --surface:#1E293B;
-  --text:#F1F5F9; --text-2:#94A3B8; --border:#334155;
-  --shadow:0 18px 44px rgba(0,0,0,.40);
-}
+/* MASAGI Account — palette, type and spacing come from /static/tokens.css,
+   the same file the landing and the CMS load. Nothing here declares a colour
+   of its own; there is one theme and no toggle. */
 * { box-sizing:border-box; margin:0; padding:0; }
 body {
-  font-family:'Inter','Helvetica Neue',Arial,sans-serif; background:var(--bg); color:var(--text);
+  font-family:var(--font-sans); background:var(--surface-raised); color:var(--text);
   line-height:1.6; -webkit-font-smoothing:antialiased; min-height:100vh;
   display:flex; flex-direction:column;
 }
 a { color:inherit; text-decoration:none; }
 
-header { border-bottom:1px solid var(--border); background:var(--surface); }
+header { border:0; background:var(--surface-muted); }
 .topbar { max-width:1080px; margin:0 auto; padding:0 22px; height:68px;
   display:flex; align-items:center; justify-content:space-between; gap:12px; }
 .brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:18px; letter-spacing:.03em; }
 .brand svg { height:28px; width:auto; }
 .brand .sub { font-weight:500; font-size:10.5px; letter-spacing:.3em; display:block; margin-top:-3px; color:var(--text-2); }
 .controls { display:flex; align-items:center; gap:8px; }
-.lang-group { display:flex; border:1px solid var(--border); border-radius:5px; overflow:hidden; }
+.lang-group { display:flex; border:2px solid var(--text); border-radius:var(--pill); overflow:hidden; }
 .lang-btn { font:inherit; font-size:11.5px; font-weight:700; cursor:pointer; padding:6px 10px;
   border:0; background:transparent; color:var(--text-2); }
-.lang-btn.on { background:var(--accent); color:#fff; }
-.theme-btn { font-size:14px; cursor:pointer; width:32px; height:30px; border:1px solid var(--border);
-  border-radius:5px; background:transparent; color:var(--text-2); }
+.lang-btn.on { background:var(--accent); color:var(--accent-ink); }
 
 main { flex:1; display:flex; align-items:center; justify-content:center; padding:40px 20px; }
 .panel { width:min(460px,100%); }
@@ -49,48 +40,49 @@ main { flex:1; display:flex; align-items:center; justify-content:center; padding
 .eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:11.5px; font-weight:700;
   letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
 .eyebrow::before { content:""; width:28px; height:3px; background:var(--accent); }
-h1 { font-size:clamp(24px,4vw,32px); font-weight:800; letter-spacing:-.015em; line-height:1.15; }
+h1 { font-size:clamp(24px,4vw,var(--fs-xl)); font-weight:var(--fw-semibold); letter-spacing:-.015em; line-height:1.15; }
 .lead { color:var(--text-2); font-size:14.5px; margin-top:8px; }
 
-.card { margin-top:26px; background:var(--surface); border:1px solid var(--border); border-radius:14px;
-  padding:30px; box-shadow:var(--shadow); }
+.card { margin-top:26px; background:var(--surface-muted); border:0; border-radius:var(--r-xs);
+  padding:30px; box-shadow:none; }
 label { display:block; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
   color:var(--text-2); margin:14px 0 6px; }
-input { width:100%; font:inherit; font-size:14.5px; color:var(--text); background:var(--bg);
-  border:1px solid var(--border); border-radius:7px; padding:12px 13px; outline:none;
+input { width:100%; font:inherit; font-size:var(--fs-md); color:var(--text); background:var(--surface-raised);
+  border:1px solid var(--field-border); border-radius:var(--r-xs); padding:12px 13px; outline:none;
   transition:border-color .2s, box-shadow .2s; }
-input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(37,99,235,.18); }
+input:focus { border-color:var(--text); box-shadow:0 0 0 3px var(--accent-soft); }
 .btn { display:inline-block; width:100%; font:inherit; font-weight:700; font-size:15px; cursor:pointer;
-  text-align:center; padding:13px; border-radius:7px; border:0; background:var(--accent); color:#fff;
-  margin-top:20px; transition:opacity .15s, transform .15s; }
-.btn:hover { opacity:.9; transform:translateY(-1px); }
-.err { display:none; margin-top:14px; font-size:13px; font-weight:700; color:#b42323;
-  background:rgba(180,35,35,.08); border:1px solid rgba(180,35,35,.25); border-radius:7px; padding:10px 12px; }
+  text-align:center; padding:13px; border-radius:0; border:2px solid var(--accent); background:var(--accent);
+  color:var(--accent-ink); margin-top:20px; transition:filter var(--m-instant); }
+.btn:hover { filter:brightness(1.12); }
+.err { display:none; margin-top:14px; font-size:var(--fs-sm); font-weight:600; color:var(--danger);
+  background:transparent; border:1px solid var(--danger); border-radius:var(--r-xs); padding:10px 12px; }
 .note { margin-top:16px; font-size:12px; color:var(--text-2); }
 
 /* chooser */
 .who { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:6px; flex-wrap:wrap; }
 .who .em { font-size:13px; color:var(--text-2); }
 .who-links { display:flex; align-items:center; gap:16px; }
-.who a { font-size:13px; font-weight:700; color:#b42323; cursor:pointer; }
-.who a#adminLink { color:var(--accent); }
+.who a { font-size:var(--fs-sm); font-weight:600; color:var(--text-3); cursor:pointer; }
+.who a#adminLink { color:var(--text); }
 .systems { display:grid; grid-template-columns:1fr; gap:16px; margin-top:26px; }
 @media (min-width:640px) { .systems { grid-template-columns:1fr 1fr; } }
-.sys { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:28px;
-  box-shadow:var(--shadow); display:flex; flex-direction:column; transition:transform .15s, border-color .15s; }
-.sys:hover { transform:translateY(-3px); border-color:var(--accent); }
-.sys .ic { width:52px; height:52px; border-radius:12px; display:flex; align-items:center; justify-content:center;
-  margin-bottom:16px; background:linear-gradient(135deg,var(--navy),var(--accent)); }
+.sys { background:var(--surface-muted); border:0; border-radius:var(--r-xs); padding:28px;
+  box-shadow:none; display:flex; flex-direction:column; transition:background var(--m-instant); }
+.sys:hover { background:var(--surface-base); }
+.sys .ic { width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  margin-bottom:16px; background:var(--accent); }
 .sys .ic svg { width:30px; height:30px; }
 .sys h3 { font-size:19px; font-weight:800; }
 .sys p { font-size:13.5px; color:var(--text-2); margin:6px 0 20px; flex:1; }
 .sys .open { display:inline-block; font:inherit; font-weight:700; font-size:14px; cursor:pointer;
-  text-align:center; padding:11px; border-radius:7px; border:0; background:var(--accent); color:#fff; }
-.sys .open:hover { opacity:.9; }
-.empty { margin-top:26px; background:var(--surface); border:1px dashed var(--border); border-radius:14px;
+  text-align:center; padding:11px; border-radius:0; border:2px solid var(--accent); background:var(--accent);
+  color:var(--accent-ink); }
+.sys .open:hover { filter:brightness(1.12); }
+.empty { margin-top:26px; background:var(--surface-muted); border:0; border-radius:var(--r-xs);
   padding:30px; text-align:center; color:var(--text-2); font-size:14px; }
 
-footer { border-top:1px solid var(--border); background:var(--surface); padding:16px 0; }
+footer { border:0; background:var(--surface-muted); padding:16px 0; }
 .foot { max-width:1080px; margin:0 auto; padding:0 22px; display:flex; justify-content:space-between;
   gap:12px; flex-wrap:wrap; font-size:12px; color:var(--text-2); }
 .hidden { display:none !important; }
@@ -109,7 +101,6 @@ footer { border-top:1px solid var(--border); background:var(--surface); padding:
         <button class="lang-btn" data-lang="en" type="button">EN</button>
         <button class="lang-btn" data-lang="id" type="button">ID</button>
       </div>
-      <button class="theme-btn" id="themeBtn" type="button" title="Light / dark">☾</button>
     </div>
   </div>
 </header>
@@ -194,16 +185,11 @@ function applyLang(lang) {
   try { localStorage.setItem("masagi-lang", LANG); } catch (e) {}
   if (ME) renderChooser();
 }
-function applyTheme(t) {
-  document.documentElement.setAttribute("data-theme", t);
-  document.getElementById("themeBtn").textContent = t === "dark" ? "☀" : "☾";
-  try { localStorage.setItem("masagi-theme", t); } catch (e) {}
-}
+/* The theme toggle is retired with the light scheme — one theme, no switch.
+   The button and its listener are removed together: a listener left bound to
+   a removed element throws and kills every binding registered after it. */
 document.querySelectorAll(".lang-btn").forEach(function (b) {
   b.addEventListener("click", function () { applyLang(b.getAttribute("data-lang")); });
-});
-document.getElementById("themeBtn").addEventListener("click", function () {
-  applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
 });
 
 function renderChooser() {
@@ -256,9 +242,8 @@ function load() {
   });
 }
 
-var st = null, sl = null;
-try { st = localStorage.getItem("masagi-theme"); sl = localStorage.getItem("masagi-lang"); } catch (e) {}
-applyTheme(st || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+var sl = null;
+try { sl = localStorage.getItem("masagi-lang"); } catch (e) {}
 applyLang(sl || ((navigator.language || "").toLowerCase().indexOf("id") === 0 ? "id" : "en"));
 load();
 </script>
