@@ -571,3 +571,110 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .lang-btn { padding: var(--sp-3) var(--sp-7); }
   .hamburger { width: 32px; height: 32px; }
 }
+
+/* ============================================================
+   19. AUDIT REMEDIATION (2026-08-16)
+   Static hero, promoted trust bar, demoted carousel, and the
+   accessibility primitives the WCAG 2.2 AA criteria require.
+   ============================================================ */
+
+/* --- skip link: must be the first focusable thing on the page --- */
+.skip-link {
+  position: absolute; left: var(--sp-15); top: -60px; z-index: 200;
+  background: var(--accent); color: var(--accent-ink);
+  font-size: var(--fs-md); font-weight: var(--fw-medium);
+  padding: var(--sp-10) var(--sp-24); border-radius: 0;
+  transition: top var(--m-instant);
+}
+.skip-link:focus { top: var(--sp-15); }
+
+/* --- focus system: never removed, >=3:1 against both bands --- */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+/* the accent is only 3.56:1 as ink but 5.38:1 as fill; on the accent-filled
+   controls a purple ring would vanish, so those invert to white */
+.btn-accent:focus-visible, .menu-cta:focus-visible,
+.lang-btn.on:focus-visible, .skip-link:focus-visible {
+  outline-color: var(--text);
+}
+
+/* --- screen-reader-only utility --- */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* --- 1. hero: static, no longer a full-viewport carousel --- */
+.hero.hero-static {
+  height: auto; min-height: 0;
+  padding: 168px 0 var(--sp-section);
+  display: flex; align-items: center;
+}
+/* .hero-inner keeps the full .wrap width; only the headline is measure-capped.
+   Capping the container instead throws the eyebrow, sub and CTA row into the
+   same narrow column and the h1 breaks one word per line. */
+.hero-static .hero-inner { width: 100%; text-align: left; }
+/* No nowrap here. The eyebrow is 41 characters at 12px with 2px tracking —
+   wider than a 390px viewport — and forcing it onto one line dragged the
+   whole page into horizontal overflow on mobile. */
+.hero-static .eyebrow { display: inline-flex; margin-bottom: var(--sp-15); }
+.hero-static h1 {
+  font-size: var(--fs-2xl); font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-display); line-height: 1.04; margin: 0;
+  max-width: 18ch;
+}
+.hero-static .hero-sub {
+  max-width: 58ch; color: var(--text-2);
+  font-size: var(--fs-lg); line-height: var(--lh-body);
+  margin: var(--sp-24) 0 var(--sp-30);
+}
+.hero-static .cta-row { gap: var(--sp-15); }
+
+/* --- 2. trust bar: credibility before the ask --- */
+.trust-bar { background: var(--surface-muted); padding: var(--sp-30) 0; border: 0; }
+.trust-bar .stats { margin-top: 0; padding-top: 0; }
+.trust-bar .stat { padding-top: 0; }
+
+/* --- highlights: the carousel in its new home. It used to inherit its
+   height from .hero (100svh); that parent is gone, and height:100% of an
+   auto-height section computes to zero. --- */
+.highlights { padding-bottom: var(--sp-section); }
+.highlights .hero-swiper { height: auto; min-height: 420px; }
+.highlights .slide-inner { padding-top: var(--sp-30); padding-bottom: var(--sp-30); }
+.highlights .slide-h { font-size: var(--fs-xl); letter-spacing: 0; }
+
+@media (max-width: 767px) {
+  .hero.hero-static { padding: 128px 0 var(--sp-section); }
+  .hero-static h1 {
+    font-size: 40px; letter-spacing: var(--ls-display-m);
+    line-height: var(--lh-display-m);
+  }
+  .highlights .hero-swiper { min-height: 480px; }
+}
+
+/* --- motion: the reveal rules already exist; autoplay is off in JS, and
+   Swiper's own transition is neutralised here too --- */
+@media (prefers-reduced-motion: reduce) {
+  .swiper-wrapper { transition-duration: 0ms !important; }
+  .skip-link { transition: none; }
+  * { scroll-behavior: auto !important; }
+}
+
+/* Login is a plain text link now, not a filled button — the sales CTA is the
+   only filled control in the header. */
+.menu .menu-link {
+  color: var(--text-2); font-size: var(--fs-md); font-weight: var(--fw-regular);
+  border-bottom: 2px solid transparent; padding: 6px 0;
+}
+.menu .menu-link:hover { color: var(--text); border-bottom-color: var(--accent); }
+
+/* The hero eyebrow is a long sentence, not a one-word kicker. Below 768px it
+   wraps to two lines, so the accent rule must not stretch with it. */
+@media (max-width: 767px) {
+  .hero-static .eyebrow { align-items: flex-start; }
+  .hero-static .eyebrow::before { margin-top: 9px; flex: 0 0 auto; }
+  .hero-static h1 { max-width: none; }
+  .hero-static .cta-row .btn { flex: 1 1 auto; text-align: center; }
+}

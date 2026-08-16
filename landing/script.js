@@ -37,10 +37,15 @@
     ((navigator.language || "").toLowerCase().indexOf("id") === 0 ? "id" : "en"));
 
   /* ---------- hero carousel (Swiper) ---------- */
+  /* No autoplay. WCAG 2.2.2 requires anything that moves automatically for more
+     than five seconds to be pausable, and the old 5s rotation carried the page's
+     only H1 away with it. Arrows, dots, keyboard and swipe all still work, so
+     nothing is lost except the motion nobody asked for. */
+  var REDUCED = window.matchMedia
+    && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var SWIPER_OPTS = {
     loop: true,
-    speed: 700,
-    autoplay: { delay: 5000, disableOnInteraction: false },
+    speed: REDUCED ? 0 : 700,
     pagination: { el: ".swiper-pagination", clickable: true },
     navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
     keyboard: { enabled: true },
@@ -205,10 +210,9 @@
       var media = slideMediaHtml(s);
       var text = '<div class="slide-text">' +
         ((s.eyebrow_en || s.eyebrow_id) ? '<span class="eyebrow" data-i18n="' + k + '.eyebrow"></span>' : "") +
-        // only the first slide carries the <h1>; the rest are h2 styled identically,
-        // so the page exposes exactly one level-1 heading to assistive tech
-        '<' + (i === 0 ? 'h1' : 'h2') + ' class="slide-h" data-i18n="' + k + '.title"></' +
-          (i === 0 ? 'h1' : 'h2') + '>' +
+        // Every slide is an h2. The static hero above owns the page's only h1,
+        // so a slide must never mint a second one.
+        '<h2 class="slide-h" data-i18n="' + k + '.title"></h2>' +
         ((s.sub_en || s.sub_id) ? '<p data-i18n="' + k + '.sub"></p>' : "") +
         (((s.cta_label_en || s.cta_label_id) && s.cta_href)
           ? '<div class="cta-row"><a class="btn btn-accent" href="' + esc(s.cta_href) +
@@ -227,8 +231,9 @@
   fetchWithTimeout(CMS_BASE + "/api/public/carousel", 6000)
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (c) {
-      // The hero IS the carousel now, so whatever the CMS holds drives it
-      // directly — there is no static hero left to fall back to.
+      // The carousel now lives in #highlights, below a static hero. The CMS
+      // still drives it exactly as before; only its position on the page and
+      // its heading level changed.
       var slides = (c && c.slides) || [];
       if (slides.length) buildHero(slides);
     })
