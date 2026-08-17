@@ -299,6 +299,53 @@
     })
     .catch(loadMediaFromHv);
 
+  /* ---------- stat count-up (brief 4.7) ----------
+     The final value already sits in the markup, so this only animates when it
+     can: reduced-motion and no-IntersectionObserver both leave the number as
+     authored, and nothing reflows because the text is only ever replaced with
+     a same-width tabular figure. */
+  (function () {
+    var nums = [].slice.call(document.querySelectorAll(".stats .n"));
+    if (!nums.length || REDUCED || !("IntersectionObserver" in window)) return;
+
+    function parse(t) {
+      var m = String(t).match(/^([^0-9]*)([0-9.,]+)(.*)$/);
+      if (!m) return null;
+      var digits = m[2].replace(/,/g, "");
+      if (!digits || isNaN(parseFloat(digits))) return null;
+      return { pre: m[1], end: parseFloat(digits), post: m[3], dp: (digits.split(".")[1] || "").length };
+    }
+
+    function run(el) {
+      var original = el.textContent;          // the authored value, verbatim
+      var spec = parse(original.trim());
+      if (!spec) return;
+      var t0 = null, DUR = 900;
+      function step(ts) {
+        if (t0 === null) t0 = ts;
+        var k = Math.min((ts - t0) / DUR, 1);
+        if (k >= 1) {
+          // never let float formatting decide the final number the user reads
+          el.textContent = original;
+          return;
+        }
+        var eased = 1 - Math.pow(1 - k, 3);
+        el.textContent = spec.pre + (spec.end * eased).toFixed(spec.dp) + spec.post;
+        requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        run(e.target);
+      });
+    }, { threshold: 0.6 });
+    nums.forEach(function (n) { io.observe(n); });
+  })();
+
   /* ---------- contact form → pre-filled email ---------- */
   document.getElementById("contactForm").addEventListener("submit", function (e) {
     e.preventDefault();

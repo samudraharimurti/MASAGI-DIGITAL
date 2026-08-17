@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="MASAGI">
-  <rect width="120" height="120" rx="16" fill="#9333ea"/>
+  <rect width="120" height="120" rx="16" fill="#8B5CF6"/>
   <!-- DUO is outline-only, so the stroke is thickened from the inline 7 to 11:
        at 16px a 7-unit stroke closes the diamonds into a solid blob. -->
   <g fill="none" stroke="#ffffff" stroke-width="11" stroke-linejoin="miter">

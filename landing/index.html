@@ -27,14 +27,14 @@
 <meta name="twitter:description" content="Consolidated finance and certification operations for multi-entity companies in Indonesia &amp; Southeast Asia.">
 <meta name="twitter:image" content="https://masagi.io/assets/og-masagi-1200x630.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon-180.png">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='16' fill='%239333ea'/%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='11' stroke-linejoin='miter'%3E%3Cpath d='M49,26 L83,60 L49,94 L15,60 Z'/%3E%3Cpath d='M71,26 L105,60 L71,94 L37,60 Z'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='16' fill='%238B5CF6'/%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='11' stroke-linejoin='miter'%3E%3Cpath d='M49,26 L83,60 L49,94 L15,60 Z'/%3E%3Cpath d='M71,26 L105,60 L71,94 L37,60 Z'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-<link rel="stylesheet" href="tokens.css?v=202608162038">
-<link rel="stylesheet" href="styles.css?v=202608162038">
-<link rel="stylesheet" href="ddam.css?v=202608162038">
+<link rel="stylesheet" href="tokens.css?v=202608171824">
+<link rel="stylesheet" href="styles.css?v=202608171824">
+<link rel="stylesheet" href="ddam.css?v=202608171824">
 
 <script type="application/ld+json">
 {
@@ -122,17 +122,72 @@
      away: it is the strongest relevance signal on the page. The feature
      carousel survives, demoted below the fold to #highlights. -->
 
+<!-- Icon sprite. 1.5px stroke, currentColor, 24px grid — one definition per
+     icon, referenced by <use>, so adding an icon costs no extra request. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <g id="i-map" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z"/><path d="M9 4v13.5M15 6.5V20"/>
+      <circle cx="12" cy="10" r="2.4"/><path d="m13.8 11.8 2 2"/>
+    </g>
+    <g id="i-tune" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <path d="M4 7h9M17 7h3M4 12h3M11 12h9M4 17h7M15 17h5"/>
+      <circle cx="15" cy="7" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="13" cy="17" r="2"/>
+    </g>
+    <g id="i-live" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="14" rx="2"/><path d="M9 21h6M12 18v3"/>
+      <path d="m6.5 13.5 3-3 2.5 2.5 4.5-5"/><path d="M16.5 8h1.5v1.5"/>
+    </g>
+    <g id="i-mission" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.2"/>
+    </g>
+    <g id="i-vision" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/>
+      <circle cx="12" cy="12" r="3"/>
+    </g>
+    <g id="i-work" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6 7.8 7.8M16.2 16.2l2.2 2.2M18.4 5.6 16.2 7.8M7.8 16.2l-2.2 2.2"/>
+      <circle cx="12" cy="12" r="3.4"/>
+    </g>
+    <g id="i-shield" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3 5 6v6c0 4.2 2.9 7.6 7 9 4.1-1.4 7-4.8 7-9V6z"/><path d="m9 12 2 2 4-4"/>
+    </g>
+    <g id="i-lock" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4.5" y="10" width="15" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1.2"/>
+    </g>
+    <g id="i-backup" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="12" cy="6.5" rx="7" ry="2.8"/><path d="M5 6.5v11c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8v-11"/><path d="M5 12c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8"/>
+    </g>
+    <g id="i-key" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="8" cy="12" r="3.5"/><path d="M11.5 12H20M17 12v3M14.5 12v2.2"/>
+    </g>
+  </defs>
+</svg>
+
 <main id="main">
 <section class="hero hero-static" id="home">
   <div class="wrap hero-inner">
-    <span class="eyebrow" data-i18n="hero.eyebrow">Operational systems for growing companies</span>
-    <h1 data-i18n="hero.title">Systems that let you see your business clearly.</h1>
-    <p class="hero-sub" data-i18n="hero.sub">MASAGI builds precise finance and certification
-      operations for multi-entity companies in Indonesia and Southeast Asia &mdash; bilingual,
-      white-label, live in weeks.</p>
-    <div class="cta-row">
-      <a class="btn btn-accent" href="#contact" data-i18n="cta.primary">Book a scoping call</a>
-      <a class="btn btn-line" href="#services" data-i18n="hero.cta2">See our products</a>
+    <div class="hero-copy">
+      <span class="eyebrow" data-i18n="hero.eyebrow">Operational systems for growing companies</span>
+      <h1 data-i18n="hero.title">Systems that let you see your business clearly.</h1>
+      <p class="hero-sub" data-i18n="hero.sub">MASAGI builds precise finance and certification
+        operations for multi-entity companies in Indonesia and Southeast Asia &mdash; bilingual,
+        white-label, live in weeks.</p>
+      <div class="cta-row">
+        <a class="btn btn-accent" href="#contact" data-i18n="cta.primary">Book a scoping call</a>
+        <a class="btn btn-line" href="#services" data-i18n="hero.cta2">See our products</a>
+        <!-- WhatsApp is table stakes for Indonesian B2B. The number is a
+             placeholder until the business line is confirmed. -->
+        <a class="btn btn-wa" href="https://wa.me/6281234567890" target="_blank" rel="noopener"
+           data-i18n="cta.whatsapp">WhatsApp us</a>
+      </div>
+    </div>
+    <!-- The hero is the LCP element, so this is an inline-referenced SVG (5.7 KB,
+         no decode cost) rather than a raster mockup. Not lazy-loaded for the same
+         reason. It is decorative-adjacent but carries a real description. -->
+    <div class="hero-shot">
+      <img src="assets/hv-dashboard.svg" width="720" height="470" decoding="async"
+           alt="MASAGI-HV consolidated dashboard showing group revenue of Rp 46.1 M across five entities">
     </div>
   </div>
 </section>
@@ -148,6 +203,18 @@
       <div class="stat"><div class="n">100M+</div><div class="t" data-i18n="about.stat3">transactions processed to date</div></div>
       <div class="stat"><div class="n">5&nbsp;yrs+</div><div class="t" data-i18n="about.stat4">industry experience behind the team</div></div>
     </div>
+    <!-- Brief 4.2. The owner declined the client-logo strip, so credibility
+         is carried by commitments we can actually stand behind. -->
+    <ul class="trust-badges" aria-label="Security and delivery commitments">
+      <li><span class="tb-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-shield"/></svg></span>
+        <span data-i18n="trust.b1">Data hosted in Indonesia</span></li>
+      <li><span class="tb-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-lock"/></svg></span>
+        <span data-i18n="trust.b2">Encrypted in transit &amp; at rest</span></li>
+      <li><span class="tb-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-backup"/></svg></span>
+        <span data-i18n="trust.b3">Daily backups, restore tested</span></li>
+      <li><span class="tb-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-key"/></svg></span>
+        <span data-i18n="trust.b4">Role-based access per entity</span></li>
+    </ul>
   </div>
 </section>
 
@@ -163,6 +230,9 @@
 
     <div class="products">
       <article class="product glass reveal">
+        <div class="p-shot"><img src="assets/hv-dashboard.svg" width="720" height="470"
+          loading="lazy" decoding="async"
+          alt="MASAGI-HV dashboard: group revenue chart with a five-entity breakdown"></div>
         <div class="p-head">
           <span class="p-tag" data-i18n="services.hv.tag">Finance &amp; Consolidation</span>
           <h3>MASAGI-HV</h3>
@@ -179,6 +249,9 @@
       </article>
 
       <article class="product glass reveal">
+        <div class="p-shot"><img src="assets/crom-pipeline.svg" width="720" height="400"
+          loading="lazy" decoding="async"
+          alt="MASAGI-CROM pipeline: certifications moving from submission to issued, with deadline badges"></div>
         <div class="p-head">
           <span class="p-tag" data-i18n="services.crom.tag">Certification &amp; Compliance</span>
           <h3>MASAGI-CROM</h3>
@@ -231,6 +304,11 @@
             <tr><td data-i18n="console.group">Group</td><td>46.1 M</td><td>28.9 M</td><td>17.2 M</td></tr>
           </tfoot>
         </table>
+      </div>
+      <div class="flow-shot reveal">
+        <img src="assets/flow-consolidation.svg" width="720" height="300"
+          loading="lazy" decoding="async"
+          alt="Five entity books flow into an intercompany elimination step and out as one group figure of Rp 46.1 M">
       </div>
       <div class="console-note">
         <span class="console-pill" data-i18n="console.badge">Illustration</span>
@@ -298,17 +376,17 @@
     </div>
     <div class="steps">
       <div class="step-card reveal">
-        <div class="step-n">01</div>
+        <div class="step-head"><span class="step-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-map"/></svg></span><div class="step-n">01</div></div>
         <h3 data-i18n="how.s1t">We map your operation</h3>
         <p data-i18n="how.s1b">We sit with your team and learn how the month really runs — entities, accounts, and the busywork.</p>
       </div>
       <div class="step-card reveal">
-        <div class="step-n">02</div>
+        <div class="step-head"><span class="step-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-tune"/></svg></span><div class="step-n">02</div></div>
         <h3 data-i18n="how.s2t">We tailor the system</h3>
         <p data-i18n="how.s2b">Your chart of accounts, workflow and reporting formats — configured, not templated.</p>
       </div>
       <div class="step-card reveal">
-        <div class="step-n">03</div>
+        <div class="step-head"><span class="step-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-live"/></svg></span><div class="step-n">03</div></div>
         <h3 data-i18n="how.s3t">You go live</h3>
         <p data-i18n="how.s3b">One live view of the whole business, bilingual EN/ID, with the typing off your people's desks.</p>
       </div>
@@ -322,10 +400,50 @@
     <div class="case-inner reveal">
       <span class="eyebrow eyebrow-green" data-i18n="case.eyebrow">Client Story</span>
       <h2 data-i18n="case.heading">Closing the books went from seven days to two.</h2>
+      <!-- Brief 4.4: the claim as a picture, not just a sentence. -->
+      <div class="ba" aria-hidden="true">
+        <div class="ba-row"><span class="ba-k" data-i18n="case.before">Before</span>
+          <span class="ba-bar"><i style="width:100%"></i></span><span class="ba-v">7 <span data-i18n="case.days">days</span></span></div>
+        <div class="ba-row is-after"><span class="ba-k" data-i18n="case.after">After</span>
+          <span class="ba-bar"><i style="width:28.6%"></i></span><span class="ba-v">2 <span data-i18n="case.days">days</span></span></div>
+      </div>
       <p class="case-sub" data-i18n="case.sub">A multi-entity group cut its monthly close by 70% after switching to MASAGI-HV — same team, far less manual work.</p>
       <div class="case-role" data-i18n="case.role">Finance Director</div>
       <div class="case-org" data-i18n="case.org">Multi-entity group · Jakarta</div>
       <a class="case-link" href="https://blog.masagi.io/month-end-close-seven-days-to-two" data-i18n="case.link">Read the case study →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FAQ (brief 4.6) =====================
+     Native <details>: keyboard-operable and screen-reader-announced with no
+     JavaScript, so it cannot break the way a hand-rolled accordion can. -->
+<section class="section faq" id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow" data-i18n="faq.eyebrow">Before you ask</span>
+      <h2 data-i18n="faq.title">The questions every finance lead asks us.</h2>
+    </div>
+    <div class="faq-list reveal">
+      <details><summary data-i18n="faq.q1">How long does implementation take?</summary>
+        <p data-i18n="faq.a1">Four weeks is typical: week one we map your operation, weeks two and
+        three we tailor the system, week four you go live. Groups with more than eight entities or
+        heavy historical migration usually run six.</p></details>
+      <details><summary data-i18n="faq.q2">What happens to our existing data?</summary>
+        <p data-i18n="faq.a2">We migrate it. Chart of accounts, opening balances, master data and as
+        much transaction history as you want to carry over — reconciled against your last closed
+        period before we call it done.</p></details>
+      <details><summary data-i18n="faq.q3">What does white-label actually mean here?</summary>
+        <p data-i18n="faq.a3">Your brand, your domain, your workflow. The system your team logs into
+        carries your identity, not ours, and the fields and reports match how your company already
+        works rather than a template.</p></details>
+      <details><summary data-i18n="faq.q4">Do you support Bahasa Indonesia?</summary>
+        <p data-i18n="faq.a4">Both languages, from day one — interface, reports and exports. Each
+        user picks their own; the data underneath is the same.</p></details>
+      <details><summary data-i18n="faq.q5">Where does our data live?</summary>
+        <p data-i18n="faq.a5">On infrastructure hosted in Indonesia, encrypted in transit and at
+        rest, backed up daily with restores tested rather than assumed. Access is role-based and
+        scoped per entity.</p></details>
     </div>
   </div>
 </section>
@@ -344,21 +462,21 @@
 
     <div class="about-grid">
       <article class="card reveal">
-        <div class="ic">◎</div>
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-mission"/></svg></div>
         <h3 data-i18n="about.mission.title">Our Mission</h3>
         <p data-i18n="about.mission.text">To give growing companies in Southeast Asia the same
           operational clarity as the region's largest groups — without the enterprise price tag
           or the enterprise bureaucracy.</p>
       </article>
       <article class="card reveal">
-        <div class="ic">◮</div>
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-vision"/></svg></div>
         <h3 data-i18n="about.vision.title">Our Vision</h3>
         <p data-i18n="about.vision.text">A region where every serious business — from a five-person
           trading firm to a multi-entity group — runs on numbers it can trust, updated live,
           understood by everyone at the table.</p>
       </article>
       <article class="card reveal">
-        <div class="ic">✦</div>
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-work"/></svg></div>
         <h3 data-i18n="about.values.title">How We Work</h3>
         <p data-i18n="about.values.text">Field-tested over theoretical. Tailored over templated.
           Human judgment over black boxes — our systems do the typing, your team keeps the
@@ -425,6 +543,10 @@
 
     <div class="contact-grid">
       <div class="c-info reveal">
+        <div class="c-map" aria-hidden="false">
+          <img src="assets/sea-map.svg" width="340" height="230" loading="lazy"
+            decoding="async" alt="Southeast Asia with Jakarta marked — MASAGI serves ID, SG, MY, VN and TH">
+        </div>
         <div class="c-block">
           <h4 data-i18n="contact.hq.label">Headquarters</h4>
           <p data-i18n="contact.hq.value">Jakarta, Indonesia<br>Serving clients across ID · SG · MY · VN · TH</p>
@@ -436,6 +558,10 @@
         <div class="c-block">
           <h4 data-i18n="contact.web.label">Web</h4>
           <p><a href="https://masagi.io" target="_blank" rel="noopener">masagi.io</a></p>
+        </div>
+        <div class="c-block">
+          <h4 data-i18n="contact.wa.label">WhatsApp</h4>
+          <p><a href="https://wa.me/6281234567890" target="_blank" rel="noopener">+62 812-3456-7890</a></p>
         </div>
         <div class="c-block">
           <h4 data-i18n="contact.hours.label">Hours</h4>
@@ -508,7 +634,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="translations.js?v=202608162038"></script>
-<script src="script.js?v=202608162038"></script>
+<script src="translations.js?v=202608171824"></script>
+<script src="script.js?v=202608171824"></script>
 </body>
 </html>

@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 282 88" role="img" aria-label="MASAGI">
-  <!-- One file has to sit on the navy sidebar AND on white invoice print. The
-       palette defines exactly one accent, so both surfaces get #9333EA rather
-       than a second purple tuned per surface: 5.38:1 on white, 3.17:1 on the
-       #1B2A4A sidebar. A logotype is exempt from SC 1.4.3, and the #3B82F6
-       this replaces balanced no better. -->
-  <g transform="translate(4,4) scale(0.74)" fill="none" stroke="#9333EA"
+  <!-- One file has to sit on the navy sidebar AND on white invoice print, so
+       both surfaces get the brand violet rather than a variant tuned per
+       surface: #8B5CF6 measures 4.22:1 on white and 3.26:1 on the #1B2A4A
+       sidebar. A logotype is exempt from SC 1.4.3, and neither the #3B82F6
+       nor the #9333ea this has passed through balanced any better. -->
+  <g transform="translate(4,4) scale(0.74)" fill="none" stroke="#8B5CF6"
      stroke-width="7" stroke-linejoin="miter">
     <path d="M49,20 L89,60 L49,100 L9,60 Z"/>
     <path d="M71,20 L111,60 L71,100 L31,60 Z"/>
   </g>
   <text x="100" y="62" font-family="Poppins,'Arial Black','Segoe UI Black',Arial,sans-serif"
-        font-weight="900" font-size="38" letter-spacing="0.5" fill="#9333EA">MASAGI</text>
+        font-weight="900" font-size="38" letter-spacing="0.5" fill="#8B5CF6">MASAGI</text>
 </svg>

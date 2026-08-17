@@ -2,31 +2,40 @@
    MASAGI Digital — design tokens (single source of truth)
 
    SOURCE OF THE CONTRACT
-   Measured live from Dentsu Data Artist Mongol (ddam.ai) and recorded in
-   SKILL (1).md. Every value below is transcribed from that measurement —
-   none of it is estimated, and nothing may be added here that was not
-   measured there.
+   The structure (type ramp, spacing, radius, motion, band alternation) is
+   transcribed from Dentsu Data Artist Mongol (ddam.ai) in SKILL (1).md.
+
+   The COLOUR was retargeted on 2026-08-17 to the MASAGI visual design brief:
+   violet #8B5CF6 on a near-black #0A0E1A canvas. The alternating band is
+   derived from that canvas by the same +5/+5/+5 step the previous pair used,
+   so the rhythm is unchanged and no band colour is invented.
 
    ONE THEME. This file is dark-only. There is no light scheme, no
    [data-theme] selector, no prefers-color-scheme branch and no theme
-   toggle: the page background is --surface-raised (#0c0f16) and the
-   alternating band is --surface-muted (#11141b).
+   toggle: the page background is --surface-raised (#0A0E1A) and the
+   alternating band is --surface-muted (#0f131f).
 
    THE ACCENT IS A FILL, NOT AN INK.
-   #9333ea measures 5.38:1 under white — so white text ON the accent is
-   safe — but only 3.56:1 as text on the page. It therefore must never be
-   used for body copy, links, labels, chips' text, list bullets or any
-   other small type. Use it as a background, a rule, an underline or a
-   focus ring. Display text at >=24px bold clears the 3.0 large-text
-   threshold, but the contract still says prefer white there.
+   #8B5CF6 measures 4.55:1 as text on #0A0E1A, so unlike the violet it
+   replaces it is technically legible as ink — but the brief assigns it to
+   glow, lines, borders, charts and highlights, and mixing it into body copy
+   would undo that. Keep it a fill.
+
+   WHITE ON #8B5CF6 IS 4.23:1 — IT FAILS AA FOR SMALL TEXT.
+   The old #9333ea carried white at 5.38:1; the brief's lighter violet does
+   not. Buttons run 16px/400 labels, which need 4.5:1. So filled controls use
+   --accent-strong (#7C3AED, 5.70:1 under white) — the violet-600 sibling on
+   the same ramp as the brief's violet-500, not a new hue. Everything the
+   brief actually names the accent for — glows, 1px borders, chart strokes,
+   eyebrow rules, focus rings — uses --accent itself.
 
    NO HAIRLINES. --border and --border-soft are transparent on purpose:
    the owner asked for every border line to be deleted. Separation is
-   carried by the 120px section rhythm and the #11141b / #0c0f16 band
+   carried by the 120px section rhythm and the #0f131f / #0A0E1A band
    alternation. The two exceptions are the 2px white button outline (set
    in ddam.css) and --field-border, which WCAG 1.4.11 requires at >=3:1
-   for form controls — rgba(255,255,255,.35) measures 3.34:1 on the page
-   background and 3.21:1 on the muted band.
+   for form controls — rgba(255,255,255,.35) measures 3.35:1 on the page
+   background and 3.25:1 on the muted band.
 
    RADIUS NAMING. The contract lists "--r-xs 5px · --r-sm 50px", but the
    existing sheets already use --r-sm for a small surface radius. To keep
@@ -39,16 +48,17 @@
   color-scheme: dark;
 
   /* ---------- palette (measured) ---------- */
-  --text:           #ffffff;   /* 19.17:1 on the page background */
-  --text-2:         #eeeeee;   /* 16.52:1 */
-  --text-3:         #999999;   /*  6.73:1 */
-  --text-inverse:   #c8c8c8;   /* 11.46:1 */
+  --text:           #ffffff;   /* 19.25:1 on the page background */
+  --text-2:         #eeeeee;   /* 16.60:1 */
+  --text-3:         #999999;   /*  6.76:1 */
+  --text-inverse:   #c8c8c8;   /* 11.51:1 */
 
   --surface-base:   #000000;   /* deepest band: nav fills, table foot */
-  --surface-muted:  #11141b;   /* alternating section band, cards */
-  --surface-raised: #0c0f16;   /* PAGE BACKGROUND */
+  --surface-muted:  #0f131f;   /* alternating section band, cards */
+  --surface-raised: #0A0E1A;   /* PAGE BACKGROUND (brief) */
 
-  --accent:         #9333ea;   /* FILL ONLY — see the note above */
+  --accent:         #8B5CF6;   /* glow, lines, borders, charts, rules */
+  --accent-strong:  #7C3AED;   /* fills that carry small white text */
 
   /* The contract mandates an `error` state on every component but names no
      colour for one, and the accent cannot carry it (error and primary would
@@ -127,10 +137,10 @@
   --border-soft: transparent;
   --field-border: rgba(255, 255, 255, .35);  /* 3.34:1 — WCAG 1.4.11 */
 
-  --accent-ink:  #ffffff;               /* 5.38:1 on the accent fill */
+  --accent-ink:  #ffffff;               /* 5.70:1 on --accent-strong */
   --accent-2:    var(--accent);
-  --accent-soft: rgba(147, 51, 234, .16);
-  --accent-line: rgba(147, 51, 234, .45);
+  --accent-soft: rgba(139, 92, 246, .16);
+  --accent-line: rgba(139, 92, 246, .45);
 
   /* the mark's old greens are gone; anything still asking for them gets
      the single accent so gradients and chips keep rendering in palette */
@@ -138,7 +148,7 @@
   --green-2: var(--accent);
   --green-3: var(--accent);
 
-  --nav-bg:     rgba(12, 15, 22, .92);
+  --nav-bg:     rgba(10, 14, 26, .92);
   --glass:      rgba(255, 255, 255, .04);
   --glass-line: transparent;
   --card-sh:    var(--shadow);

@@ -165,7 +165,7 @@ p, li, .lead, .card p, .p-sub, .step-card p, .m-card p, .c-block p, .case-sub {
 
 /* primary: accent fill, white ink */
 .btn-accent, .menu .menu-cta, .btn-solid, .pcard .cta, .mobile-login, .scoping button {
-  background: var(--accent);
+  background: var(--accent-strong);
   border-color: var(--accent);
   color: var(--accent-ink) !important;
   box-shadow: none;
@@ -221,7 +221,7 @@ p, li, .lead, .card p, .p-sub, .step-card p, .m-card p, .c-block p, .case-sub {
   border: 2px solid var(--text); border-radius: var(--pill); overflow: hidden;
 }
 .lang-btn, .navbar.scrolled .lang-btn { color: var(--text-2); background: transparent; font-size: var(--fs-xs); font-weight: var(--fw-medium); }
-.lang-btn.on { background: var(--accent); color: var(--accent-ink) !important; }
+.lang-btn.on { background: var(--accent-strong); color: var(--accent-ink) !important; }
 
 /* The theme toggle is retired with the light scheme. Hidden here so the
    control disappears even where the markup still ships it. */
@@ -263,7 +263,7 @@ p, li, .lead, .card p, .p-sub, .step-card p, .m-card p, .c-block p, .case-sub {
   border: 2px solid var(--text); border-radius: 50%;
 }
 .hero-swiper .swiper-button-prev:hover,
-.hero-swiper .swiper-button-next:hover { background: var(--accent); border-color: var(--accent); }
+.hero-swiper .swiper-button-next:hover { background: var(--accent-strong); border-color: var(--accent); }
 
 /* ============================================================
    7. SECTION RHYTHM — 120px top and bottom, desktop and mobile.
@@ -303,14 +303,14 @@ p, li, .lead, .card p, .p-sub, .step-card p, .m-card p, .c-block p, .case-sub {
 
 .card .ic {
   width: 46px; height: 46px; border-radius: 50%;
-  background: var(--accent); color: var(--accent-ink);
+  background: var(--accent-strong); color: var(--accent-ink);
   display: flex; align-items: center; justify-content: center;
   margin-bottom: var(--sp-15);
 }
 
 .p-tag, .tag, .m-meta .tag, .step-n, .console-pill, .inc-n {
   display: inline-flex; align-items: center; gap: var(--sp-7);
-  background: var(--accent); color: var(--accent-ink);
+  background: var(--accent-strong); color: var(--accent-ink);
   border-radius: var(--pill);
   padding: var(--sp-5) var(--sp-15);
   font-size: var(--fs-xs); font-weight: var(--fw-medium);
@@ -500,7 +500,7 @@ table.pl tfoot td {
 /* ============================================================
    17. SELECTION, FOCUS, MOTION
    ============================================================ */
-::selection { background: var(--accent); color: var(--accent-ink); }
+::selection { background: var(--accent-strong); color: var(--accent-ink); }
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
   outline: 2px solid var(--text); outline-offset: 2px;
 }
@@ -581,7 +581,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 /* --- skip link: must be the first focusable thing on the page --- */
 .skip-link {
   position: absolute; left: var(--sp-15); top: -60px; z-index: 200;
-  background: var(--accent); color: var(--accent-ink);
+  background: var(--accent-strong); color: var(--accent-ink);
   font-size: var(--fs-md); font-weight: var(--fw-medium);
   padding: var(--sp-10) var(--sp-24); border-radius: 0;
   transition: top var(--m-instant);
@@ -678,3 +678,115 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .hero-static h1 { max-width: none; }
   .hero-static .cta-row .btn { flex: 1 1 auto; text-align: center; }
 }
+
+/* ============================================================
+   20. PRODUCT IMAGERY (visual design brief, 2026-08-17)
+   Every mockup is SVG built from these same tokens, so the art
+   and the UI cannot drift apart.
+   ============================================================ */
+
+/* --- hero: copy left, product right (the right half used to be empty) --- */
+.hero-static .hero-inner {
+  display: grid; grid-template-columns: 1.02fr .98fr;
+  gap: 56px; align-items: center;
+}
+.hero-static .hero-copy { min-width: 0; }
+.hero-shot { min-width: 0; position: relative; }
+.hero-shot img {
+  width: 100%; height: auto; display: block; border-radius: 12px;
+  /* the brief asks for a slight 3D tilt; keep it subtle enough to stay legible */
+  transform: perspective(1600px) rotateY(-7deg) rotateX(2.5deg) scale(1.02);
+  box-shadow: 0 40px 90px rgba(0, 0, 0, .55);
+}
+/* the violet bloom behind the panel, per the brief's glow language */
+.hero-shot::before {
+  content: ""; position: absolute; inset: -18% -12% -22% -8%;
+  background: radial-gradient(closest-side, rgba(139, 92, 246, .26), transparent 72%);
+  pointer-events: none; z-index: -1;
+}
+
+/* --- reusable product panel (services cards, console, highlights) --- */
+.shot { display: block; width: 100%; height: auto; border-radius: 12px; }
+.p-shot { margin: 0 0 var(--sp-24); }
+.p-shot img { width: 100%; height: auto; display: block; border-radius: 10px; }
+
+/* --- consolidation flow diagram under the console --- */
+.flow-shot { margin-top: var(--sp-30); }
+.flow-shot img { width: 100%; height: auto; display: block; }
+
+/* --- carousel slide media --- */
+.highlights .slide-media img,
+.highlights .slide-media video,
+.highlights .slide-media iframe { width: 100%; height: auto; border-radius: 12px; display: block; }
+
+@media (max-width: 1023.5px) {
+  .hero-static .hero-inner { grid-template-columns: 1fr; gap: var(--sp-30); }
+  .hero-shot img { transform: none; }
+  .hero-shot::before { inset: -10%; }
+}
+
+/* --- icons: 1.5px violet line work on a consistent 24px grid (brief 2.5) --- */
+.step-head { display: flex; align-items: center; gap: var(--sp-15); margin-bottom: var(--sp-10); }
+.step-ic svg, .card .ic svg, .tb-ic svg { width: 100%; height: 100%; display: block; }
+.step-ic { width: 26px; height: 26px; color: var(--accent); flex: 0 0 auto; }
+.card .ic {
+  width: 34px; height: 34px; color: var(--accent);
+  background: none; border-radius: 0; font-size: 0; margin-bottom: var(--sp-15);
+}
+
+/* --- trust badges: the credibility line that replaces the logo strip --- */
+.trust-badges {
+  list-style: none; margin: var(--sp-30) 0 0; padding: 0;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-24);
+}
+.trust-badges li {
+  display: flex; align-items: center; gap: var(--sp-10);
+  font-size: var(--fs-sm); color: var(--text-2); line-height: 1.35;
+}
+.tb-ic { width: 20px; height: 20px; color: var(--accent); flex: 0 0 auto; }
+
+/* --- WhatsApp: a third action, kept visually below the primary --- */
+.btn-wa { border-color: var(--accent) !important; color: var(--text) !important; }
+.btn-wa:hover { background: var(--accent-soft); }
+
+/* --- before/after (brief 4.4) --- */
+.ba { margin: var(--sp-30) 0 var(--sp-24); max-width: 420px; }
+.ba-row { display: flex; align-items: center; gap: var(--sp-15); margin-top: var(--sp-10); }
+.ba-k { flex: 0 0 58px; font-size: var(--fs-xs); letter-spacing: 1.4px;
+        text-transform: uppercase; color: var(--text-3); }
+.ba-bar { flex: 1; height: 10px; background: rgba(255,255,255,.08); border-radius: 5px; overflow: hidden; }
+.ba-bar i { display: block; height: 100%; background: rgba(255,255,255,.22); border-radius: 5px; }
+.ba-row.is-after .ba-bar i { background: var(--accent); }
+.ba-v { flex: 0 0 auto; font-size: var(--fs-md); font-weight: var(--fw-semibold); color: var(--text); }
+
+/* --- FAQ: native disclosure, so keyboard and SR support come free --- */
+.faq-list { max-width: 860px; }
+.faq-list details { border-bottom: 1px solid rgba(255,255,255,.10); }
+.faq-list summary {
+  cursor: pointer; list-style: none; padding: var(--sp-24) 0;
+  font-size: var(--fs-lg); font-weight: var(--fw-medium); color: var(--text);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-15);
+}
+.faq-list summary::-webkit-details-marker { display: none; }
+.faq-list summary::after {
+  content: "+"; font-size: 22px; font-weight: var(--fw-light);
+  color: var(--accent); line-height: 1; flex: 0 0 auto;
+  transition: transform var(--m-instant);
+}
+.faq-list details[open] summary::after { transform: rotate(45deg); }
+.faq-list summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.faq-list p { padding: 0 0 var(--sp-24); max-width: 72ch; }
+
+/* --- count-up leaves no layout shift: the final value is in the markup --- */
+.stat .n { font-variant-numeric: tabular-nums; }
+
+@media (max-width: 900px) {
+  .trust-badges { grid-template-columns: repeat(2, 1fr); gap: var(--sp-15); }
+}
+@media (max-width: 520px) {
+  .trust-badges { grid-template-columns: 1fr; }
+}
+
+/* --- contact map (brief 2.9) --- */
+.c-map { margin-bottom: var(--sp-30); max-width: 340px; }
+.c-map img { width: 100%; height: auto; display: block; }

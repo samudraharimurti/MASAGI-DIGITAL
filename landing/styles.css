@@ -41,7 +41,7 @@ h3 { font-size: 19px; font-weight: 700; }
   border: 1px solid transparent; transition: transform .15s, box-shadow .15s, background .15s, color .15s;
 }
 .btn:hover { transform: translateY(-2px); }
-.btn-accent { background: var(--accent); color: #fff; box-shadow: 0 10px 26px rgba(37, 99, 235, .30); }
+.btn-accent { background: var(--accent-strong); color: #fff; box-shadow: 0 10px 26px rgba(37, 99, 235, .30); }
 .btn-accent:hover { box-shadow: 0 14px 32px rgba(37, 99, 235, .38); }
 .btn-line { background: transparent; color: #fff; border-color: rgba(255, 255, 255, .55); }
 .btn-line:hover { background: rgba(255, 255, 255, .12); }
@@ -72,7 +72,7 @@ h3 { font-size: 19px; font-weight: 700; }
 .navbar.scrolled .menu a { color: var(--text-2); }
 .navbar.scrolled .menu a:hover { color: var(--text); }
 .menu .menu-cta {
-  background: var(--accent); color: var(--accent-ink) !important; padding: 9px 18px;
+  background: var(--accent-strong); color: var(--accent-ink) !important; padding: 9px 18px;
   border-radius: 6px; border-bottom: none !important;
 }
 .menu .menu-cta:hover { opacity: .9; }
@@ -88,7 +88,7 @@ h3 { font-size: 19px; font-weight: 700; }
    full menu (containing the real Login button) is hidden until opened */
 .mobile-login {
   display: none; font-size: 13.5px; font-weight: 700; padding: 8px 14px;
-  border-radius: 6px; background: var(--accent); color: var(--accent-ink) !important;
+  border-radius: 6px; background: var(--accent-strong); color: var(--accent-ink) !important;
 }
 
 .nav-controls { display: flex; align-items: center; gap: 9px; }
@@ -99,7 +99,7 @@ h3 { font-size: 19px; font-weight: 700; }
   padding: 6px 10px; border: 0; background: transparent; color: rgba(255, 255, 255, .85); transition: background .2s, color .2s;
 }
 .navbar.scrolled .lang-btn { color: var(--text-2); }
-.lang-btn.on { background: var(--accent); color: var(--accent-ink) !important; }
+.lang-btn.on { background: var(--accent-strong); color: var(--accent-ink) !important; }
 .theme-btn {
   font-size: 15px; line-height: 1; cursor: pointer; width: 34px; height: 31px;
   border: 1px solid rgba(255, 255, 255, .45); border-radius: 5px; background: transparent;
@@ -183,7 +183,7 @@ h3 { font-size: 19px; font-weight: 700; }
   color: #fff; width: 46px; height: 46px; border: 1px solid rgba(255, 255, 255, .35); border-radius: 50%;
   background: rgba(255, 255, 255, .06); backdrop-filter: blur(4px); transition: background .2s, border-color .2s;
 }
-.hero-swiper .swiper-button-prev:hover, .hero-swiper .swiper-button-next:hover { background: var(--accent); border-color: var(--accent); }
+.hero-swiper .swiper-button-prev:hover, .hero-swiper .swiper-button-next:hover { background: var(--accent-strong); border-color: var(--accent); }
 .hero-swiper .swiper-button-prev::after, .hero-swiper .swiper-button-next::after { font-size: 16px; font-weight: 700; }
 
 /* ================= SECTIONS ================= */

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 470" role="img" aria-label="MASAGI-HV consolidated finance dashboard: group revenue Rp 46.1 M across five entities" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8B5CF6" stop-opacity=".38"/>
+      <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="corner" cx="88%" cy="6%" r="70%">
+      <stop offset="0%" stop-color="#8B5CF6" stop-opacity=".22"/>
+      <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0"/>
+    </radialGradient>
+  </defs><rect x="0" y="0" width="720" height="470" rx="12" fill="#0f131f"/><rect x="0" y="0" width="720" height="470" rx="12" fill="url(#corner)"/><rect x=".5" y=".5" width="719" height="469" rx="12" fill="none" stroke="#8B5CF6" stroke-opacity=".30"/>
+  <rect x="0" y="0" width="720" height="38" rx="12" fill="#000000"/>
+  <rect x="0" y="26" width="720" height="12" fill="#000000"/>
+  <circle cx="22" cy="19" r="4.5" fill="#2a2f3d"/>
+  <circle cx="39" cy="19" r="4.5" fill="#2a2f3d"/>
+  <circle cx="56" cy="19" r="4.5" fill="#2a2f3d"/>
+  <text x="76" y="23" font-family="Poppins,'Segoe UI',system-ui,sans-serif" font-size="11" fill="#999999"
+        data-en="MASAGI-HV · Consolidated" data-id="MASAGI-HV · Konsolidasi">MASAGI-HV · Consolidated</text>
+  <text x="42" y="76" font-family="Poppins,'Segoe UI',system-ui,sans-serif" font-size="11" letter-spacing="2"
+        fill="#999999" data-en="GROUP REVENUE" data-id="PENDAPATAN GRUP">GROUP REVENUE</text>
+  <text x="42" y="112" font-family="Poppins,'Segoe UI',system-ui,sans-serif" font-size="30" font-weight="700"
+        fill="#ffffff">Rp 46.1 M</text>
+  <text x="222" y="112" font-family="Poppins,'Segoe UI',system-ui,sans-serif" font-size="12" font-weight="500"
+        fill="#8B5CF6">+18.4%</text>
+  <text x="678" y="76" text-anchor="end" font-family="Poppins,'Segoe UI',system-ui,sans-serif" font-size="11"
+        fill="#999999" data-en="5 entities consolidated" data-id="5 entitas terkonsolidasi">5 entities consolidated</text>
+  <line x1="42" y1="170" x2="678" y2="170" stroke="#999999" stroke-opacity=".12" stroke-width="1"/><line x1="42" y1="213" x2="678" y2="213" stroke="#999999" stroke-opacity=".12" stroke-width="1"/><line x1="42" y1="256" x2="678" y2="256" stroke="#999999" stroke-opacity=".12" stroke-width="1"/><line x1="42" y1="299" x2="678" y2="299" stroke="#999999" stroke-opacity=".12" stroke-width="1"/>
+  <path d="M42.0,281.3 L99.8,267.1 L157.6,271.9 L215.5,248.3 L273.3,229.4 L331.1,238.8 L388.9,215.2 L446.7,196.3 L504.5,205.8 L562.4,182.2 L620.2,163.3 L678.0,167.6 L678.0,300 L42.0,300 Z" fill="url(#fade)"/>
+  <path d="M42.0,281.3 L99.8,267.1 L157.6,271.9 L215.5,248.3 L273.3,229.4 L331.1,238.8 L388.9,215.2 L446.7,196.3 L504.5,205.8 L562.4,182.2 L620.2,163.3 L678.0,167.6" fill="none" stroke="#8B5CF6" stroke-width="2"
+        stroke-linejoin="round" stroke-linecap="round" filter="url(#glow)"/>
+  <circle cx="678.0" cy="167.6" r="4" fill="#8B5CF6" filter="url(#glow)"/>
+  <line x1="42" y1="330" x2="678" y2="330" stroke="#999999" stroke-opacity=".16"/>
+  <text x="42" y="348" font-family="Poppins,'Segoe UI',system-ui,sans-serif" font-size="10" letter-spacing="1.6"
+        fill="#999999" data-en="BY ENTITY" data-id="PER ENTITAS">BY ENTITY</text>
+  <text x="42" y="366" font-family="Poppins,'Segoe UI',system-ui,sans-serif" font-size="11" fill="#eeeeee">PT Sinar Mas Niaga</text><rect x="404" y="358" width="132" height="7" rx="3.5" fill="#999999" fill-opacity=".14"/><rect x="404" y="358" width="132" height="7" rx="3.5" fill="#8B5CF6" fill-opacity="0.95"/><text x="678" y="366" text-anchor="end" font-family="Poppins,'Segoe UI',system-ui,sans-serif" font-size="11" fill="#ffffff">14.2</text><text x="42" y="388" font-family="Poppins,'Segoe UI',system-ui,sans-serif" font-size="11" fill="#eeeeee">PT Alam Jaya Perkasa</text><rect x="404" y="380" width="132" height="7" rx="3.5" fill="#999999" fill-opacity=".14"/><rect x="404" y="380" width="110" height="7" rx="3.5" fill="#8B5CF6" fill-opacity="0.82"/><text x="678" y="388" text-anchor="end" font-family="Poppins,'Segoe UI',system-ui,sans-serif" font-size="11" fill="#ffffff">11.8</text><text x="42" y="410" font-family="Poppins,'Segoe UI',system-ui,sans-serif" font-size="11" fill="#eeeeee">PT Bumi Karya Abadi</text><rect x="404" y="402" width="132" height="7" rx="3.5" fill="#999999" fill-opacity=".14"/><rect x="404" y="402" width="87" height="7" rx="3.5" fill="#8B5CF6" fill-opacity="0.69"/><text x="678" y="410" text-anchor="end" font-family="Poppins,'Segoe UI',system-ui,sans-serif" font-size="11" fill="#ffffff">9.4</text><text x="42" y="432" font-family="Poppins,'Segoe UI',system-ui,sans-serif" font-size="11" fill="#eeeeee">PT Cahaya Timur</text><rect x="404" y="424" width="132" height="7" rx="3.5" fill="#999999" fill-opacity=".14"/><rect x="404" y="424" width="65" height="7" rx="3.5" fill="#8B5CF6" fill-opacity="0.56"/><text x="678" y="432" text-anchor="end" font-family="Poppins,'Segoe UI',system-ui,sans-serif" font-size="11" fill="#ffffff">6.9</text><text x="42" y="454" font-family="Poppins,'Segoe UI',system-ui,sans-serif" font-size="11" fill="#eeeeee">PT Nusantara Prima</text><rect x="404" y="446" width="132" height="7" rx="3.5" fill="#999999" fill-opacity=".14"/><rect x="404" y="446" width="36" height="7" rx="3.5" fill="#8B5CF6" fill-opacity="0.43"/><text x="678" y="454" text-anchor="end" font-family="Poppins,'Segoe UI',system-ui,sans-serif" font-size="11" fill="#ffffff">3.8</text></svg>

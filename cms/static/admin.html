@@ -5,16 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>MASAGI CMS</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='16' fill='%239333ea'/%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='11' stroke-linejoin='miter'%3E%3Cpath d='M49,26 L83,60 L49,94 L15,60 Z'/%3E%3Cpath d='M71,26 L105,60 L71,94 L37,60 Z'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='16' fill='%238B5CF6'/%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='11' stroke-linejoin='miter'%3E%3Cpath d='M49,26 L83,60 L49,94 L15,60 Z'/%3E%3Cpath d='M71,26 L105,60 L71,94 L37,60 Z'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
   color-scheme: dark;
-  /* DDAM contract — single dark scheme, measured. #9333ea is a FILL only:
+  /* DDAM contract — single dark scheme, measured. #8B5CF6 is a FILL only:
      white on it is 5.38:1, but as text on the page it is 3.56:1 and fails AA. */
-  --accent:#9333ea; /* --danger now comes from tokens.css */ --green:#9333ea;
+  --accent:#8B5CF6; /* --danger now comes from tokens.css */ --green:#8B5CF6;
   --bg:#0c0f16;            /* page */
   --surface:#11141b;       /* panels, cards, fields */
   --text:#ffffff;          /* 19.17:1 */
@@ -68,7 +68,7 @@ h1.page { font-size:23px; font-weight:800; letter-spacing:-.4px; }
   padding:9px 16px; border-radius:var(--r); border:0; background:var(--surface);
   color:var(--text); transition:filter .15s; }
 .btn:hover { filter:brightness(.97); }
-.btn.primary { background:var(--accent); color:#ffffff; border-color:var(--accent); }
+.btn.primary { background:var(--accent-strong); color:#ffffff; border-color:var(--accent); }
 .btn.danger { color:var(--danger); border-color:var(--danger); background:transparent; }
 .btn.ghost { border-color:transparent; background:transparent; color:var(--text-2); }
 .btn.sm { padding:6px 11px; font-size:12.5px; }
@@ -117,7 +117,7 @@ tr.row:hover { background:var(--bg); }
 .lang-tabs { display:flex; gap:6px; margin-bottom:10px; }
 .lang-tabs button { font-size:12px; font-weight:800; cursor:pointer; padding:5px 13px; border-radius:var(--r);
   border:0; background:transparent; color:var(--text-2); }
-.lang-tabs button.on { background:var(--accent); color:#ffffff; border-color:var(--accent); }
+.lang-tabs button.on { background:var(--accent-strong); color:#ffffff; border-color:var(--accent); }
 .pane { display:none; } .pane.on { display:block; }
 .toolbar { display:flex; flex-wrap:wrap; gap:4px; padding:7px; border:0;
   border-bottom:0; border-radius:var(--r) 8px 0 0; background:var(--bg); }

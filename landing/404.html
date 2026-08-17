@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page not found — MASAGI Digital</title>
+<meta name="robots" content="noindex, follow">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='16' fill='%238B5CF6'/%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='11' stroke-linejoin='miter'%3E%3Cpath d='M49,26 L83,60 L49,94 L15,60 Z'/%3E%3Cpath d='M71,26 L105,60 L71,94 L37,60 Z'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/tokens.css">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:var(--font-sans); background:var(--surface-raised); color:var(--text);
+  min-height:100vh; display:flex; flex-direction:column; -webkit-font-smoothing:antialiased; }
+a { color:inherit; text-decoration:none; }
+header { padding:26px 22px; }
+.brand { display:inline-flex; align-items:center; gap:10px; }
+.brand svg { height:30px; width:auto; }
+.brand .word { font-weight:600; font-size:19px; letter-spacing:.04em; line-height:1; }
+.brand .word .digital { display:block; font-weight:400; font-size:10.5px;
+  letter-spacing:.34em; color:var(--text-3); margin-top:2px; }
+main { flex:1; display:flex; align-items:center; }
+.inner { max-width:1280px; margin:0 auto; padding:0 22px 120px; width:100%; }
+.code { font-size:var(--fs-xs); letter-spacing:2px; text-transform:uppercase;
+  color:var(--text-2); display:inline-flex; align-items:center; gap:var(--sp-10); }
+.code::before { content:""; width:var(--sp-30); height:var(--sp-3); background:var(--accent); }
+h1 { font-size:clamp(40px,6.5vw,var(--fs-2xl)); font-weight:var(--fw-bold);
+  letter-spacing:var(--ls-display); line-height:1.04; margin:var(--sp-15) 0 0; max-width:18ch; }
+p { color:var(--text-2); font-size:var(--fs-lg); line-height:var(--lh-body);
+  margin:var(--sp-24) 0 var(--sp-30); max-width:56ch; }
+.row { display:flex; gap:var(--sp-15); flex-wrap:wrap; }
+.btn { display:inline-block; font-size:var(--fs-lg); padding:12px 35px; border:2px solid var(--text);
+  color:var(--text); background:transparent; transition:background var(--m-instant); }
+.btn:hover { background:var(--glass); }
+.btn.primary { background:var(--accent-strong); border-color:var(--accent); color:var(--accent-ink); }
+.btn.primary:hover { filter:brightness(1.12); }
+.links { margin-top:var(--sp-30); display:flex; gap:var(--sp-24); flex-wrap:wrap;
+  font-size:var(--fs-md); color:var(--text-3); }
+.links a { color:var(--text-2); border-bottom:2px solid transparent; padding-bottom:2px; }
+.links a:hover { color:var(--text); border-bottom-color:var(--accent); }
+:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="/" aria-label="MASAGI Digital home">
+    <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="7"
+         stroke-linejoin="miter" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M49,20 L89,60 L49,100 L9,60 Z"/><path d="M71,20 L111,60 L71,100 L31,60 Z"/></svg>
+    <span class="word">MASAGI<span class="digital">DIGITAL</span></span>
+  </a>
+</header>
+<main>
+  <div class="inner">
+    <span class="code">Error 404</span>
+    <h1>This page doesn't reconcile.</h1>
+    <p>The address you followed doesn't match anything we have. It may have moved,
+      or the link may have been mistyped. Everything else is exactly where you left it.</p>
+    <div class="row">
+      <a class="btn primary" href="/">Back to masagi.io</a>
+      <a class="btn" href="/#contact">Book a scoping call</a>
+    </div>
+    <div class="links">
+      <a href="/#services">Our services</a>
+      <a href="/pricing">Pricing</a>
+      <a href="https://blog.masagi.io/">Insights</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </div>
+</main>
+</body>
+</html>
